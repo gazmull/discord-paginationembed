@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FieldsEmbed.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Embeds.html">Embeds</a><ul class='methods'><li data-type='method'><a href="Embeds.html#addBlankField">addBlankField</a></li><li data-type='method'><a href="Embeds.html#addField">addField</a></li><li data-type='method'><a href="Embeds.html#build">build</a></li><li data-type='method'><a href="Embeds.html#setArray">setArray</a></li><li data-type='method'><a href="Embeds.html#setAuthor">setAuthor</a></li><li data-type='method'><a href="Embeds.html#setAuthorisedUser">setAuthorisedUser</a></li><li data-type='method'><a href="Embeds.html#setChannel">setChannel</a></li><li data-type='method'><a href="Embeds.html#setClientMessage">setClientMessage</a></li><li data-type='method'><a href="Embeds.html#setColor">setColor</a></li><li data-type='method'><a href="Embeds.html#setDescription">setDescription</a></li><li data-type='method'><a href="Embeds.html#setEmojis">setEmojis</a></li><li data-type='method'><a href="Embeds.html#setFooter">setFooter</a></li><li data-type='method'><a href="Embeds.html#setImage">setImage</a></li><li data-type='method'><a href="Embeds.html#setPage">setPage</a></li><li data-type='method'><a href="Embeds.html#setThumbnail">setThumbnail</a></li><li data-type='method'><a href="Embeds.html#setTimeout">setTimeout</a></li><li data-type='method'><a href="Embeds.html#setTimestamp">setTimestamp</a></li><li data-type='method'><a href="Embeds.html#setTitle">setTitle</a></li><li data-type='method'><a href="Embeds.html#setURL">setURL</a></li><li data-type='method'><a href="Embeds.html#showPageIndicator">showPageIndicator</a></li></ul></li><li><a href="FieldsEmbed.html">FieldsEmbed</a><ul class='methods'><li data-type='method'><a href="FieldsEmbed.html#build">build</a></li><li data-type='method'><a href="FieldsEmbed.html#formatField">formatField</a></li><li data-type='method'><a href="FieldsEmbed.html#setArray">setArray</a></li><li data-type='method'><a href="FieldsEmbed.html#setAuthorisedUser">setAuthorisedUser</a></li><li data-type='method'><a href="FieldsEmbed.html#setChannel">setChannel</a></li><li data-type='method'><a href="FieldsEmbed.html#setClientMessage">setClientMessage</a></li><li data-type='method'><a href="FieldsEmbed.html#setElementsPerPage">setElementsPerPage</a></li><li data-type='method'><a href="FieldsEmbed.html#setEmojis">setEmojis</a></li><li data-type='method'><a href="FieldsEmbed.html#setPage">setPage</a></li><li data-type='method'><a href="FieldsEmbed.html#setTimeout">setTimeout</a></li><li data-type='method'><a href="FieldsEmbed.html#showPageIndicator">showPageIndicator</a></li></ul></li><li><a href="PaginationEmbed.html">PaginationEmbed</a><ul class='methods'><li data-type='method'><a href="PaginationEmbed.html#setArray">setArray</a></li><li data-type='method'><a href="PaginationEmbed.html#setAuthorisedUser">setAuthorisedUser</a></li><li data-type='method'><a href="PaginationEmbed.html#setChannel">setChannel</a></li><li data-type='method'><a href="PaginationEmbed.html#setClientMessage">setClientMessage</a></li><li data-type='method'><a href="PaginationEmbed.html#setEmojis">setEmojis</a></li><li data-type='method'><a href="PaginationEmbed.html#setPage">setPage</a></li><li data-type='method'><a href="PaginationEmbed.html#setTimeout">setTimeout</a></li><li data-type='method'><a href="PaginationEmbed.html#showPageIndicator">showPageIndicator</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">FieldsEmbed.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+  Also known as 'Leaderboard-Embed/Dynamic Mode'
+*/
+
+const PaginationEmbed = require('./base/PaginationEmbed');
+const { MessageEmbed } = require('discord.js');
+
+/**
+ * @extends {PaginationEmbed}
+ */
+class FieldsEmbed extends PaginationEmbed {
+
+  /**
+   * Options for FieldsEmbed.fields.
+   * @typedef {Object[]} FieldOptions
+   * @property {string} name - Name of the field.
+   * @property {Function} value - Value of the field. Function for Array.prototype.map().join('\n').
+   * @property {boolean} [inline=true] - Whether the field is inline with other field or not.
+   */
+
+  /**
+   * Options for the constructor.
+   * @typedef {Object} FieldsEmbedOptions
+   * @property {number} [elementsPerPage=10] - Items per page.
+   * @property {FieldOptions} fields - An array formatted fields to input.
+   */
+
+  /**
+   * @param {FieldsEmbedOptions} [options={}] Options for pagination utility.
+   */
+  constructor(options = {}) {
+    if (!(options instanceof Object)) throw new Error('Cannot invoke FieldsEmbed class without an actual options object.');
+
+    super(options);
+
+    /**
+     * Maximum number of elements to be displayed per page.
+     * @type {number}
+     */
+    this.elementsPerPage = options.elementsPerPage || 10;
+  }
+
+  /**
+   * Elements in the current page.
+   * @returns {Array.&lt;*>} - An array for a page.
+   */
+  get elementList() {
+    const begin = (this.page - 1) * this.elementsPerPage;
+    const end = begin + this.elementsPerPage;
+
+    return this.array.slice(begin, end);
+  }
+
+  /**
+   * Build the Pagination Fields Embed.
+   *
+   * @example
+   *
+   * // Object as constructor.
+   * const FieldsEmbed = require('discord-paginationembed').FieldsEmbed;
+   *
+   * // Under message event.
+   * new FieldsEmbed({
+   *  authorisedUser: message.author,
+   *  channel: message.channel,
+   *  clientMessage: { content: 'Preparing the embed...' },
+   *  array: [
+   *    { id: 1, name: 'John Doe' },
+   *    { id: 2, name: 'Jane Doe' }
+   *  ],
+   *  elementsPerPage: 1,
+   *  pageIndicator: false,
+   *  fields: [
+   *    { name: 'ID', value: el => el.id },
+   *    { name: 'Name', value: el => el.name }
+   *  ],
+   *  page: 2,
+   *  timeout: 69000,
+   *  emojis: {
+   *    back: '◀',
+   *    jump: '↗',
+   *    forward: '▶',
+   *    delete: '🗑'
+   *  }
+   * }).build();
+   *
+   * @example
+   *
+   * // Methods as constructor.
+   * const FieldsEmbed = require('discord-paginationembed').FieldsEmbed;
+   *
+   * // Under message event.
+   * new FieldsEmbed()
+   *  .setAuthorisedUser(message.author)
+   *  .setChannel(message.channel)
+   *  .setClientMessage(null, 'Preparing the embed...')
+   *  .setArray([
+   *    { id: 1, name: 'John Doe' },
+   *    { id: 2, name: 'Jane Doe' }
+   *  ])
+   *  .setElementsPerPage(1)
+   *  .setPageIndicator(false)
+   *  .formatField('ID', el => el.id)
+   *  .formatField('Name', el => el.name)
+   *  .setPage(2)
+   *  .setTimeout(69000)
+   *  .setEmojis({
+   *    back: '◀',
+   *    jump: '↗',
+   *    forward: '▶',
+   *    delete: '🗑'
+   *  })
+   *  .build();
+   */
+  async build() {
+    this.pages = Math.ceil(this.array.length / this.elementsPerPage);
+    this
+      .setElementsPerPage(this.elementsPerPage)
+      .setPage(this.page);
+
+    await this._verify(this.pages);
+
+    const isValidFields = Array.isArray(this.fields) &amp;&amp; Boolean(this.fields.length);
+
+    if (!isValidFields) throw new Error('Cannot invoke FieldsEmbed class without initialising at least one field.');
+
+    const fields = this.fields;
+    this.fields = [];
+
+    for (let i = 0; i &lt; fields.length; i++) {
+      const field = fields[i];
+
+      this.formatField(field.name, field.value, field.inline);
+    }
+
+    const hasPaginateField = this.fields.filter(f => typeof f.value === 'function');
+
+    if (!hasPaginateField) throw new Error('Cannot invoke FieldsEmbed class without at least one field to paginate.');
+
+    await this._loadList();
+  }
+
+  /**
+   * Adds a field to the embed.
+   * Same as MessageEmbed.addField, but value takes a function instead.
+   * @param {string} name - Name of the field.
+   * @param {Function} value - Value of the field. Function for Array.prototype.map().join('\n').
+   * @param {boolean} [inline=true] - Whether the field is inline with other field or not.
+   * @returns {FieldsEmbed} - Instance of FieldsEmbed
+   */
+  formatField(name, value, inline = true) {
+    this.fields.push({ name, value, inline });
+
+    return this;
+  }
+
+  /**
+   * Sets the maximum number of elements to be displayed per page.
+   * @param {number} [number=10] - Maximum number of elements to be displayed per page.
+   * @returns {FieldsEmbed} - Instance of FieldsEmbed
+   */
+  setElementsPerPage(number = 10) {
+    if (typeof number !== 'number') throw new Error('setElementsPerPage() only accepts number type.');
+
+    this.elementsPerPage = number;
+
+    return this;
+  }
+
+  _drawList() {
+    const embed = new MessageEmbed({
+      type: this.type,
+      title: this.title,
+      description: this.description,
+      url: this.url,
+      color: this.color,
+      timestamp: this.timestamp,
+      thumbnail: this.thumbnail,
+      image: this.image,
+      video: this.video,
+      author: this.author,
+      provider: this.provider,
+      footer: this.footer,
+      files: this.files
+    });
+
+    if (this.pageIndicator &amp;&amp; this.pages > 1)
+      embed.setDescription(
+        this.description
+          ? `${this.description}\n\nPage ${this.page} of ${this.pages}`
+          : `Page ${this.page} of ${this.pages}`
+      );
+
+    for (let i = 0; i &lt; this.fields.length; i++) {
+      const field = this.fields[i];
+
+      embed.addField(
+        field.name,
+        typeof field.value === 'function'
+          ? this.elementList.map(field.value).join('\n')
+          : field.value,
+        field.inline
+      );
+    }
+
+    return embed;
+  }
+
+  async _loadList(callNavigation = true) {
+    const embed = this._drawList();
+    await this.clientMessage.message.edit({ embed });
+
+    super._loadList(callNavigation);
+  }
+}
+
+module.exports = FieldsEmbed;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Mar 09 2018 09:04:35 GMT+0800 (Taipei Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

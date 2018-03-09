@@ -1,0 +1,38 @@
+{
+  "name": "discord-paginationembed",
+  "version": "0.1.0",
+  "description": "Pagination Embed for Discord.JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "eslint --ignore-path .eslintignore . && npm run generate-docs",
+    "generate-docs": "jsdoc -c jsdoc.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gazmull/discord-paginationembed.git"
+  },
+  "keywords": [
+    "discord",
+    "discord.js",
+    "pagination",
+    "embed",
+    "paginationembed",
+    "emoji",
+    "react",
+    "leaderboard"
+  ],
+  "author": "gazmull",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gazmull/discord-paginationembed/issues"
+  },
+  "homepage": "https://github.com/gazmull/discord-paginationembed#readme",
+  "dependencies": {
+    "discord.js": "discordjs/discord.js"
+  },
+  "devDependencies": {
+    "docdash": "^0.4.0",
+    "eslint": "^4.18.2",
+    "jsdoc": "^3.5.5"
+  }
+}
