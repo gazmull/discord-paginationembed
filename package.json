@@ -2,7 +2,7 @@
   "name": "discord-paginationembed",
   "version": "0.1.0",
   "description": "Pagination Embed for Discord.JS",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "eslint --ignore-path .eslintignore . && npm run generate-docs",
     "generate-docs": "jsdoc -c jsdoc.json"
