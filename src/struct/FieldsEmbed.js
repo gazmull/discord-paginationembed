@@ -42,7 +42,7 @@ class FieldsEmbed extends PaginationEmbed {
 
   /**
    * Elements in the current page.
-   * @returns {Array.<*>} - An array for a page.
+   * @type {Array.<*>}
    */
   get elementList() {
     const begin = (this.page - 1) * this.elementsPerPage;
@@ -57,11 +57,11 @@ class FieldsEmbed extends PaginationEmbed {
    * @example
    *
    * // Object as constructor.
-   * const FieldsEmbed = require('discord-paginationembed').FieldsEmbed;
+   * const { FieldsEmbed } = require('discord-paginationembed');
    *
    * // Under message event.
    * new FieldsEmbed({
-   *  authorisedUser: message.author,
+   *  authorizedUser: message.author,
    *  channel: message.channel,
    *  clientMessage: { content: 'Preparing the embed...' },
    *  array: [
@@ -87,11 +87,11 @@ class FieldsEmbed extends PaginationEmbed {
    * @example
    *
    * // Methods as constructor.
-   * const FieldsEmbed = require('discord-paginationembed').FieldsEmbed;
+   * const { FieldsEmbed } = require('discord-paginationembed');
    *
    * // Under message event.
    * new FieldsEmbed()
-   *  .setAuthorisedUser(message.author)
+   *  .setAuthorizedUser(message.author)
    *  .setChannel(message.channel)
    *  .setClientMessage(null, 'Preparing the embed...')
    *  .setArray([
@@ -146,7 +146,7 @@ class FieldsEmbed extends PaginationEmbed {
    * @param {string} name - Name of the field.
    * @param {Function} value - Value of the field. Function for Array.prototype.map().join('\n').
    * @param {boolean} [inline=true] - Whether the field is inline with other field or not.
-   * @returns {FieldsEmbed} - Instance of FieldsEmbed
+   * @returns {PaginationEmbed}
    */
   formatField(name, value, inline = true) {
     this.fields.push({ name, value, inline });
@@ -156,10 +156,10 @@ class FieldsEmbed extends PaginationEmbed {
 
   /**
    * Sets the maximum number of elements to be displayed per page.
-   * @param {number} [number=10] - Maximum number of elements to be displayed per page.
-   * @returns {FieldsEmbed} - Instance of FieldsEmbed
+   * @param {number} number - Maximum number of elements to be displayed per page.
+   * @returns {PaginationEmbed}
    */
-  setElementsPerPage(number = 10) {
+  setElementsPerPage(number) {
     if (typeof number !== 'number') throw new Error('setElementsPerPage() only accepts number type.');
 
     this.elementsPerPage = number;

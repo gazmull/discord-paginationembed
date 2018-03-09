@@ -1,11 +1,11 @@
 {
   "name": "discord-paginationembed",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Pagination Embed for Discord.JS",
   "main": "./src/index.js",
   "scripts": {
-    "test": "eslint --ignore-path .eslintignore . && npm run generate-docs",
-    "generate-docs": "jsdoc -c jsdoc.json"
+    "test": "eslint ./src && npm run docs",
+    "docs": "node_modules/.bin/jsdoc -c .jsdoc.json"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "url": "https://github.com/gazmull/discord-paginationembed/issues"
   },
   "homepage": "https://github.com/gazmull/discord-paginationembed#readme",
-  "dependencies": {
+  "peerDependencies": {
     "discord.js": "discordjs/discord.js"
   },
   "devDependencies": {

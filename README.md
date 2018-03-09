@@ -5,7 +5,9 @@
 # Discord.JS - Pagination Embed
 A pagination utility for MessageEmbed in Discord.JS
 
-`npm install gazmull/discord-paginationembed`
+Installing the utility: `npm install gazmull/discord-paginationembed`
+
+Requires Discord.JS: `npm install discordjs/discord.js`
 
 # Compatibility
 Currently supports Discord.JS v12.
@@ -14,11 +16,11 @@ Currently supports Discord.JS v12.
 > ### Under `message` event
 
 ```js
-const FieldsEmbedMode = require('discord-paginationembed').FieldsEmbed;
+const { FieldsEmbed: FieldsEmbedMode } = require('discord-paginationembed');
 
 new FieldsEmbedMode()
   .setArray([ { name: "John Doe" }, { name: "Jane Doe" } ])
-  .setAuthorisedUser(message.author)
+  .setAuthorizedUser(message.author)
   .setChannel(message.channel)
   .setElementsPerPage(1)
   .setPage(2)
@@ -26,7 +28,7 @@ new FieldsEmbedMode()
   .build();
 ```
 ```js
-const EmbedsMode = require('discord-paginationembed').Embeds;
+const { Embeds: EmbedsMode } = require('discord-paginationembed');
 const { MessageEmbed } = require("discord.js");
 
 const embeds = [];
@@ -38,7 +40,7 @@ const myImage = message.author.displayAvatarURL();
 
 new EmbedsMode()
   .setArray(embeds)
-  .setAuthorisedUser(message.author)
+  .setAuthorizedUser(message.author)
   .setChannel(message.channel)
   .showPageIndicator(true)
   .setPage(3)
@@ -65,7 +67,7 @@ new EmbedsMode()
 * Fork this repository.
 * Execute `npm install`
 * Code and code and code and code and... code!
-* `npm test` to verify your additions/adjustments are following ESLint's rules and verify docs are valid.
+* `npm test` to verify if your additions/adjustments are following ESLint's rules and to verify if the docs are valid.
 * File a [Pull Request](https://github.com/gazmull/discord-paginationembed/compare)!
 
 # License

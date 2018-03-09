@@ -72,6 +72,7 @@ class Embeds extends PaginationEmbed {
 
     /**
      * The thumbnail of all embeds.
+     * @type {string}
      */
     this.thumbnail = options.thumbnail || null;
 
@@ -96,7 +97,7 @@ class Embeds extends PaginationEmbed {
 
   /**
    * Embed in the current page.
-   * @returns {MessageEmbed} - An instance of MessageEmbed.
+   * @type {MessageEmbed}
    */
   get currentEmbed() {
     return this.array[this.page - 1];
@@ -105,7 +106,7 @@ class Embeds extends PaginationEmbed {
   /**
    * Adds a blank field to the fields of all embeds.
    * @param {boolean} [inline=false] - Whether the field is inline or not to the other fields.
-   * @returns {Embeds} - Instance of Embeds
+   * @returns {PaginationEmbed}
    */
   addBlankField(inline = false) {
     const arr = this.array;
@@ -121,7 +122,7 @@ class Embeds extends PaginationEmbed {
    * @param {string} name - The name of the field.
    * @param {string} value - The value of the field.
    * @param {boolean} [inline=false] - Whether the field is inline or not to the other fields.
-   * @returns {Embeds} - Instance of Embeds
+   * @returns {PaginationEmbed}
    */
   addField(name, value, inline = false) {
     if (!name && !value) return this;
@@ -140,12 +141,12 @@ class Embeds extends PaginationEmbed {
    * @example
    *
    * // Object as constructor.
-   * const Embeds = require('discord-paginationembed').Embeds;
+   * const { Embeds } = require('discord-paginationembed');
    * const { MessageEmbed } = require('discord.js');
    *
    * // Under message event.
    * new Embeds({
-   *  authorisedUser: message.author,
+   *  authorizedUser: message.author,
    *  channel: message.channel,
    *  clientMessage: { content: 'Preparing the embed...' },
    *  array: [
@@ -169,12 +170,12 @@ class Embeds extends PaginationEmbed {
    * @example
    *
    * // Methods as constructor.
-   * const Embeds = require('discord-paginationembed').Embeds;
+   * const { Embeds } = require('discord-paginationembed');
    * const { MessageEmbed } = require('discord.js');
    *
    * // Under message event.
    * new Embeds()
-   *  .setAuthorisedUser(message.author)
+   *  .setAuthorizedUser(message.author)
    *  .setChannel(message.channel)
    *  .setClientMessage(null, 'Preparing the embed...')
    *  .setArray([
@@ -230,7 +231,7 @@ class Embeds extends PaginationEmbed {
   /**
    * Sets the array of embeds to paginate.
    * @param {Array} array - An array of embeds to paginate.
-   * @returns {Embeds} - Instance of Embeds
+   * @returns {PaginationEmbed}
    */
   setArray(array) {
     const isValidArray = Array.isArray(array) && Boolean(array.length);
@@ -251,7 +252,7 @@ class Embeds extends PaginationEmbed {
    * @param {StringResolvable} name - The name of the author.
    * @param {string} [iconURL=null] - The icon URL of the author.
    * @param {string} [url=null] - The URL of the author.
-   * @returns {Embeds} - Instance of Embeds
+   * @returns {PaginationEmbed}
    */
   setAuthor(name, iconURL = null, url = null) {
     if (!name) return this;
@@ -267,7 +268,7 @@ class Embeds extends PaginationEmbed {
   /**
    * Sets the color of all embeds.
    * @param {ColorResolvable} color - The color of all embeds.
-   * @returns {Embeds} - Instance of Embeds
+   * @returns {PaginationEmbed}
    */
   setColor(color) {
     if (!color) return this;
@@ -283,7 +284,7 @@ class Embeds extends PaginationEmbed {
   /**
    * Sets the description of all embeds.
    * @param {string} description - The description of all embeds.
-   * @returns {Embeds} - Instance of Embeds
+   * @returns {PaginationEmbed}
    */
   setDescription(description) {
     if (!description) return this;
@@ -300,7 +301,7 @@ class Embeds extends PaginationEmbed {
    * Sets the footer of all embeds.
    * @param {string} text - The footer text.
    * @param {string} [iconURL=null] - URL for the footer's icon.
-   * @returns {Embeds} - Instance of Embeds
+   * @returns {PaginationEmbed}
    */
   setFooter(text, iconURL = null) {
     if (!text) return this;
@@ -316,7 +317,7 @@ class Embeds extends PaginationEmbed {
   /**
    * Sets the image of all embeds.
    * @param {string} image - The image of all embeds.
-   * @returns {Embeds} - Instance of Embeds
+   * @returns {PaginationEmbed}
    */
   setImage(image) {
     if (!image) return this;
@@ -332,7 +333,7 @@ class Embeds extends PaginationEmbed {
   /**
    * Sets the thumbnail of all embeds.
    * @param {string} thumbnail - The thumbnail of all embeds.
-   * @returns {Embeds} - Instance of Embeds
+   * @returns {PaginationEmbed}
    */
   setThumbnail(thumbnail) {
     if (!thumbnail) return this;
@@ -347,7 +348,7 @@ class Embeds extends PaginationEmbed {
 
   /**
    * Sets the timestamp of all embeds.
-   * @returns {Embeds} - Instance of Embeds
+   * @returns {PaginationEmbed}
    */
   setTimestamp() {
     const arr = this.array;
@@ -361,7 +362,7 @@ class Embeds extends PaginationEmbed {
   /**
    * Sets the title of all embeds.
    * @param {string} title - The title of all embeds.
-   * @returns {Embeds} - Instance of Embeds
+   * @returns {PaginationEmbed}
    */
   setTitle(title) {
     if (!title) return this;
@@ -377,7 +378,7 @@ class Embeds extends PaginationEmbed {
   /**
    * Sets the URL of all embeds.
    * @param {string} url - The URL of all embeds.
-   * @returns {Embeds} - Instance of Embeds
+   * @returns {PaginationEmbed}
    */
   setURL(url) {
     if (!url) return this;

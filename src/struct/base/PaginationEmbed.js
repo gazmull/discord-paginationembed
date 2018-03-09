@@ -24,7 +24,7 @@ class PaginationEmbed extends MessageEmbed {
   /**
    * Options for the constructor.
    * @typedef {Object} PaginationEmbedOptions
-   * @property {User} [authorisedUser=null] - The authorised user to navigate the pages.
+   * @property {User} [authorizedUser=null] - The authorized user to navigate the pages.
    * @property {TextChannel} channel - The channel where to send the embed.
    * @property {ClientMessageOptions} [clientMessage=null] - Settings for the message sent by the client.
    * @property {Array.<*>} array - An array of elements to paginate.
@@ -43,10 +43,10 @@ class PaginationEmbed extends MessageEmbed {
     super(options);
 
     /**
-     * The authorised user to navigate the pages.
+     * The authorized user to navigate the pages.
      * @type {User}
      */
-    this.authorisedUser = options.authorisedUser || null;
+    this.authorizedUser = options.authorizedUser || null;
 
     /**
      * The channel where to send the embed.
@@ -110,7 +110,7 @@ class PaginationEmbed extends MessageEmbed {
   /**
    * Sets the array of elements to paginate.
    * @param {Array} array - An array of elements to paginate.
-   * @returns {PaginationEmbed} - Instance of PaginationEmbed
+   * @returns {PaginationEmbed}
    */
   setArray(array) {
     const isValidArray = Array.isArray(array) && Boolean(array.length);
@@ -123,12 +123,12 @@ class PaginationEmbed extends MessageEmbed {
   }
 
   /**
-   * Set the authorised person to navigate the pages.
-   * @param {User} [user=null] - The user object.
-   * @returns {PaginationEmbed} - Instance of PaginationEmbed
+   * Set the authorized person to navigate the pages.
+   * @param {User} user - The user object.
+   * @returns {PaginationEmbed}
    */
-  setAuthorisedUser(user = null) {
-    this.authorisedUser = user;
+  setAuthorizedUser(user) {
+    this.authorizedUser = user;
 
     return this;
   }
@@ -136,7 +136,7 @@ class PaginationEmbed extends MessageEmbed {
   /**
    * The channel where to send the embed.
    * @param {TextChannel} channel - The channel object.
-   * @returns {PaginationEmbed} - Instance of PaginationEmbed
+   * @returns {PaginationEmbed}
    */
   setChannel(channel) {
     this.channel = channel;
@@ -146,11 +146,11 @@ class PaginationEmbed extends MessageEmbed {
 
   /**
    * Sets the settings for the message sent by the client.
-   * @param {Message} [message=null] - The message object sent by the client, if there is any.
+   * @param {Message} message - The message object sent by the client.
    * @param {string} [content='Preparing...'] - The custom message content while preparing the embed.
-   * @returns {PaginationEmbed} - Instance of PaginationEmbed
+   * @returns {PaginationEmbed}
    */
-  setClientMessage(message = null, content = null) {
+  setClientMessage(message, content = null) {
     if (!content) content = 'Preparing...';
 
     Object.assign(this.clientMessage, { message, content });
@@ -160,8 +160,8 @@ class PaginationEmbed extends MessageEmbed {
 
   /**
    * Sets the emojis used for navigation buttons.
-   * @param {NavigationButtons} [emojis={}] - An object containing customised emojis to use as navigation buttons.
-   * @returns {PaginationEmbed} - Instance of PaginationEmbed
+   * @param {NavigationButtons} emojis - An object containing customised emojis to use as navigation buttons.
+   * @returns {PaginationEmbed}
    */
   setEmojis(emojis) {
     Object.assign(this.emojis, emojis);
@@ -171,10 +171,10 @@ class PaginationEmbed extends MessageEmbed {
 
   /**
    * Sets to jump to a certain page upon calling PaginationEmbed.build().
-   * @param {number|string} [param=1] - The page number to jump to. As String: 'back', 'forward'
-   * @returns {PaginationEmbed} - Instance of PaginationEmbed
+   * @param {number|string} param - The page number to jump to. As String: 'back', 'forward'
+   * @returns {PaginationEmbed}
    */
-  setPage(param = 1) {
+  setPage(param) {
     const isString = typeof param === 'string';
 
     if (!(!isNaN(param) || isString)) throw new Error('setPage() only accepts number/string type.');
@@ -190,10 +190,10 @@ class PaginationEmbed extends MessageEmbed {
 
   /**
    * Sets the time for awaiting a user action before timeout in ms.
-   * @param {number} [timeout=30000] Timeout value in ms.
-   * @returns {PaginationEmbed} - Instance of PaginationEmbed
+   * @param {number} timeout Timeout value in ms.
+   * @returns {PaginationEmbed}
    */
-  setTimeout(timeout = 30000) {
+  setTimeout(timeout) {
     if (typeof timeout !== 'number') throw new Error('setTimeout() only accepts number type.');
 
     this.timeout = timeout;
@@ -203,10 +203,10 @@ class PaginationEmbed extends MessageEmbed {
 
   /**
    * Sets whether page number indicator on client's message is shown or not.
-   * @param {boolean} [boolean=true] - Show page indicator?
-   * @returns {PaginationEmbed} - Instance of PaginationEmbed
+   * @param {boolean} boolean - Show page indicator?
+   * @returns {PaginationEmbed}
    */
-  showPageIndicator(boolean = true) {
+  showPageIndicator(boolean) {
     if (typeof boolean !== 'boolean') throw new Error('showPageIndicator() only accepts boolean type.');
 
     this.pageIndicator = boolean;
@@ -222,7 +222,7 @@ class PaginationEmbed extends MessageEmbed {
   async _verify(pages) {
     this
       .setChannel(this.channel)
-      .setAuthorisedUser(this.authorisedUser)
+      .setAuthorizedUser(this.authorizedUser)
       .setClientMessage(this.clientMessage.message, this.clientMessage.content)
       .setArray(this.array)
       .showPageIndicator(this.pageIndicator)
@@ -298,8 +298,8 @@ class PaginationEmbed extends MessageEmbed {
   async _awaitResponse() {
     const emojis = Object.values(this.emojis);
     const filter = (r, u) => {
-      if (this.authorisedUser)
-        return u.id === this.authorisedUser.id && emojis.includes(r.emoji.name);
+      if (this.authorizedUser)
+        return u.id === this.authorizedUser.id && emojis.includes(r.emoji.name);
 
       return !u.bot && emojis.includes(r.emoji.name);
     };
