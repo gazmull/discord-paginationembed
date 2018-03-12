@@ -19,7 +19,7 @@ Currently supports Discord.JS v12.
 const { FieldsEmbed: FieldsEmbedMode } = require('discord-paginationembed');
 
 new FieldsEmbedMode()
-  .setArray([ { name: "John Doe" }, { name: "Jane Doe" } ])
+  .setArray([ { name: 'John Doe' }, { name: 'Jane Doe' } ])
   .setAuthorizedUser(message.author)
   .setChannel(message.channel)
   .setElementsPerPage(1)
@@ -29,7 +29,7 @@ new FieldsEmbedMode()
 ```
 ```js
 const { Embeds: EmbedsMode } = require('discord-paginationembed');
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed } = require('discord.js');
 
 const embeds = [];
 
