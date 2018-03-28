@@ -3,7 +3,7 @@
 */
 
 const PaginationEmbed = require('./base/PaginationEmbed');
-const { MessageEmbed } = require('discord.js');
+const { RichEmbed } = require('discord.js');
 
 /**
  * @extends {PaginationEmbed}
@@ -97,7 +97,7 @@ class Embeds extends PaginationEmbed {
 
   /**
    * Embed in the current page.
-   * @type {MessageEmbed}
+   * @type {RichEmbed}
    */
   get currentEmbed() {
     return this.array[this.page - 1];
@@ -142,7 +142,7 @@ class Embeds extends PaginationEmbed {
    *
    * // Object as constructor.
    * const { Embeds } = require('discord-paginationembed');
-   * const { MessageEmbed } = require('discord.js');
+   * const { RichEmbed } = require('discord.js');
    *
    * // Under message event.
    * new Embeds({
@@ -150,8 +150,8 @@ class Embeds extends PaginationEmbed {
    *  channel: message.channel,
    *  clientMessage: { content: 'Preparing the embed...' },
    *  array: [
-   *    new MessageEmbed({ title: 'John Doe' }),
-   *    new MessageEmbed({ title: 'Jane Doe' })
+   *    new RichEmbed({ title: 'John Doe' }),
+   *    new RichEmbed({ title: 'Jane Doe' })
    *  ],
    *  pageIndicator: false,
    *  page: 2,
@@ -171,7 +171,7 @@ class Embeds extends PaginationEmbed {
    *
    * // Methods as constructor.
    * const { Embeds } = require('discord-paginationembed');
-   * const { MessageEmbed } = require('discord.js');
+   * const { RichEmbed } = require('discord.js');
    *
    * // Under message event.
    * new Embeds()
@@ -179,8 +179,8 @@ class Embeds extends PaginationEmbed {
    *  .setChannel(message.channel)
    *  .setClientMessage(null, 'Preparing the embed...')
    *  .setArray([
-   *    new MessageEmbed({ title: 'John Doe' }),
-   *    new MessageEmbed({ title: 'Jane Doe' })
+   *    new RichEmbed({ title: 'John Doe' }),
+   *    new RichEmbed({ title: 'Jane Doe' })
    *  ])
    *  .setPageIndicator(false)
    *  .setPage(2)
@@ -239,8 +239,8 @@ class Embeds extends PaginationEmbed {
     if (!isValidArray) throw new Error('Cannot invoke Embeds class without initialising the array to paginate.');
 
     for (let i = 0; i < array.length; i++)
-      if (array[i] instanceof MessageEmbed) continue;
-      else throw new Error(`(MessageEmbeds[${i}]) Cannot invoke Embeds class with an invalid MessageEmbed instance.`);
+      if (array[i] instanceof RichEmbed) continue;
+      else throw new Error(`(RichEmbeds[${i}]) Cannot invoke Embeds class with an invalid RichEmbed instance.`);
 
     this.array = array;
 

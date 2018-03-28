@@ -1,9 +1,9 @@
-const { MessageEmbed } = require('discord.js');
+const { RichEmbed } = require('discord.js');
 
 /**
- * @extends {MessageEmbed}
+ * @extends {RichEmbed}
  */
-class PaginationEmbed extends MessageEmbed {
+class PaginationEmbed extends RichEmbed {
 
   /**
    * Options for PaginationEmbed.clientMessage.
@@ -262,8 +262,8 @@ class PaginationEmbed extends MessageEmbed {
   }
 
   /**
-   * Helper for intialising the MessageEmbed.
-   * [For sub-class] Initialises the MessageEmbed.
+   * Helper for intialising the RichEmbed.
+   * [For sub-class] Initialises the RichEmbed.
    * @private
    * @param {boolean} [callNavigation=true] - Whether to call _drawNavigation() or not.
    */
@@ -305,7 +305,7 @@ class PaginationEmbed extends MessageEmbed {
 
       if (emoji === this.emojis.delete) return clientMessage.delete();
 
-      await response.users.remove(user);
+      await response.remove(user);
 
       switch (emoji) {
         case this.emojis.back:
@@ -327,7 +327,7 @@ class PaginationEmbed extends MessageEmbed {
           break;
       }
     } catch (c) {
-      await clientMessage.reactions.removeAll();
+      await clientMessage.clearReactions();
 
       if (c instanceof Error) throw c;
     }

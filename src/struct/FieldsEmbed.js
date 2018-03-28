@@ -3,7 +3,7 @@
 */
 
 const PaginationEmbed = require('./base/PaginationEmbed');
-const { MessageEmbed } = require('discord.js');
+const { RichEmbed } = require('discord.js');
 
 /**
  * @extends {PaginationEmbed}
@@ -142,7 +142,7 @@ class FieldsEmbed extends PaginationEmbed {
 
   /**
    * Adds a field to the embed.
-   * Same as MessageEmbed.addField, but value takes a function instead.
+   * Same as RichEmbed.addField, but value takes a function instead.
    * @param {string} name - Name of the field.
    * @param {Function} value - Value of the field. Function for Array.prototype.map().join('\n').
    * @param {boolean} [inline=true] - Whether the field is inline with other field or not.
@@ -168,7 +168,7 @@ class FieldsEmbed extends PaginationEmbed {
   }
 
   _drawList() {
-    const embed = new MessageEmbed({
+    const embed = new RichEmbed({
       type: this.type,
       title: this.title,
       description: this.description,

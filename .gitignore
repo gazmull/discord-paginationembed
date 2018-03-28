@@ -3,5 +3,8 @@ package-lock.json
 yarn.lock
 node_modules/
 
-#VSC
+# Docs on Master only
+docs/
+
+# VSC
 .vscode

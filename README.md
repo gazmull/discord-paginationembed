@@ -1,16 +1,18 @@
 <div align="center">
-<a href="https://travis-ci.org/gazmull/discord-paginationembed"><img src="https://travis-ci.org/gazmull/discord-paginationembed.svg?branch=master" alt="Build Status" /></a>
+<a href="https://travis-ci.org/gazmull/discord-paginationembed"><img src="https://travis-ci.org/gazmull/discord-paginationembed.svg?branch=v11" alt="Build Status" /></a>
 </div>
 
 # Discord.JS - Pagination Embed
-A pagination utility for MessageEmbed in Discord.JS
+A pagination utility for RichEmbed in Discord.JS
 
-Installing the utility: `npm install gazmull/discord-paginationembed`
+Installing the utility: `npm install gazmull/discord-paginationembed#v11`
 
-Requires Discord.JS: `npm install discordjs/discord.js`
+Requires Discord.JS: `npm install discord.js`
 
 # Compatibility
-Currently supports Discord.JS v12.
+Supports both v11 and v12.
+
+v12 installation: `npm install gazmull/discord-paginationembed`
 
 # Examples
 > ### Under `message` event
@@ -30,14 +32,14 @@ new FieldsEmbedMode()
 ```
 ```js
 const { Embeds: EmbedsMode } = require('discord-paginationembed');
-const { MessageEmbed } = require('discord.js');
+const { RichEmbed } = require('discord.js');
 
 const embeds = [];
 
 for (let i = 0; i < 5; ++i)
-  embeds.push(new MessageEmbed().addField('Page', i + 1));
+  embeds.push(new RichEmbed().addField('Page', i + 1));
 
-const myImage = message.author.displayAvatarURL();
+const myImage = message.author.displayAvatarURL;
 
 new EmbedsMode()
   .setArray(embeds)
