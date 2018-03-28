@@ -10,7 +10,9 @@ Installing the utility: `npm install gazmull/discord-paginationembed`
 Requires Discord.JS: `npm install discordjs/discord.js`
 
 # Compatibility
-Currently supports Discord.JS v12.
+Supports both v11 and v12.
+
+v11 installation: `npm install gazmull/discord-paginationembed#v11`
 
 # Examples
 > ### Under `message` event
