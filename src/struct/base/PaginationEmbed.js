@@ -251,9 +251,11 @@ class PaginationEmbed extends MessageEmbed {
    * @private
    */
   async _drawNavigation() {
-    if (this.page !== 1) await this.clientMessage.message.react(this.emojis.back);
+    await this.clientMessage.message.react(this.emojis.back);
+
     if (this.pages > 2) await this.clientMessage.message.react(this.emojis.jump);
-    if (this.page !== this.pages) await this.clientMessage.message.react(this.emojis.forward);
+
+    await this.clientMessage.message.react(this.emojis.forward);
     await this.clientMessage.message.react(this.emojis.delete);
 
     this._awaitResponse();
@@ -267,8 +269,6 @@ class PaginationEmbed extends MessageEmbed {
    */
   _loadList(callNavigation = true) {
     if (callNavigation) return this._drawNavigation();
-
-    this.clientMessage.message.react(this.emojis.delete);
   }
 
   /**
@@ -277,18 +277,10 @@ class PaginationEmbed extends MessageEmbed {
    * @param {number} param - The page number to jump to. As String: 'back', 'forward'
    */
   async _loadPage(param = 1) {
-    const oldPage = this.page;
     this.setPage(param);
+    await this._loadList(false);
 
-    if (oldPage === 1 || oldPage === this.pages || this.page === 1 || this.page === this.pages) {
-      await this.clientMessage.message.reactions.removeAll();
-
-      this._loadList(true);
-    } else {
-      await this._loadList(false);
-
-      this._awaitResponse();
-    }
+    this._awaitResponse();
   }
 
   /**
