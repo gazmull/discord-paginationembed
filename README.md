@@ -25,6 +25,7 @@ new FieldsEmbedMode()
   .setElementsPerPage(1)
   .setPage(2)
   .showPageIndicator(false)
+  .formatField('Name', i => i.name)
   .build();
 ```
 ```js
