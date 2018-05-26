@@ -32,14 +32,15 @@ new FieldsEmbedMode()
 ```
 ```js
 const { Embeds: EmbedsMode } = require('discord-paginationembed');
-const { MessageEmbed } = require('discord.js');
+const { RichEmbed } = require('discord.js');
 
 const embeds = [];
 
 for (let i = 0; i < 5; ++i)
-  embeds.push(new MessageEmbed().addField('Page', i + 1));
+// you can set per-RichEmbed propeties here instead of globally below
+  embeds.push(new RichEmbed().addField('Page', i + 1));
 
-const myImage = message.author.displayAvatarURL();
+const myImage = message.author.avatarURL;
 
 new EmbedsMode()
   .setArray(embeds)
