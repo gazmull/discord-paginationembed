@@ -37,6 +37,7 @@ const { RichEmbed } = require('discord.js');
 const embeds = [];
 
 for (let i = 0; i < 5; ++i)
+  // You can set per RichEmbed propeties here instead of globally below
   embeds.push(new RichEmbed().addField('Page', i + 1));
 
 const myImage = message.author.displayAvatarURL;
