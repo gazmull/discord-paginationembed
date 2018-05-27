@@ -37,7 +37,7 @@ const { MessageEmbed } = require('discord.js');
 const embeds = [];
 
 for (let i = 0; i < 5; ++i)
-  // You can set per MessageEmbed propeties here instead of globally below
+  // You can set per MessageEmbed properties here instead of globally below
   embeds.push(new MessageEmbed().addField('Page', i + 1));
 
 const myImage = message.author.displayAvatarURL();

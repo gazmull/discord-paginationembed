@@ -1,6 +1,6 @@
 {
   "name": "discord-paginationembed",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Pagination Embed for Discord.JS",
   "main": "./src/index.js",
   "scripts": {
