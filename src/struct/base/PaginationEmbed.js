@@ -251,11 +251,10 @@ class PaginationEmbed extends MessageEmbed {
    * @private
    */
   async _drawNavigation() {
-    await this.clientMessage.message.react(this.emojis.back);
-
+    if (this.pages > 1) await this.clientMessage.message.react(this.emojis.back);
     if (this.pages > 2) await this.clientMessage.message.react(this.emojis.jump);
+    if (this.pages > 1) await this.clientMessage.message.react(this.emojis.forward);
 
-    await this.clientMessage.message.react(this.emojis.forward);
     await this.clientMessage.message.react(this.emojis.delete);
 
     this._awaitResponse();
