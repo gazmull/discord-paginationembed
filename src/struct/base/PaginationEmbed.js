@@ -70,7 +70,7 @@ class PaginationEmbed extends MessageEmbed {
      * Whether page number indicator on client's message is shown or not.
      * @type {boolean}
      */
-    this.pageIndicator = options.pageIndicator || true;
+    this.pageIndicator = (options.pageIndicator != null ? options.pageIndicator : true);
 
     /**
      * Jumps to a certain page upon PaginationEmbed.build().
