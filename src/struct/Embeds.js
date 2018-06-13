@@ -392,11 +392,11 @@ class Embeds extends PaginationEmbed {
   }
 
   async _loadList(callNavigation = true) {
-    const shouldIndicate = this.showPageIndicator
+    const shouldIndicate = this.pageIndicator
       ? this.pages === 1
         ? null
         : `Page ${this.page} of ${this.pages}`
-      : null;
+      : this.clientMessage.content;
 
     await this.clientMessage.message.edit(shouldIndicate, { embed: this.currentEmbed });
 
