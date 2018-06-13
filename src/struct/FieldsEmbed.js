@@ -99,7 +99,7 @@ class FieldsEmbed extends PaginationEmbed {
    *    { id: 2, name: 'Jane Doe' }
    *  ])
    *  .setElementsPerPage(1)
-   *  .setPageIndicator(false)
+   *  .showPageIndicator(false)
    *  .formatField('ID', el => el.id)
    *  .formatField('Name', el => el.name)
    *  .setPage(2)

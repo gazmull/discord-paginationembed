@@ -182,7 +182,7 @@ class Embeds extends PaginationEmbed {
    *    new RichEmbed({ title: 'John Doe' }),
    *    new RichEmbed({ title: 'Jane Doe' })
    *  ])
-   *  .setPageIndicator(false)
+   *  .showPageIndicator(false)
    *  .setPage(2)
    *  .setTimeout(69000)
    *  .setEmojis({
