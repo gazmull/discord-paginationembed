@@ -182,7 +182,7 @@ class Embeds extends PaginationEmbed {
    *    new MessageEmbed({ title: 'John Doe' }),
    *    new MessageEmbed({ title: 'Jane Doe' })
    *  ])
-   *  .setPageIndicator(false)
+   *  .showPageIndicator(false)
    *  .setPage(2)
    *  .setTimeout(69000)
    *  .setEmojis({
