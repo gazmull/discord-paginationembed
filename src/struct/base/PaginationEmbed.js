@@ -98,7 +98,7 @@ class PaginationEmbed extends MessageEmbed {
 
     /**
      * The custom emojis added.
-     * @type {NaviagtionEmoji, CallbackFunction}
+     * @type {CustomEmojisDictonary}
      */
     this.customEmojis = options.customEmojis || {};
 
@@ -178,7 +178,7 @@ class PaginationEmbed extends MessageEmbed {
 
   /**
    * Sets the emojis used for navigation buttons.
-   * @param {NavigationButtons} emojis - An object containing custom emojis to use as buttons, and their callbacks.
+   * @param {CustomEmojisDictonary} customEmojis - An object containing custom emojis to use as buttons, and their callbacks.
    * @returns {PaginationEmbed}
    */
   setCustomEmojis(customEmojis) {
@@ -189,8 +189,8 @@ class PaginationEmbed extends MessageEmbed {
 
   /**
    * Adds an emoji used for custom buttons.
-   * @param {NavigationEmoji} emoji - An string emoji to use as a custom button.
-   * @param {NavigationEmoji} callback - The function to call when that button is pressed.
+   * @param {CustomEmoji} emoji - An string emoji to use as a custom button.
+   * @param {Function} callback - The function to call when that button is pressed.
    * @returns {PaginationEmbed}
    */
   addCustomEmoji(emoji, callback) {
