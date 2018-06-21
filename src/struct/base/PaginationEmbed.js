@@ -32,6 +32,7 @@ class PaginationEmbed extends MessageEmbed {
    * @property {number|string} [page=1] - Jumps to a certain page upon PaginationEmbed.build().
    * @property {number} [timeout=30000] - The time for awaiting a user action before timeout in ms.
    * @property {NavigationButtons} [emojis={back:'◀',jump:'↗',forward:'▶',delete:'🗑'}] - The emojis used for navigation buttons.
+   * @property {CustomEmojisDictonary} [customEmojis={}] - An object containing custom emojis to use as buttons, and their callbacks.
    */
 
   /**
@@ -94,6 +95,12 @@ class PaginationEmbed extends MessageEmbed {
       forward: '▶',
       delete: '🗑'
     };
+
+    /**
+     * The custom emojis added.
+     * @type {CustomEmojisDictonary}
+     */
+    this.customEmojis = options.customEmojis || {};
 
     /**
      * Number of pages for this instance.
@@ -160,11 +167,34 @@ class PaginationEmbed extends MessageEmbed {
 
   /**
    * Sets the emojis used for navigation buttons.
-   * @param {NavigationButtons} emojis - An object containing customised emojis to use as navigation buttons.
+   * @param {NavigationButtons} emojis - An object containing emojis to use as navigation buttons.
    * @returns {PaginationEmbed}
    */
   setEmojis(emojis) {
     Object.assign(this.emojis, emojis);
+
+    return this;
+  }
+
+  /**
+   * Sets the emojis used for navigation buttons.
+   * @param {CustomEmojisDictonary} customEmojis - An object containing custom emojis to use as buttons, and their callbacks.
+   * @returns {PaginationEmbed}
+   */
+  setCustomEmojis(customEmojis) {
+    Object.assign(this.customEmojis, customEmojis);
+
+    return this;
+  }
+
+  /**
+   * Adds an emoji used for custom buttons.
+   * @param {CustomEmoji} emoji - An string emoji to use as a custom button.
+   * @param {Function} callback - The function to call when that button is pressed.
+   * @returns {PaginationEmbed}
+   */
+  addCustomEmoji(emoji, callback) {
+    this.customEmojis[emoji] = callback;
 
     return this;
   }
@@ -227,7 +257,8 @@ class PaginationEmbed extends MessageEmbed {
       .setArray(this.array)
       .showPageIndicator(this.pageIndicator)
       .setTimeout(this.timeout)
-      .setEmojis(this.emojis);
+      .setEmojis(this.emojis)
+      .setCustomEmojis(this.customEmojis);
 
     this.pages = pages;
     this.setPage(this.page);
@@ -251,6 +282,9 @@ class PaginationEmbed extends MessageEmbed {
    * @private
    */
   async _drawNavigation() {
+    if (Object.keys(this.customEmojis).length > 0)
+      for (const key in this.customEmojis) await this.clientMessage.message.react(key);
+
     if (this.pages > 1) await this.clientMessage.message.react(this.emojis.back);
     if (this.pages > 2) await this.clientMessage.message.react(this.emojis.jump);
     if (this.pages > 1) await this.clientMessage.message.react(this.emojis.forward);
@@ -290,9 +324,9 @@ class PaginationEmbed extends MessageEmbed {
     const emojis = Object.values(this.emojis);
     const filter = (r, u) => {
       if (this.authorizedUser)
-        return u.id === this.authorizedUser.id && emojis.includes(r.emoji.name);
+        return u.id === this.authorizedUser.id && (emojis.includes(r.emoji.name) || r.emoji.name in this.customEmojis || r.emoji.id in this.customEmojis);
 
-      return !u.bot && emojis.includes(r.emoji.name);
+      return !u.bot && (emojis.includes(r.emoji.name) || r.emoji.name in this.customEmojis || r.emoji.id in this.customEmojis);
     };
     const clientMessage = this.clientMessage.message;
 
@@ -323,6 +357,13 @@ class PaginationEmbed extends MessageEmbed {
           if (this.page === this.pages) return this._awaitResponse();
 
           this._loadPage('forward');
+          break;
+        default:
+          if (emoji in this.customEmojis || response.emoji.id in this.customEmojis) {
+            const callbk = this.customEmojis[emoji] || this.customEmojis[response.emoji.id];
+            await callbk(user, this);
+            this._loadPage(this.page);
+          }
           break;
       }
     } catch (c) {
