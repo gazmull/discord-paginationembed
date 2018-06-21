@@ -29,7 +29,7 @@ class PaginationEmbed extends MessageEmbed {
    * @property {ClientMessageOptions} [clientMessage=null] - Settings for the message sent by the client.
    * @property {Array.<*>} array - An array of elements to paginate.
    * @property {boolean} [pageIndicator=true] - Whether page number indicator on client's message is shown or not.
-   * @property {nmber|string} [page=1] - Jumps to a certain page upon PaginationEmbeds.build().
+   * @property {number|string} [page=1] - Jumps to a certain page upon PaginationEmbeds.build().
    * @property {number} [timeout=30000] - The time for awaiting a user action before timeout in ms.
    * @property {NavigationButtons} [emojis={back:'◀',jump:'↗',forward:'▶',delete:'🗑'}] - The emojis used for navigation buttons.
    * @property {NavigationEmojis,CallbackFunction} [customEmojis={}] - The emojis used for navigation buttons.
@@ -393,7 +393,7 @@ class PaginationEmbed extends MessageEmbed {
       );
     };
     const channel = this.clientMessage.message.channel;
-    const prompt = await channel.send('To what page would you like to jump? Say `cancel` or `0` to cancel the prompt.');
+    const prompt = await channel.send(`${user.toString()}, To what page would you like to jump? Say \`cancel\` or \`0\` to cancel the prompt.`);
 
     try {
       const responses = await channel.awaitMessages(filter, { max: 1, time: this.timeout, errors: ['time'] });
