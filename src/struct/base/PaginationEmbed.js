@@ -326,7 +326,7 @@ class PaginationEmbed extends MessageEmbed {
       if (this.authorizedUser)
         return u.id === this.authorizedUser.id && (emojis.includes(r.emoji.name) || r.emoji.name in this.customEmojis);
 
-      return !u.bot && emojis.includes(r.emoji.name);
+      return !u.bot && (emojis.includes(r.emoji.name) || r.emoji.name in this.customEmojis);
     };
     const clientMessage = this.clientMessage.message;
 
