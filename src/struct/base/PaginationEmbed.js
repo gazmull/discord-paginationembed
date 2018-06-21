@@ -95,12 +95,12 @@ class PaginationEmbed extends MessageEmbed {
       forward: '▶',
       delete: '🗑'
     };
-    
+
     /**
      * The custom emojis added.
      * @type {NaviagtionEmoji, CallbackFunction}
      */
-     this.customEmojis = options.customEmojis || {};
+    this.customEmojis = options.customEmojis || {};
 
     /**
      * Number of pages for this instance.
@@ -186,7 +186,7 @@ class PaginationEmbed extends MessageEmbed {
 
     return this;
   }
-  
+
   /**
    * Adds an emoji used for custom buttons.
    * @param {NavigationEmoji} emoji - An string emoji to use as a custom button.
@@ -194,7 +194,8 @@ class PaginationEmbed extends MessageEmbed {
    * @returns {PaginationEmbed}
    */
   addCustomEmoji(emoji, callback) {
-   	this.customEmojis[emoji] = callback;
+    this.customEmojis[emoji] = callback;
+
     return this;
   }
 
@@ -281,12 +282,10 @@ class PaginationEmbed extends MessageEmbed {
    * @private
    */
   async _drawNavigation() {
-    if(Object.keys(this.customEmojis).length > 0){
-    	for (var key in this.customEmojis) {
-    		await this.clientMessage.message.react(key);
-		};
+    if (Object.keys(this.customEmojis).length > 0) {
+	for (const key in this.customEmojis) await this.clientMessage.message.react(key);
     }
-    
+
     if (this.pages > 1) await this.clientMessage.message.react(this.emojis.back);
     if (this.pages > 2) await this.clientMessage.message.react(this.emojis.jump);
     if (this.pages > 1) await this.clientMessage.message.react(this.emojis.forward);
@@ -361,10 +360,10 @@ class PaginationEmbed extends MessageEmbed {
           this._loadPage('forward');
           break;
         default:
-          if(emoji in this.customEmojis){
-          	var callbk = this.customEmojis[emoji];
-          	await callbk(user, this);
-          	this._loadPage(this.page);
+          if (emoji in this.customEmojis) {
+		let callbk = this.customEmojis[emoji];
+		await callbk(user, this);
+		this._loadPage(this.page);
           }
           break;
       }
