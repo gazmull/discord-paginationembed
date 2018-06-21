@@ -282,7 +282,7 @@ class PaginationEmbed extends MessageEmbed {
    * @private
    */
   async _drawNavigation() {
-    if (Object.keys(this.customEmojis).length > 0) 
+    if (Object.keys(this.customEmojis).length > 0)
       for (const key in this.customEmojis) await this.clientMessage.message.react(key);
 
     if (this.pages > 1) await this.clientMessage.message.react(this.emojis.back);
@@ -360,9 +360,9 @@ class PaginationEmbed extends MessageEmbed {
           break;
         default:
           if (emoji in this.customEmojis) {
-             const callbk = this.customEmojis[emoji];
-             await callbk(user, this);
-             this._loadPage(this.page);
+            const callbk = this.customEmojis[emoji];
+            await callbk(user, this);
+            this._loadPage(this.page);
           }
           break;
       }
