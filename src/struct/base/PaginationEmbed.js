@@ -324,9 +324,9 @@ class PaginationEmbed extends MessageEmbed {
     const emojis = Object.values(this.emojis);
     const filter = (r, u) => {
       if (this.authorizedUser)
-        return u.id === this.authorizedUser.id && (emojis.includes(r.emoji.name) || r.emoji.name in this.customEmojis);
+        return u.id === this.authorizedUser.id && (emojis.includes(r.emoji.name) || r.emoji.name in this.customEmojis || r.emoji.id in this.customEmojis);
 
-      return !u.bot && (emojis.includes(r.emoji.name) || r.emoji.name in this.customEmojis);
+      return !u.bot && (emojis.includes(r.emoji.name) || r.emoji.name in this.customEmojis || r.emoji.id in this.customEmojis);
     };
     const clientMessage = this.clientMessage.message;
 
@@ -359,7 +359,7 @@ class PaginationEmbed extends MessageEmbed {
           this._loadPage('forward');
           break;
         default:
-          if (emoji in this.customEmojis) {
+          if (emoji in this.customEmojis || response.emoji.id in this.customEmojis) {
             const callbk = this.customEmojis[emoji];
             await callbk(user, this);
             this._loadPage(this.page);
