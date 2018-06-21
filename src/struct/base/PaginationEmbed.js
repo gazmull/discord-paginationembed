@@ -32,7 +32,7 @@ class PaginationEmbed extends MessageEmbed {
    * @property {number|string} [page=1] - Jumps to a certain page upon PaginationEmbed.build().
    * @property {number} [timeout=30000] - The time for awaiting a user action before timeout in ms.
    * @property {NavigationButtons} [emojis={back:'◀',jump:'↗',forward:'▶',delete:'🗑'}] - The emojis used for navigation buttons.
-   * @property {NavigationEmojis,CallbackFunction} [customEmojis={}] - The emojis used for navigation buttons.
+   * @property {CustomEmojisDictonary} [customEmojis={}] - An object containing custom emojis to use as buttons, and their callbacks.
    */
 
   /**
