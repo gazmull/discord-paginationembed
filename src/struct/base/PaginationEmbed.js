@@ -29,9 +29,10 @@ class PaginationEmbed extends MessageEmbed {
    * @property {ClientMessageOptions} [clientMessage=null] - Settings for the message sent by the client.
    * @property {Array.<*>} array - An array of elements to paginate.
    * @property {boolean} [pageIndicator=true] - Whether page number indicator on client's message is shown or not.
-   * @property {number|string} [page=1] - Jumps to a certain page upon PaginationEmbed.build().
+   * @property {nmber|string} [page=1] - Jumps to a certain page upon PaginationEmbeds.build().
    * @property {number} [timeout=30000] - The time for awaiting a user action before timeout in ms.
    * @property {NavigationButtons} [emojis={back:'◀',jump:'↗',forward:'▶',delete:'🗑'}] - The emojis used for navigation buttons.
+   * @property {NavigationEmojis,CallbackFunction} [customEmojis={}] - The emojis used for navigation buttons.
    */
 
   /**
@@ -94,6 +95,12 @@ class PaginationEmbed extends MessageEmbed {
       forward: '▶',
       delete: '🗑'
     };
+    
+    /**
+     * The custom emojis added.
+     * @type {NaviagtionEmoji, CallbackFunction}
+     */
+     this.customEmojis = options.customEmojis || {};
 
     /**
      * Number of pages for this instance.
@@ -160,12 +167,34 @@ class PaginationEmbed extends MessageEmbed {
 
   /**
    * Sets the emojis used for navigation buttons.
-   * @param {NavigationButtons} emojis - An object containing customised emojis to use as navigation buttons.
+   * @param {NavigationButtons} emojis - An object containing emojis to use as navigation buttons.
    * @returns {PaginationEmbed}
    */
   setEmojis(emojis) {
     Object.assign(this.emojis, emojis);
 
+    return this;
+  }
+
+  /**
+   * Sets the emojis used for navigation buttons.
+   * @param {NavigationButtons} emojis - An object containing custom emojis to use as buttons, and their callbacks.
+   * @returns {PaginationEmbed}
+   */
+  setCustomEmojis(customEmojis) {
+    Object.assign(this.customEmojis, customEmojis);
+
+    return this;
+  }
+  
+  /**
+   * Adds an emoji used for custom buttons.
+   * @param {NavigationEmoji} emoji - An string emoji to use as a custom button.
+   * @param {NavigationEmoji} callback - The function to call when that button is pressed.
+   * @returns {PaginationEmbed}
+   */
+  addCustomEmoji(emoji, callback) {
+   	this.customEmojis[emoji] = callback;
     return this;
   }
 
@@ -227,7 +256,8 @@ class PaginationEmbed extends MessageEmbed {
       .setArray(this.array)
       .showPageIndicator(this.pageIndicator)
       .setTimeout(this.timeout)
-      .setEmojis(this.emojis);
+      .setEmojis(this.emojis)
+      .setCustomEmojis(this.customEmojis);
 
     this.pages = pages;
     this.setPage(this.page);
@@ -251,6 +281,12 @@ class PaginationEmbed extends MessageEmbed {
    * @private
    */
   async _drawNavigation() {
+    if(Object.keys(this.customEmojis).length > 0){
+    	for (var key in this.customEmojis) {
+    		await this.clientMessage.message.react(key);
+		};
+    }
+    
     if (this.pages > 1) await this.clientMessage.message.react(this.emojis.back);
     if (this.pages > 2) await this.clientMessage.message.react(this.emojis.jump);
     if (this.pages > 1) await this.clientMessage.message.react(this.emojis.forward);
@@ -290,7 +326,7 @@ class PaginationEmbed extends MessageEmbed {
     const emojis = Object.values(this.emojis);
     const filter = (r, u) => {
       if (this.authorizedUser)
-        return u.id === this.authorizedUser.id && emojis.includes(r.emoji.name);
+        return u.id === this.authorizedUser.id && (emojis.includes(r.emoji.name) || r.emoji.name in this.customEmojis);
 
       return !u.bot && emojis.includes(r.emoji.name);
     };
@@ -324,6 +360,13 @@ class PaginationEmbed extends MessageEmbed {
 
           this._loadPage('forward');
           break;
+        default:
+          if(emoji in this.customEmojis){
+          	var callbk = this.customEmojis[emoji];
+          	await callbk(user, this);
+          	this._loadPage(this.page);
+          }
+          break;
       }
     } catch (c) {
       await clientMessage.reactions.removeAll();
@@ -350,7 +393,7 @@ class PaginationEmbed extends MessageEmbed {
       );
     };
     const channel = this.clientMessage.message.channel;
-    const prompt = await channel.send(`${user.toString()}, To what page would you like to jump? Say \`cancel\` or \`0\` to cancel the prompt.`);
+    const prompt = await channel.send('To what page would you like to jump? Say `cancel` or `0` to cancel the prompt.');
 
     try {
       const responses = await channel.awaitMessages(filter, { max: 1, time: this.timeout, errors: ['time'] });
