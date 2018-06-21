@@ -360,7 +360,7 @@ class PaginationEmbed extends MessageEmbed {
           break;
         default:
           if (emoji in this.customEmojis || response.emoji.id in this.customEmojis) {
-            const callbk = this.customEmojis[emoji];
+            const callbk = this.customEmojis[emoji] || this.customEmojis[response.emoji.id];
             await callbk(user, this);
             this._loadPage(this.page);
           }
