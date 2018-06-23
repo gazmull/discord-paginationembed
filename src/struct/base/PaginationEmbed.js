@@ -215,16 +215,14 @@ class PaginationEmbed extends MessageEmbed {
   }
 
   /**
-   * Sets whether page number indicator on client's message is shown or not.
-   * @param {boolean} boolean - Show page indicator?
-   * @returns {PaginationEmbed}
+   * Returns wether the user is authorized
+   * @param {user} user - Which use to check if they are authorized
+   * @returns {boolean}
    */
   isAuthorized(user) {
-    if (this.authorizedUser.length != null) {
-      return this.authorizedUser.filter((u) => u.id == user.id).length > 0;
-    } else {
-      return this.authorizedUser.id == user.id;
-    }
+    if (Array.isArray(this.authorizedUser))
+      return this.authorizedUser.filter(u => u.id === user.id).length > 0;
+    return this.authorizedUser.id === user.id;
   }
 
   /**
@@ -303,7 +301,7 @@ class PaginationEmbed extends MessageEmbed {
     const emojis = Object.values(this.emojis);
     const filter = (r, u) => {
       if (this.authorizedUser)
-        return isAuthorized(u) && emojis.includes(r.emoji.name);
+        return this.isAuthorized(u) && emojis.includes(r.emoji.name);
 
       return !u.bot && emojis.includes(r.emoji.name);
     };
