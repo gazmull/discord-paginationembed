@@ -222,6 +222,7 @@ class PaginationEmbed extends MessageEmbed {
   isAuthorized(user) {
     if (Array.isArray(this.authorizedUser))
       return this.authorizedUser.filter(u => u.id === user.id).length > 0;
+
     return this.authorizedUser.id === user.id;
   }
 
