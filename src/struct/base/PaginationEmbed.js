@@ -215,6 +215,19 @@ class PaginationEmbed extends MessageEmbed {
   }
 
   /**
+   * Sets whether page number indicator on client's message is shown or not.
+   * @param {boolean} boolean - Show page indicator?
+   * @returns {PaginationEmbed}
+   */
+  isAuthorized(user) {
+    if (this.authorizedUser.length != null) {
+      return this.authorizedUser.filter((u) => u.id == user.id).length > 0;
+    } else {
+      return this.authorizedUser.id == user.id;
+    }
+  }
+
+  /**
    * Evaluates the constructor and the client.
    * @private
    * @param {number} pages - The number of pages in this instance.
@@ -290,7 +303,7 @@ class PaginationEmbed extends MessageEmbed {
     const emojis = Object.values(this.emojis);
     const filter = (r, u) => {
       if (this.authorizedUser)
-        return u.id === this.authorizedUser.id && emojis.includes(r.emoji.name);
+        return isAuthorized(u) && emojis.includes(r.emoji.name);
 
       return !u.bot && emojis.includes(r.emoji.name);
     };
