@@ -129,7 +129,7 @@ class PaginationEmbed extends MessageEmbed {
    */
   setAuthorizedUsers(users) {
     const isValidArray = Array.isArray(users) && Boolean(users.length);
-    
+
     if (!isValidArray) throw new Error('Cannot invoke PaginationEmbed class without initialising the authorized users properly.');
 
     this.authorizedUsers = users;
