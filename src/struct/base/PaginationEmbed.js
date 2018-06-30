@@ -281,7 +281,7 @@ class PaginationEmbed extends MessageEmbed {
 
     this._awaitResponse();
   }
-  
+
   /**
    * Returns whether the user is authorized or not.
    * @param {User} user - User to check.
