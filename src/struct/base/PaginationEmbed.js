@@ -24,7 +24,7 @@ class PaginationEmbed extends MessageEmbed {
   /**
    * Options for the constructor.
    * @typedef {Object} PaginationEmbedOptions
-   * @property {User} [authorizedUser=null] - The authorized user to navigate the pages.
+   * @property {Array.<User.id>} [authorizedUsers=[]] - The authorized users to navigate the pages.
    * @property {TextChannel} channel - The channel where to send the embed.
    * @property {ClientMessageOptions} [clientMessage=null] - Settings for the message sent by the client.
    * @property {Array.<*>} array - An array of elements to paginate.
@@ -43,10 +43,10 @@ class PaginationEmbed extends MessageEmbed {
     super(options);
 
     /**
-     * The authorized user to navigate the pages.
-     * @type {User}
+     * The authorized users to navigate the pages.
+     * @type {Array.<User.id>}
      */
-    this.authorizedUser = options.authorizedUser || null;
+    this.authorizedUsers = options.authorizedUsers || [];
 
     /**
      * The channel where to send the embed.
@@ -123,12 +123,16 @@ class PaginationEmbed extends MessageEmbed {
   }
 
   /**
-   * Set the authorized person to navigate the pages.
-   * @param {User} user - The user object.
+   * Set the authorized users to navigate the pages.
+   * @param {Array.<User.id>} users - An array of user IDs.
    * @returns {PaginationEmbed}
    */
-  setAuthorizedUser(user) {
-    this.authorizedUser = user;
+  setAuthorizedUsers(users) {
+    const isValidArray = Array.isArray(users) && Boolean(users.length);
+
+    if (!isValidArray) throw new Error('Cannot invoke PaginationEmbed class without initialising the authorized users properly.');
+
+    this.authorizedUsers = users;
 
     return this;
   }
@@ -222,7 +226,7 @@ class PaginationEmbed extends MessageEmbed {
   async _verify(pages) {
     this
       .setChannel(this.channel)
-      .setAuthorizedUser(this.authorizedUser)
+      .setAuthorizedUsers(this.authorizedUsers)
       .setClientMessage(this.clientMessage.message, this.clientMessage.content)
       .setArray(this.array)
       .showPageIndicator(this.pageIndicator)
@@ -289,8 +293,8 @@ class PaginationEmbed extends MessageEmbed {
   async _awaitResponse() {
     const emojis = Object.values(this.emojis);
     const filter = (r, u) => {
-      if (this.authorizedUser)
-        return u.id === this.authorizedUser.id && emojis.includes(r.emoji.name);
+      if (this.authorizedUsers.length)
+        return this.authorizedUsers.includes(u.id) && emojis.includes(r.emoji.name);
 
       return !u.bot && emojis.includes(r.emoji.name);
     };
