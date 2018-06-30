@@ -43,10 +43,10 @@ class PaginationEmbed extends MessageEmbed {
     super(options);
 
     /**
-     * The authorized user to navigate the pages.
-     * @type {User}
+     * The authorized user or users to navigate the pages.
+     * @type {User|Array.<User>}
      */
-    this.authorizedUser = options.authorizedUser || null;
+    this.authorizedUser = options.authorizedUser || [];
 
     /**
      * The channel where to send the embed.
@@ -215,18 +215,6 @@ class PaginationEmbed extends MessageEmbed {
   }
 
   /**
-   * Returns wether the user is authorized
-   * @param {user} user - Which use to check if they are authorized
-   * @returns {boolean}
-   */
-  isAuthorized(user) {
-    if (Array.isArray(this.authorizedUser))
-      return this.authorizedUser.filter(u => u.id === user.id).length > 0;
-
-    return this.authorizedUser.id === user.id;
-  }
-
-  /**
    * Evaluates the constructor and the client.
    * @private
    * @param {number} pages - The number of pages in this instance.
@@ -293,6 +281,18 @@ class PaginationEmbed extends MessageEmbed {
 
     this._awaitResponse();
   }
+  
+  /**
+   * Returns whether the user is authorized or not.
+   * @param {User} user - User to check.
+   * @returns {boolean}
+   */
+  _isAuthorized(user) {
+    if (this.authorizedUser instanceof Array)
+      return this.authorizedUser.includes(user.id);
+
+    return this.authorizedUser.id === user.id;
+  }
 
   /**
    * Awaits the reaction from the user.
@@ -301,8 +301,8 @@ class PaginationEmbed extends MessageEmbed {
   async _awaitResponse() {
     const emojis = Object.values(this.emojis);
     const filter = (r, u) => {
-      if (this.authorizedUser)
-        return this.isAuthorized(u) && emojis.includes(r.emoji.name);
+      if (this.authorizedUser || (this.authorizedUser instanceof Array && this.authorizedUser.length))
+        return this._isAuthorized(u) && emojis.includes(r.emoji.name);
 
       return !u.bot && emojis.includes(r.emoji.name);
     };
