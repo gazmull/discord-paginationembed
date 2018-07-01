@@ -11,13 +11,16 @@
     "opts": {
         "template": "node_modules/docdash",
         "encoding": "utf8",
-        "destination": "docs/",
+        "destination": "../discord-paginationembed-docs/",
         "recurse": true,
         "verbose": true
     },
     "templates": {
-        "cleverLinks": false,
-        "monospaceLinks": false
+        "cleverLinks": true,
+        "monospaceLinks": false,
+        "default": {
+            "includeDate": false
+        }
     },
     "docdash": {
         "sort": true

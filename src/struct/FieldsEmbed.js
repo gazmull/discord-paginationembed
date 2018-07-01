@@ -6,7 +6,13 @@ const PaginationEmbed = require('./base/PaginationEmbed');
 const { MessageEmbed } = require('discord.js');
 
 /**
- * @extends {PaginationEmbed}
+ * Function for Formatting Fields.
+ * @typedef {Function} FieldFormatFunction
+ * @param {*} element - The current element.
+ */
+
+/**
+ * @description Extends {@link PaginationEmbed}
  */
 class FieldsEmbed extends PaginationEmbed {
 
@@ -42,7 +48,7 @@ class FieldsEmbed extends PaginationEmbed {
 
   /**
    * Elements in the current page.
-   * @type {Array.<*>}
+   * @type {Array<*>}
    */
   get elementList() {
     const begin = (this.page - 1) * this.elementsPerPage;
@@ -61,26 +67,30 @@ class FieldsEmbed extends PaginationEmbed {
    *
    * // Under message event.
    * new FieldsEmbed({
-   *  authorizedUser: message.author,
+   *  authorizedUsers: [message.author.id],
    *  channel: message.channel,
    *  clientMessage: { content: 'Preparing the embed...' },
-   *  array: [
-   *    { id: 1, name: 'John Doe' },
-   *    { id: 2, name: 'Jane Doe' }
-   *  ],
+   *  array: [{ name: 'John Doe' }, { name: 'Jane Doe' }],
    *  elementsPerPage: 1,
    *  pageIndicator: false,
-   *  fields: [
-   *    { name: 'ID', value: el => el.id },
-   *    { name: 'Name', value: el => el.name }
-   *  ],
-   *  page: 2,
+   *  fields: [{ name: 'Name', value: el => el.name }],
+   *  page: 1,
    *  timeout: 69000,
-   *  emojis: {
+   *  navigationEmojis: {
    *    back: '◀',
    *    jump: '↗',
    *    forward: '▶',
    *    delete: '🗑'
+   *  },
+   *  functionEmojis: {
+   *    '🔄': (user, instance) => {
+   *      const field = instance.fields[0];
+   *
+   *      if (field.name === 'Name')
+   *        field.name = user.tag;
+   *      else
+   *        field.name = 'Name';
+   *    }
    *  }
    * }).build();
    *
@@ -91,24 +101,30 @@ class FieldsEmbed extends PaginationEmbed {
    *
    * // Under message event.
    * new FieldsEmbed()
-   *  .setAuthorizedUser(message.author)
+   *  .setAuthorizedUsers([message.author.id])
    *  .setChannel(message.channel)
    *  .setClientMessage(null, 'Preparing the embed...')
-   *  .setArray([
-   *    { id: 1, name: 'John Doe' },
-   *    { id: 2, name: 'Jane Doe' }
-   *  ])
+   *  .setArray([{ name: 'John Doe' }, { name: 'Jane Doe' }])
    *  .setElementsPerPage(1)
    *  .showPageIndicator(false)
-   *  .formatField('ID', el => el.id)
    *  .formatField('Name', el => el.name)
-   *  .setPage(2)
+   *  .setPage(1)
    *  .setTimeout(69000)
-   *  .setEmojis({
+   *  .setNavigationEmojis({
    *    back: '◀',
    *    jump: '↗',
    *    forward: '▶',
    *    delete: '🗑'
+   *  })
+   *  .setFunctionEmojis({
+   *    '🔄': (user, instance) => {
+   *      const field = instance.fields[0];
+   *
+   *      if (field.name === 'Name')
+   *        field.name = user.tag;
+   *      else
+   *        field.name = 'Name';
+   *    }
    *  })
    *  .build();
    */
@@ -144,7 +160,7 @@ class FieldsEmbed extends PaginationEmbed {
    * Adds a field to the embed.
    * Same as MessageEmbed.addField, but value takes a function instead.
    * @param {string} name - Name of the field.
-   * @param {Function} value - Value of the field. Function for Array.prototype.map().join('\n').
+   * @param {FieldFormatFunction} value - Value of the field. Function for Array.prototype.map().join('\n').
    * @param {boolean} [inline=true] - Whether the field is inline with other field or not.
    * @returns {PaginationEmbed}
    */

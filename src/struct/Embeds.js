@@ -6,7 +6,7 @@ const PaginationEmbed = require('./base/PaginationEmbed');
 const { MessageEmbed } = require('discord.js');
 
 /**
- * @extends {PaginationEmbed}
+ * @description Extends {@link PaginationEmbed}
  */
 class Embeds extends PaginationEmbed {
 
@@ -18,11 +18,11 @@ class Embeds extends PaginationEmbed {
    * @property {string} [url=null] - The URL of all embeds.
    * @property {number} [color=null] - The color of all embeds.
    * @property {boolean} [timestamp=null] - Whether to show timestamp to all embeds or not.
-   * @property {Object[]} [fields=null] - The fields of all embeds.
+   * @property {Array<Object>} [fields=null] - The fields of all embeds.
    * @property {string} [thumbnail=null] - The thumbnail of all embeds.
-   * @property {Object} [image=null] - The image of all embeds.
-   * @property {Object} [author=null] - The author of all embeds.
-   * @property {Object} [footer=null] - The footer of all embeds.
+   * @property {{}} [image=null] - The image of all embeds.
+   * @property {{}} [author=null] - The author of all embeds.
+   * @property {{}} [footer=null] - The footer of all embeds.
    */
 
   /**
@@ -145,23 +145,35 @@ class Embeds extends PaginationEmbed {
    * const { MessageEmbed } = require('discord.js');
    *
    * // Under message event.
+   * const embeds = [];
+   *
+   * for (let i = 0; i < 5; ++i)
+   *  embeds.push(new MessageEmbed().addField('Page', i + 1));
+   *
    * new Embeds({
-   *  authorizedUser: message.author,
+   *  authorizedUsers: [message.author.id],
    *  channel: message.channel,
    *  clientMessage: { content: 'Preparing the embed...' },
-   *  array: [
-   *    new MessageEmbed({ title: 'John Doe' }),
-   *    new MessageEmbed({ title: 'Jane Doe' })
-   *  ],
+   *  array: embeds,
    *  pageIndicator: false,
-   *  page: 2,
+   *  page: 1,
    *  timeout: 69000,
-   *  emojis: {
+   *  navigationEmojis: {
    *    back: '◀',
    *    jump: '↗',
    *    forward: '▶',
    *    delete: '🗑'
    *  },
+   *  functionEmojis: {
+   *    '⬆': (_, instance) => {
+   *      for (const embed of instance.array)
+   *        embed.fields[0].value++;
+   *    },
+   *    '⬇': (_, instance) => {
+   *      for (const embed of instance.array)
+   *        embed.fields[0].value--;
+   *    }
+   *  }
    *  description: 'This is one of my embeds with this message!',
    *  color: 0xFF00AE,
    *  timestamp: true
@@ -174,22 +186,34 @@ class Embeds extends PaginationEmbed {
    * const { MessageEmbed } = require('discord.js');
    *
    * // Under message event.
+   * const embeds = [];
+   *
+   * for (let i = 0; i < 5; ++i)
+   *  embeds.push(new MessageEmbed().addField('Page', i + 1));
+   *
    * new Embeds()
-   *  .setAuthorizedUser(message.author)
+   *  .setAuthorizedUsers([message.author.id])
    *  .setChannel(message.channel)
    *  .setClientMessage(null, 'Preparing the embed...')
-   *  .setArray([
-   *    new MessageEmbed({ title: 'John Doe' }),
-   *    new MessageEmbed({ title: 'Jane Doe' })
-   *  ])
+   *  .setArray(embeds)
    *  .showPageIndicator(false)
-   *  .setPage(2)
+   *  .setPage(1)
    *  .setTimeout(69000)
-   *  .setEmojis({
+   *  .setNavigationEmojis({
    *    back: '◀',
    *    jump: '↗',
    *    forward: '▶',
    *    delete: '🗑'
+   *  })
+   *  .setFunctionEmojis({
+   *    '⬆': (_, instance) => {
+   *      for (const embed of instance.array)
+   *        embed.fields[0].value++;
+   *      },
+   *    '⬇': (_, instance) => {
+   *       for (const embed of instance.array)
+   *         embed.fields[0].value--;
+   *      }
    *  })
    *  .setDescription('This is one of my embeds with this message!')
    *  .setColor(0xFF00AE)
@@ -249,7 +273,7 @@ class Embeds extends PaginationEmbed {
 
   /**
    * Set the author of all embeds.
-   * @param {StringResolvable} name - The name of the author.
+   * @param {string} name - The name of the author.
    * @param {string} [iconURL=null] - The icon URL of the author.
    * @param {string} [url=null] - The URL of the author.
    * @returns {PaginationEmbed}
@@ -395,7 +419,10 @@ class Embeds extends PaginationEmbed {
     const shouldIndicate = this.pageIndicator
       ? this.pages === 1
         ? null
-        : `Page ${this.page} of ${this.pages}`
+        : `Page ${this.page} of ${this.pages}${
+          this.clientMessage.content
+            ? `\n\n${this.clientMessage.content}`
+            : ''}`
       : this.clientMessage.content;
 
     await this.clientMessage.message.edit(shouldIndicate, { embed: this.currentEmbed });

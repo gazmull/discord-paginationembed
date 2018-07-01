@@ -5,3 +5,6 @@ node_modules/
 
 # VSC
 .vscode
+
+# Tests
+test/credentials.js
