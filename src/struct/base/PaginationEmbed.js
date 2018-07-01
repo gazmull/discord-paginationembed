@@ -366,7 +366,7 @@ class PaginationEmbed extends MessageEmbed {
    * @private
    */
   async _drawNavigation() {
-    if (Object.keys(this.functionEmojis))
+    if (Object.keys(this.functionEmojis).length)
       for (const emoji in this.functionEmojis)
         await this.clientMessage.message.react(emoji);
 
