@@ -22,7 +22,7 @@ const { FieldsEmbed: FieldsEmbedMode } = require('discord-paginationembed');
 
 new FieldsEmbedMode()
   .setArray([ { name: 'John Doe' }, { name: 'Jane Doe' } ])
-  .setAuthorizedUser(message.author)
+  .setAuthorizedUsers([message.author.id])
   .setChannel(message.channel)
   .setElementsPerPage(1)
   .setPage(2)
@@ -44,7 +44,7 @@ const myImage = message.author.displayAvatarURL;
 
 new EmbedsMode()
   .setArray(embeds)
-  .setAuthorizedUser(message.author)
+  .setAuthorizedUsers([message.author.id])
   .setChannel(message.channel)
   .showPageIndicator(true)
   .setPage(3)
@@ -72,6 +72,10 @@ new EmbedsMode()
 * Execute `npm install`
 * Code and code and code and code and... code!
 * `npm test` to verify if your additions/adjustments are following ESLint's rules and to verify if the docs are valid.
+* Please make sure that you have tested your changes very well.
+  * There is a test bot script under `test` folder. To get started:
+    * Copy `credentials.sample.js` to `credentials.js` and fill up your private credentials (token, test channel, etc)
+    * Execute `npm run bot-test`.
 * File a [Pull Request](https://github.com/gazmull/discord-paginationembed/compare)!
 
 # License

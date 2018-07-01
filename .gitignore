@@ -8,3 +8,6 @@ docs/
 
 # VSC
 .vscode
+
+# Tests
+test/credentials.js
