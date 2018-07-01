@@ -71,11 +71,11 @@ new EmbedsMode()
 * Fork this repository.
 * Execute `npm install`
 * Code and code and code and code and... code!
-* `npm run verify` to verify if your additions/adjustments are following ESLint's rules and to verify if the docs are valid.
+* `npm test` to verify if your additions/adjustments are following ESLint's rules and to verify if the docs are valid.
 * Please make sure that you have tested your changes very well.
   * There is a test bot script under `test` folder. To get started:
     * Copy `credentials.sample.js` to `credentials.js` and fill up your private credentials (token, test channel, etc)
-    * Execute `npm run test`.
+    * Execute `npm run bot-test`.
 * File a [Pull Request](https://github.com/gazmull/discord-paginationembed/compare)!
 
 # License
