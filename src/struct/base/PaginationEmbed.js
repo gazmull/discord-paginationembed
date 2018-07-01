@@ -427,7 +427,8 @@ class PaginationEmbed extends MessageEmbed {
 
       if (emoji.includes(this.navigationEmojis.delete)) return clientMessage.delete();
 
-      await response.users.remove(user);
+      if (clientMessage.guild)
+        await response.users.remove(user);
 
       switch (emoji[0] || emoji[1]) {
         case this.navigationEmojis.back:
@@ -456,7 +457,8 @@ class PaginationEmbed extends MessageEmbed {
           this._loadPage(this.page);
       }
     } catch (c) {
-      await clientMessage.reactions.removeAll();
+      if (clientMessage.guild)
+        await clientMessage.reactions.removeAll();
 
       if (c instanceof Error) throw c;
     }
@@ -488,7 +490,9 @@ class PaginationEmbed extends MessageEmbed {
       const content = response.content;
 
       await prompt.delete();
-      await response.delete();
+
+      if (this.clientMessage.message.guild)
+        await response.delete();
 
       if (cancel.includes(content)) return this._awaitResponse();
 
