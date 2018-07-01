@@ -306,7 +306,8 @@ class PaginationEmbed extends RichEmbed {
 
       if (emoji === this.emojis.delete) return clientMessage.delete();
 
-      await response.remove(user);
+      if (clientMessage.guild)
+        await response.remove(user);
 
       switch (emoji) {
         case this.emojis.back:
@@ -328,7 +329,8 @@ class PaginationEmbed extends RichEmbed {
           break;
       }
     } catch (c) {
-      await clientMessage.clearReactions();
+      if (clientMessage.guild)
+        await clientMessage.clearReactions();
 
       if (c instanceof Error) throw c;
     }
@@ -360,7 +362,9 @@ class PaginationEmbed extends RichEmbed {
       const content = response.content;
 
       await prompt.delete();
-      await response.delete();
+
+      if (this.clientMessage.message.guild)
+        await response.delete();
 
       if (cancel.includes(content)) return this._awaitResponse();
 
