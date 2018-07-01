@@ -1,7 +1,50 @@
 const { RichEmbed } = require('discord.js');
 
 /**
- * @extends {RichEmbed}
+ * Callback for a function emoji.
+ * @typedef {Function} EmojiCallback
+ * @param {User} user - The user who triggered the function emoji.
+ * @param {PaginationEmbed} embed - The current instance of PaginationEmbed.
+ */
+
+/**
+ * An Emoji character or a custom Emoji ID (Guild Emojis).
+ * @see [Discord.JS: EmojiIdentifier]{@link https://discord.js.org/#/docs/main/master/typedef/EmojiIdentifierResolvable}
+ * @typedef {string} EmojiIdentifier
+ */
+
+/**
+ * Data that resolves as colour. e.g: <b>0xFF00AE</b>, <b>'PURPLE'</b>, <b>[255, 0, 255]</b>
+ * @see [Discord.JS: ColorResolvable]{@link https://discord.js.org/#/docs/main/master/typedef/ColorResolvable}
+ * @typedef {string|number|Array<number>} ColorResolvable
+ */
+
+/**
+ * A Message object.
+ * @see [Discord.JS: Message]{@link https://discord.js.org/#/docs/main/master/class/Message}
+ * @typedef {Object} Message
+ */
+
+/**
+ * A User object.
+ * @see [Discord.JS: User]{@link https://discord.js.org/#/docs/main/master/class/User}
+ * @typedef {Object} User
+ */
+
+/**
+ * A TextChannel Object.
+ * @see [Discord.JS: TextChannel]{@link https://discord.js.org/#docs/main/master/class/TextChannel}
+ * @typedef {Object} TextChannel
+ */
+
+/**
+ * Unique ID for an object (e.g. User).
+ * @see [Discord.JS: Snowflake]{@link https://discord.js.org/#/docs/main/master/typedef/Snowflake}
+ * @typedef {string} Snowflake
+ */
+
+/**
+ * @description Extends [MessageEmbed]{@link https://discord.js.org/#/docs/main/master/class/MessageEmbed}
  */
 class PaginationEmbed extends RichEmbed {
 
@@ -13,25 +56,32 @@ class PaginationEmbed extends RichEmbed {
    */
 
   /**
-   * Options for PaginationEmbed.emojis.
-   * @typedef {Object} NavigationButtons
-   * @property {string} [back='◀'] - The back button.
-   * @property {string} [jump='↗'] - The jump button.
-   * @property {string} [forward='▶'] - The forward button.
-   * @property {string} [delete='🗑'] - The delete button.
+   * Options for PaginationEmbed.navigationEmojis.
+   * @typedef {Object} NavigationEmojis
+   * @property {EmojiIdentifier} [back='◀'] - The back emoji.
+   * @property {EmojiIdentifier} [jump='↗'] - The jump emoji.
+   * @property {EmojiIdentifier} [forward='▶'] - The forward emoji.
+   * @property {EmojiIdentifier} [delete='🗑'] - The delete emoji.
+   */
+
+  /**
+   * Options for PaginationEmbed.functionEmojis.
+   * @typedef {Object} FunctionEmoji
+   * @property {EmojiCallback} emojiNameOrID
    */
 
   /**
    * Options for the constructor.
    * @typedef {Object} PaginationEmbedOptions
-   * @property {User} [authorizedUser=null] - The authorized user to navigate the pages.
+   * @property {Array<User<Snowflake>>} [authorizedUsers=[]] - The authorized users to navigate the pages.
    * @property {TextChannel} channel - The channel where to send the embed.
    * @property {ClientMessageOptions} [clientMessage=null] - Settings for the message sent by the client.
-   * @property {Array.<*>} array - An array of elements to paginate.
+   * @property {Array<*>} array - An array of elements to paginate.
    * @property {boolean} [pageIndicator=true] - Whether page number indicator on client's message is shown or not.
    * @property {number|string} [page=1] - Jumps to a certain page upon PaginationEmbed.build().
    * @property {number} [timeout=30000] - The time for awaiting a user action before timeout in ms.
-   * @property {NavigationButtons} [emojis={back:'◀',jump:'↗',forward:'▶',delete:'🗑'}] - The emojis used for navigation buttons.
+   * @property {NavigationEmojis} [navigationEmojis={back:'◀',jump:'↗',forward:'▶',delete:'🗑'}] - The emojis used for navigation emojis.
+   * @property {Object<FunctionEmoji>} [functionEmojis={}] - The emojis used for function emojis.
    */
 
   /**
@@ -43,10 +93,10 @@ class PaginationEmbed extends RichEmbed {
     super(options);
 
     /**
-     * The authorized user to navigate the pages.
-     * @type {User}
+     * The authorized users to navigate the pages.
+     * @type {Array<User<Snowflake>>}
      */
-    this.authorizedUser = options.authorizedUser || null;
+    this.authorizedUsers = options.authorizedUsers || [];
 
     /**
      * The channel where to send the embed.
@@ -62,7 +112,7 @@ class PaginationEmbed extends RichEmbed {
 
     /**
      * An array of elements to paginate.
-     * @type {Array.<*>}
+     * @type {Array<*>}
      */
     this.array = options.array || [];
 
@@ -85,15 +135,21 @@ class PaginationEmbed extends RichEmbed {
     this.timeout = options.timeout || 30000;
 
     /**
-     * The emojis used for navigation buttons.
-     * @type {NavigationButtons}
+     * The emojis used for navigation emojis.
+     * @type {NavigationEmojis}
      */
-    this.emojis = options.emojis || {
+    this.navigationEmojis = options.navigationEmojis || {
       back: '◀',
       jump: '↗',
       forward: '▶',
       delete: '🗑'
     };
+
+    /**
+     * The emojis used for function emojis.
+     * @type {Array<FunctionEmoji>}
+     */
+    this.functionEmojis = options.functionEmojis || {};
 
     /**
      * Number of pages for this instance.
@@ -105,6 +161,32 @@ class PaginationEmbed extends RichEmbed {
 
   build() {
     throw new Error('Cannot invoke this class. Invoke with [pagination/Embeds] or [pagination/FieldsEmbed] instead.');
+  }
+
+  /**
+   * Adds a Function Emoji to the embed.
+   * @param {EmojiIdentifier} emoji - The emoji to use as the function's emoji.
+   * @param {EmojiCallback} callback - The function to call upon pressing the function emoji.
+   * @returns {PaginationEmbed}
+   *
+   * @example
+   *
+   * <PaginationEmbed>.addFunctionEmoji('🅱', (_, instance) => {
+   *  const field = instance.fields[0];
+   *
+   *  if (field.name.includes('🅱'))
+   *    field.name = 'Name';
+   *  else
+   *    field.name = 'Na🅱e';
+   * });
+   */
+  addFunctionEmoji(emoji, callback) {
+    if (!(callback instanceof Function))
+      throw new TypeError(`Callback for ${emoji} must be a function type.`);
+
+    Object.assign(this.functionEmojis, { [emoji]: callback });
+
+    return this;
   }
 
   /**
@@ -123,12 +205,16 @@ class PaginationEmbed extends RichEmbed {
   }
 
   /**
-   * Set the authorized person to navigate the pages.
-   * @param {User} user - The user object.
+   * Set the authorized users to navigate the pages.
+   * @param {Array<User<Snowflake>>} users - An array of user IDs.
    * @returns {PaginationEmbed}
    */
-  setAuthorizedUser(user) {
-    this.authorizedUser = user;
+  setAuthorizedUsers(users) {
+    const isValidArray = Array.isArray(users) && Boolean(users.length);
+
+    if (!isValidArray) throw new Error('Cannot invoke PaginationEmbed class without initialising the authorized users properly.');
+
+    this.authorizedUsers = users;
 
     return this;
   }
@@ -159,12 +245,39 @@ class PaginationEmbed extends RichEmbed {
   }
 
   /**
-   * Sets the emojis used for navigation buttons.
-   * @param {NavigationButtons} emojis - An object containing customised emojis to use as navigation buttons.
+   * Sets the emojis used for function emojis.
+   * @param {Object<FunctionEmoji>} emojis - An object containing customised emojis to use as function emojis.
+   * @returns {PaginationEmbed}
+   * @example
+   *
+   *  <PaginationEmbed>.setFunctionEmojis({
+   *    '🔄': (user, instance) => {
+   *      const field = instance.fields[0];
+   *
+   *      if (field.name === 'Name')
+   *        field.name = user.tag;
+   *      else
+   *        field.name = 'Name';
+   *    }
+   *  });
+   */
+  setFunctionEmojis(emojis) {
+    for (const emoji in emojis) {
+      const fn = emojis[emoji];
+
+      this.addFunctionEmoji(emoji, fn);
+    }
+
+    return this;
+  }
+
+  /**
+   * Sets the emojis used for navigation emojis.
+   * @param {NavigationEmojis} emojis - An object containing customised emojis to use as navigation emojis.
    * @returns {PaginationEmbed}
    */
-  setEmojis(emojis) {
-    Object.assign(this.emojis, emojis);
+  setNavigationEmojis(emojis) {
+    Object.assign(this.navigationEmojis, emojis);
 
     return this;
   }
@@ -222,12 +335,13 @@ class PaginationEmbed extends RichEmbed {
   async _verify(pages) {
     this
       .setChannel(this.channel)
-      .setAuthorizedUser(this.authorizedUser)
+      .setAuthorizedUsers(this.authorizedUsers)
       .setClientMessage(this.clientMessage.message, this.clientMessage.content)
       .setArray(this.array)
       .showPageIndicator(this.pageIndicator)
       .setTimeout(this.timeout)
-      .setEmojis(this.emojis);
+      .setNavigationEmojis(this.navigationEmojis)
+      .setFunctionEmojis(this.functionEmojis);
 
     this.pages = pages;
     this.setPage(this.page);
@@ -253,11 +367,15 @@ class PaginationEmbed extends RichEmbed {
    * @private
    */
   async _drawNavigation() {
-    if (this.pages > 1) await this.clientMessage.message.react(this.emojis.back);
-    if (this.pages > 2) await this.clientMessage.message.react(this.emojis.jump);
-    if (this.pages > 1) await this.clientMessage.message.react(this.emojis.forward);
+    if (Object.keys(this.functionEmojis).length)
+      for (const emoji in this.functionEmojis)
+        await this.clientMessage.message.react(emoji);
 
-    await this.clientMessage.message.react(this.emojis.delete);
+    if (this.pages > 1) await this.clientMessage.message.react(this.navigationEmojis.back);
+    if (this.pages > 2) await this.clientMessage.message.react(this.navigationEmojis.jump);
+    if (this.pages > 1) await this.clientMessage.message.react(this.navigationEmojis.forward);
+
+    await this.clientMessage.message.react(this.navigationEmojis.delete);
 
     this._awaitResponse();
   }
@@ -289,12 +407,16 @@ class PaginationEmbed extends RichEmbed {
    * @private
    */
   async _awaitResponse() {
-    const emojis = Object.values(this.emojis);
+    const emojis = Object.values(this.navigationEmojis);
     const filter = (r, u) => {
-      if (this.authorizedUser)
-        return u.id === this.authorizedUser.id && emojis.includes(r.emoji.name);
+      const passedEmoji =
+      emojis.includes(r.emoji.name) || emojis.includes(r.emoji.id) ||
+      r.emoji.name in this.functionEmojis || r.emoji.id in this.functionEmojis;
 
-      return !u.bot && emojis.includes(r.emoji.name);
+      if (this.authorizedUsers.length)
+        return this.authorizedUsers.includes(u.id) && passedEmoji;
+
+      return !u.bot && passedEmoji;
     };
     const clientMessage = this.clientMessage.message;
 
@@ -302,31 +424,38 @@ class PaginationEmbed extends RichEmbed {
       const responses = await clientMessage.awaitReactions(filter, { max: 1, time: this.timeout, errors: ['time'] });
       const response = responses.first();
       const user = response.users.last();
-      const emoji = response.emoji.name;
+      const emoji = [response.emoji.name, response.emoji.id];
 
-      if (emoji === this.emojis.delete) return clientMessage.delete();
+      if (emoji.includes(this.navigationEmojis.delete)) return clientMessage.delete();
 
       if (clientMessage.guild)
         await response.remove(user);
 
-      switch (emoji) {
-        case this.emojis.back:
+      switch (emoji[0] || emoji[1]) {
+        case this.navigationEmojis.back:
           if (this.page === 1) return this._awaitResponse();
 
           this._loadPage('back');
           break;
 
-        case this.emojis.jump:
+        case this.navigationEmojis.jump:
           if (this.pages <= 2) return this._awaitResponse();
 
           this._awaitResponseEx(user);
           break;
 
-        case this.emojis.forward:
+        case this.navigationEmojis.forward:
           if (this.page === this.pages) return this._awaitResponse();
 
           this._loadPage('forward');
           break;
+
+        default:
+          const cb = this.functionEmojis[emoji[0]] || this.functionEmojis[emoji[1]];
+
+          await cb(user, this); // eslint-disable-line callback-return
+
+          this._loadPage(this.page);
       }
     } catch (c) {
       if (clientMessage.guild)
