@@ -352,11 +352,13 @@ class PaginationEmbed extends MessageEmbed {
       : await this.channel.send(this.clientMessage.content);
     this.setClientMessage(message, this.clientMessage.content);
 
-    const permissions = ['ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS'];
-    const missing = message.channel.permissionsFor(message.client.user).missing(permissions);
+    if (message.guild) {
+      const permissions = ['ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS'];
+      const missing = message.channel.permissionsFor(message.client.user).missing(permissions);
 
-    if (missing.length)
-      throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${missing.join(', ')}`);
+      if (missing.length)
+        throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${missing.join(', ')}`);
+    }
   }
 
   /**
