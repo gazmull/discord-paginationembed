@@ -225,7 +225,7 @@ class Embeds extends PaginationEmbed {
 
     await this._verify(this.pages);
   }
-  
+
   async build() {
     this.prebuild();
 
