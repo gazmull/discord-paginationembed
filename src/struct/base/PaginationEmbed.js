@@ -78,6 +78,7 @@ class PaginationEmbed extends RichEmbed {
    * @property {ClientMessageOptions} [clientMessage=null] - Settings for the message sent by the client.
    * @property {Array<*>} array - An array of elements to paginate.
    * @property {boolean} [pageIndicator=true] - Whether page number indicator on client's message is shown or not.
+   * @property {boolean} [deleteOnTimeout=false] - The boolean determining if the message will be deleted on timeout.
    * @property {number|string} [page=1] - Jumps to a certain page upon PaginationEmbed.build().
    * @property {number} [timeout=30000] - The time for awaiting a user action before timeout in ms.
    * @property {NavigationEmojis} [navigationEmojis={back:'◀',jump:'↗',forward:'▶',delete:'🗑'}] - The emojis used for navigation emojis.
@@ -121,6 +122,12 @@ class PaginationEmbed extends RichEmbed {
      * @type {boolean}
      */
     this.pageIndicator = options.pageIndicator || true;
+
+    /**
+     * Whether the client's message will be deleted upon timeout or not.
+     * @type {boolean}
+     */
+    this.deleteOnTimeout = options.deleteOnTimeout || false;
 
     /**
      * Jumps to a certain page upon PaginationEmbed.build().
@@ -326,6 +333,19 @@ class PaginationEmbed extends RichEmbed {
   }
 
   /**
+   * Sets whether the client's message will be deleted upon timeout or not.
+   * @param {boolean} boolean - Delete client's message upon timeout?
+   * @returns {PaginationEmbed}
+   */
+  setDeleteOnTimeout(boolean) {
+    if (typeof boolean !== 'boolean') throw new Error('deleteOnTimeout() only accepts boolean type.');
+
+    this.deleteOnTimeout = boolean;
+
+    return this;
+  }
+
+  /**
    * Evaluates the constructor and the client.
    * @private
    * @param {number} pages - The number of pages in this instance.
@@ -337,6 +357,7 @@ class PaginationEmbed extends RichEmbed {
       .setClientMessage(this.clientMessage.message, this.clientMessage.content)
       .setArray(this.array)
       .showPageIndicator(this.pageIndicator)
+      .setDeleteOnTimeout(this.deleteOnTimeout)
       .setTimeout(this.timeout)
       .setNavigationEmojis(this.navigationEmojis)
       .setFunctionEmojis(this.functionEmojis);
@@ -458,6 +479,8 @@ class PaginationEmbed extends RichEmbed {
     } catch (c) {
       if (clientMessage.guild)
         await clientMessage.clearReactions();
+      if (this.deleteOnTimeout)
+        await clientMessage.delete();
 
       if (c instanceof Error) throw c;
     }
