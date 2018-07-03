@@ -258,7 +258,7 @@ class Embeds extends PaginationEmbed {
    * @returns {PaginationEmbed}
    */
   setArray(array) {
-    const isValidArray = Array.isArray(array) && Boolean(array.length);
+    const isValidArray = array instanceof Array && Boolean(array.length);
 
     if (!isValidArray) throw new Error('Cannot invoke Embeds class without initialising the array to paginate.');
 

@@ -191,11 +191,11 @@ class PaginationEmbed extends RichEmbed {
 
   /**
    * Sets the array of elements to paginate.
-   * @param {Array} array - An array of elements to paginate.
+   * @param {Array<*>} array - An array of elements to paginate.
    * @returns {PaginationEmbed}
    */
   setArray(array) {
-    const isValidArray = Array.isArray(array) && Boolean(array.length);
+    const isValidArray = array instanceof Array && Boolean(array.length);
 
     if (!isValidArray) throw new Error('Cannot invoke PaginationEmbed class without initialising the array to paginate.');
 
@@ -210,9 +210,7 @@ class PaginationEmbed extends RichEmbed {
    * @returns {PaginationEmbed}
    */
   setAuthorizedUsers(users) {
-    const isValidArray = Array.isArray(users) && Boolean(users.length);
-
-    if (!isValidArray) throw new Error('Cannot invoke PaginationEmbed class without initialising the authorized users properly.');
+    if (!(users instanceof Array)) throw new Error('Cannot invoke PaginationEmbed class without initialising the authorized users properly.');
 
     this.authorizedUsers = users;
 
