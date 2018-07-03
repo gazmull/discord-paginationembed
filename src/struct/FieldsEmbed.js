@@ -136,7 +136,7 @@ class FieldsEmbed extends PaginationEmbed {
 
     await this._verify(this.pages);
 
-    const isValidFields = Array.isArray(this.fields) && Boolean(this.fields.length);
+    const isValidFields = this.fields instanceof Array && Boolean(this.fields.length);
 
     if (!isValidFields) throw new Error('Cannot invoke FieldsEmbed class without initialising at least one field.');
 
