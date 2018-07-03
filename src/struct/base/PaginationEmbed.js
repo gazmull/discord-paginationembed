@@ -480,7 +480,7 @@ class PaginationEmbed extends MessageEmbed {
     } catch (c) {
       if (clientMessage.guild)
         await clientMessage.reactions.removeAll();
-      if this.deleteOnTimeout
+      if (this.deleteOnTimeout)
         await clientMessage.delete();
 
       if (c instanceof Error) throw c;
