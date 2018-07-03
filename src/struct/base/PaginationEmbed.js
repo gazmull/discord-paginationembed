@@ -334,8 +334,8 @@ class PaginationEmbed extends MessageEmbed {
   }
 
   /**
-   * Sets whether page number indicator on client's message is shown or not.
-   * @param {boolean} boolean - Show page indicator?
+   * Sets whether the client's message will be deleted upon timeout or not.
+   * @param {boolean} boolean - Delete client's message upon timeout?
    * @returns {PaginationEmbed}
    */
   deleteOnTimeout(boolean) {
