@@ -123,7 +123,7 @@ class PaginationEmbed extends MessageEmbed {
     this.pageIndicator = options.pageIndicator || true;
 
     /**
-     * Whether message/menu gets deleted on timeout.
+     * Whether the client's message will be deleted upon timeout or not.
      * @type {boolean}
      */
     this.deleteOnTimeout = options.deleteOnTimeout || false;
