@@ -220,10 +220,14 @@ class Embeds extends PaginationEmbed {
    *  .setTimestamp()
    *  .build();
    */
-  async build() {
+  async prebuild() {
     this.pages = this.array.length;
 
     await this._verify(this.pages);
+  }
+
+  async build() {
+    this.prebuild();
 
     this
       .setTitle(this.title)
