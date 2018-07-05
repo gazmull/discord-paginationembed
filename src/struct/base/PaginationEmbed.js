@@ -389,11 +389,11 @@ class PaginationEmbed extends MessageEmbed {
       for (const emoji in this.functionEmojis)
         await this.clientMessage.message.react(emoji);
 
-    if (this.pages > 1) await this.clientMessage.message.react(this.navigationEmojis.back);
-    if (this.pages > 2) await this.clientMessage.message.react(this.navigationEmojis.jump);
-    if (this.pages > 1) await this.clientMessage.message.react(this.navigationEmojis.forward);
+    if (this.pages > 1 && 'back' in this.navigationEmojis) await this.clientMessage.message.react(this.navigationEmojis.back);
+    if (this.pages > 2 && 'jump' in this.navigationEmojis) await this.clientMessage.message.react(this.navigationEmojis.jump);
+    if (this.pages > 1 && 'forward' in this.navigationEmojis) await this.clientMessage.message.react(this.navigationEmojis.forward);
 
-    await this.clientMessage.message.react(this.navigationEmojis.delete);
+    if ('delete' in this.navigationEmojis) await this.clientMessage.message.react(this.navigationEmojis.delete);
 
     this._awaitResponse();
   }
