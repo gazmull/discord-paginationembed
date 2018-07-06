@@ -203,7 +203,7 @@ class PaginationEmbed extends MessageEmbed {
   setArray(array) {
     const isValidArray = array instanceof Array && Boolean(array.length);
 
-    if (!isValidArray) throw new Error('Cannot invoke PaginationEmbed class without initialising the array to paginate.');
+    if (!isValidArray) throw new Error('Cannot invoke PaginationEmbed class without initializing the array to paginate.');
 
     this.array = array;
 
@@ -216,7 +216,7 @@ class PaginationEmbed extends MessageEmbed {
    * @returns {PaginationEmbed}
    */
   setAuthorizedUsers(users) {
-    if (!(users instanceof Array)) throw new Error('Cannot invoke PaginationEmbed class without initialising the authorized users properly.');
+    if (!(users instanceof Array)) throw new Error('Cannot invoke PaginationEmbed class without initializing the authorized users properly.');
 
     this.authorizedUsers = users;
 
