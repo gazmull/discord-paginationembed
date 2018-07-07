@@ -20,7 +20,14 @@ bot
 
     console.log('Ready to test! Channel name:', channel.name, 'Channel ID:', channel.id);
 
-    if (credentials.test === 'embeds') {
+    const {
+      test,
+      users,
+      disabledNavigationEmojis,
+      deleteOnTimeout
+    } = credentials;
+
+    if (test === 'embeds') {
       const embeds = [];
 
       for (let i = 0; i < 5; ++i)
@@ -28,7 +35,7 @@ bot
 
       new PaginationEmbed.Embeds({
         array: embeds,
-        authorizedUsers: credentials.users,
+        authorizedUsers: users,
         channel,
         pageIndicator: true,
         title: 'Test Title',
@@ -36,6 +43,8 @@ bot
         footer: 'Test Footer Text',
         url: 'https://gazmull.github.io/discord-paginationembed',
         color: 0xFF00AE,
+        deleteOnTimeout,
+        disabledNavigationEmojis,
         functionEmojis: {
           '⬆': (_, instance) => {
             for (const embed of instance.array)
@@ -48,15 +57,17 @@ bot
         }
       })
         .build();
-    } else if (credentials.test === 'fieldsembed')
+    } else if (test === 'fieldsembed')
       new PaginationEmbed.FieldsEmbed()
         .setArray([{ name: 'John Doe' }, { name: 'Jane Doe' }])
-        .setAuthorizedUsers(credentials.users)
+        .setAuthorizedUsers(users)
         .setChannel(channel)
         .setElementsPerPage(1)
         .setPage(1)
         .showPageIndicator(false)
         .formatField('Name', i => i.name)
+        .setDeleteOnTimeout(deleteOnTimeout)
+        .setDisabledNavigationEmojis(disabledNavigationEmojis)
         .setFunctionEmojis({
           '🔄': (user, instance) => {
             const field = instance.fields[0];
