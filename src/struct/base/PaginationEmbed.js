@@ -447,7 +447,7 @@ class PaginationEmbed extends MessageEmbed {
    */
   _enabled(emoji) {
     return this.disabledNavigationEmojis.includes('ALL')
-      ? !this.disabledNavigationEmojis.includes('ALL')
+      ? false
       : !this.disabledNavigationEmojis.includes(emoji);
   }
 
@@ -497,7 +497,7 @@ class PaginationEmbed extends MessageEmbed {
   async _awaitResponse() {
     const emojis = Object.values(this.navigationEmojis);
     const filter = (r, u) => {
-      const enabledEmoji = this._enabled('a chaotic evil way')
+      const enabledEmoji = this._enabled('ALL')
         ? this.disabledNavigationEmojiValues.some(e => ![r.emoji.name, r.emoji.id].includes(e))
         : false;
       const passedEmoji =
