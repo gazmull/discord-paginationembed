@@ -82,6 +82,7 @@ class PaginationEmbed extends MessageEmbed {
    * @property {number} [timeout=30000] - The time for awaiting a user action before timeout in ms.
    * @property {NavigationEmojis} [navigationEmojis={back:'◀',jump:'↗',forward:'▶',delete:'🗑'}] - The emojis used for navigation emojis.
    * @property {Object<FunctionEmoji>} [functionEmojis={}] - The emojis used for function emojis.
+   * @property {Array<string>} [disabledNavigationEmojis=[]] - The disabled navigation emojis.
    */
 
   /**
@@ -158,11 +159,30 @@ class PaginationEmbed extends MessageEmbed {
     this.functionEmojis = options.functionEmojis || {};
 
     /**
+     * The disabled navigation emojis.
+     * Available navigation emojis to disable:
+     * - 'BACK'
+     * - 'JUMP'
+     * - 'FORWARD'
+     * - 'DELETE'
+     * - 'ALL'
+     * @type {Array<string>}
+     */
+    this.disabledNavigationEmojis = options.disabledNavigationEmojis || [];
+
+    /**
      * Number of pages for this instance.
      * @type {number}
      * @private
      */
     this.pages = null;
+
+    /**
+     * The disabled navigation emojis (in values).
+     * @type {Array<string>}
+     * @private
+     */
+    this.disabledNavigationEmojiValues = [];
   }
 
   build() {
@@ -244,6 +264,44 @@ class PaginationEmbed extends MessageEmbed {
     if (!content) content = 'Preparing...';
 
     Object.assign(this.clientMessage, { message, content });
+
+    return this;
+  }
+
+  /**
+   * Sets the disabled navigation emojis.
+   * @param {Array<string>} emojis  - An array of navigation emojis to disable.
+   * @returns {PaginationEmbed}
+   * @example
+   *
+   * // Disable specific navigation emojis
+   * <PaginationEmbed>.setDisabledNavigationEmojis(['delete', 'jump']);
+   *
+   * // Disable all navigation emojis
+   * <PaginationEmbed>.setDisabledNavigationEmojis(['all']);
+   */
+  setDisabledNavigationEmojis(emojis) {
+    if (!(emojis instanceof Array)) throw new Error('Cannot invoke PaginationEmbed class without initialising disabledNavigationEmojis properly.');
+
+    const invalid = [];
+    const sanitised = [];
+
+    for (let emoji of emojis) {
+      emoji = typeof emoji === 'string' ? emoji.toUpperCase() : emoji;
+      const validEmojis = ['BACK', 'JUMP', 'FORWARD', 'DELETE', 'ALL'];
+
+      if (!validEmojis.includes(emoji)) invalid.push(emoji);
+
+      sanitised.push(emoji);
+
+      emoji = emoji.toLowerCase();
+
+      this.disabledNavigationEmojiValues.push(this.navigationEmojis[emoji]);
+    }
+
+    if (invalid.length) throw new Error(`Cannot invoke PaginationEmbed class with invalid navigation emoji(s): ${invalid.join(', ')}.`);
+
+    this.disabledNavigationEmojis = sanitised;
 
     return this;
   }
@@ -359,7 +417,8 @@ class PaginationEmbed extends MessageEmbed {
       .setDeleteOnTimeout(this.deleteOnTimeout)
       .setTimeout(this.timeout)
       .setNavigationEmojis(this.navigationEmojis)
-      .setFunctionEmojis(this.functionEmojis);
+      .setFunctionEmojis(this.functionEmojis)
+      .setDisabledNavigationEmojis(this.disabledNavigationEmojis);
 
     this.pages = pages;
     this.setPage(this.page);
@@ -381,6 +440,18 @@ class PaginationEmbed extends MessageEmbed {
   }
 
   /**
+   * Returns whether the given navigation emoji is enabled or not.
+   * @private
+   * @param {string} emoji The navigation emoji to search.
+   * @returns {boolean}
+   */
+  _enabled(emoji) {
+    return this.disabledNavigationEmojis.includes('ALL')
+      ? false
+      : !this.disabledNavigationEmojis.includes(emoji);
+  }
+
+  /**
    * Deploys emoji reacts for the message sent by the client.
    * @private
    */
@@ -389,11 +460,10 @@ class PaginationEmbed extends MessageEmbed {
       for (const emoji in this.functionEmojis)
         await this.clientMessage.message.react(emoji);
 
-    if (this.pages > 1) await this.clientMessage.message.react(this.navigationEmojis.back);
-    if (this.pages > 2) await this.clientMessage.message.react(this.navigationEmojis.jump);
-    if (this.pages > 1) await this.clientMessage.message.react(this.navigationEmojis.forward);
-
-    await this.clientMessage.message.react(this.navigationEmojis.delete);
+    if (this._enabled('BACK') && this.pages > 1) await this.clientMessage.message.react(this.navigationEmojis.back);
+    if (this._enabled('JUMP') && this.pages > 2) await this.clientMessage.message.react(this.navigationEmojis.jump);
+    if (this._enabled('FORWARD') && this.pages > 1) await this.clientMessage.message.react(this.navigationEmojis.forward);
+    if (this._enabled('DELETE')) await this.clientMessage.message.react(this.navigationEmojis.delete);
 
     this._awaitResponse();
   }
@@ -427,8 +497,11 @@ class PaginationEmbed extends MessageEmbed {
   async _awaitResponse() {
     const emojis = Object.values(this.navigationEmojis);
     const filter = (r, u) => {
+      const enabledEmoji = this._enabled('ALL')
+        ? this.disabledNavigationEmojiValues.some(e => ![r.emoji.name, r.emoji.id].includes(e))
+        : false;
       const passedEmoji =
-        emojis.includes(r.emoji.name) || emojis.includes(r.emoji.id) ||
+        (enabledEmoji && (emojis.includes(r.emoji.name) || emojis.includes(r.emoji.id))) ||
         r.emoji.name in this.functionEmojis || r.emoji.id in this.functionEmojis;
 
       if (this.authorizedUsers.length)
@@ -443,8 +516,6 @@ class PaginationEmbed extends MessageEmbed {
       const response = responses.first();
       const user = response.users.last();
       const emoji = [response.emoji.name, response.emoji.id];
-
-      if (emoji.includes(this.navigationEmojis.delete)) return clientMessage.delete();
 
       if (clientMessage.guild)
         await response.users.remove(user);
@@ -466,6 +537,10 @@ class PaginationEmbed extends MessageEmbed {
           if (this.page === this.pages) return this._awaitResponse();
 
           this._loadPage('forward');
+          break;
+
+        case this.navigationEmojis.delete:
+          clientMessage.delete();
           break;
 
         default:
