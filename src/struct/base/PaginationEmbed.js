@@ -183,6 +183,17 @@ class PaginationEmbed extends MessageEmbed {
      * @private
      */
     this.disabledNavigationEmojiValues = [];
+
+    /**
+     * The default navigation emojis. Used for resetting the navigation emojis.
+     * @type {NavigationEmojis}
+     */
+    this.defaultNavigationEmojis = {
+      back: '◀',
+      jump: '↗',
+      forward: '▶',
+      delete: '🗑'
+    };
   }
 
   build() {
@@ -292,11 +303,25 @@ class PaginationEmbed extends MessageEmbed {
 
       if (!validEmojis.includes(emoji)) invalid.push(emoji);
 
+      if (emoji === 'ALL') {
+        this.navigationEmojis = {
+          back: null,
+          jump: null,
+          forward: null,
+          delete: null
+        };
+
+        sanitised.push('ALL');
+        break;
+      }
+
       sanitised.push(emoji);
 
       emoji = emoji.toLowerCase();
 
       this.disabledNavigationEmojiValues.push(this.navigationEmojis[emoji]);
+
+      this.navigationEmojis[emoji] = null;
     }
 
     if (invalid.length) throw new Error(`Cannot invoke PaginationEmbed class with invalid navigation emoji(s): ${invalid.join(', ')}.`);
