@@ -498,7 +498,7 @@ class PaginationEmbed extends MessageEmbed {
     const emojis = Object.values(this.navigationEmojis);
     const filter = (r, u) => {
       const enabledEmoji = this._enabled('ALL')
-        ? this.disabledNavigationEmojiValues.some(e => ![r.emoji.name, r.emoji.id].includes(e))
+        ? this.disabledNavigationEmojiValues.length <= 0 || this.disabledNavigationEmojiValues.some(e => ![r.emoji.name, r.emoji.id].includes(e))
         : false;
       const passedEmoji =
         (enabledEmoji && (emojis.includes(r.emoji.name) || emojis.includes(r.emoji.id))) ||
