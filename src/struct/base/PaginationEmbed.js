@@ -182,17 +182,18 @@ class PaginationEmbed extends MessageEmbed {
      * @type {Array<string>}
      * @private
      */
-    this.disabledNavigationEmojiValues = [];
+    this._disabledNavigationEmojiValues = [];
 
     /**
      * The default navigation emojis. Used for resetting the navigation emojis.
      * @type {NavigationEmojis}
+     * @private
      */
-    this.defaultNavigationEmojis = {
-      back: '◀',
-      jump: '↗',
-      forward: '▶',
-      delete: '🗑'
+    this._defaultNavigationEmojis = {
+      back: options.navigationEmojis.back || '◀',
+      jump: options.navigationEmojis.jump || '↗',
+      forward: options.navigationEmojis.forward || '▶',
+      delete: options.navigationEmojis.delete || '🗑'
     };
   }
 
@@ -201,7 +202,7 @@ class PaginationEmbed extends MessageEmbed {
   }
 
   /**
-   * Adds a Function Emoji to the embed.
+   * Adds a function emoji to the embed.
    * @param {EmojiIdentifier} emoji - The emoji to use as the function's emoji.
    * @param {EmojiCallback} callback - The function to call upon pressing the function emoji.
    * @returns {PaginationEmbed}
@@ -222,6 +223,33 @@ class PaginationEmbed extends MessageEmbed {
       throw new TypeError(`Callback for ${emoji} must be a function type.`);
 
     Object.assign(this.functionEmojis, { [emoji]: callback });
+
+    return this;
+  }
+
+  /**
+   * Deletes a function emoji.
+   * @param {EmojiIdentifier} emoji - The emoji key to delete.
+   * @returns {PaginationEmbed}
+   */
+  deleteFunctionEmoji(emoji) {
+    if (!(emoji in this.functionEmojis))
+      throw new Error(`${emoji} function emoji does not exist.`);
+
+    delete this.functionEmojis[emoji];
+
+    return this;
+  }
+
+  /**
+   * Deletes all function emojis, and then re-enables all navigation emojis.
+   * @returns {PaginationEmbed}
+   */
+  resetEmojis() {
+    for (const emoji in this.functionEmojis)
+      delete this.functionEmojis[emoji];
+
+    this.navigationEmojis = this._defaultNavigationEmojis;
 
     return this;
   }
@@ -319,7 +347,7 @@ class PaginationEmbed extends MessageEmbed {
 
       emoji = emoji.toLowerCase();
 
-      this.disabledNavigationEmojiValues.push(this.navigationEmojis[emoji]);
+      this._disabledNavigationEmojiValues.push(this.navigationEmojis[emoji]);
 
       this.navigationEmojis[emoji] = null;
     }
@@ -523,7 +551,7 @@ class PaginationEmbed extends MessageEmbed {
     const emojis = Object.values(this.navigationEmojis);
     const filter = (r, u) => {
       const enabledEmoji = this._enabled('ALL')
-        ? this.disabledNavigationEmojiValues.length <= 0 || this.disabledNavigationEmojiValues.some(e => ![r.emoji.name, r.emoji.id].includes(e))
+        ? !this._disabledNavigationEmojiValues.length || this._disabledNavigationEmojiValues.some(e => ![r.emoji.name, r.emoji.id].includes(e))
         : false;
       const passedEmoji =
         (enabledEmoji && (emojis.includes(r.emoji.name) || emojis.includes(r.emoji.id))) ||
