@@ -190,10 +190,10 @@ class PaginationEmbed extends MessageEmbed {
      * @private
      */
     this._defaultNavigationEmojis = {
-      back: options.navigationEmojis.back || '◀',
-      jump: options.navigationEmojis.jump || '↗',
-      forward: options.navigationEmojis.forward || '▶',
-      delete: options.navigationEmojis.delete || '🗑'
+      back: options.navigationEmojis && options.navigationEmojis.back ? options.navigationEmojis.back : '◀',
+      jump: options.navigationEmojis && options.navigationEmojis.jump ? options.navigationEmojis.jump : '↗',
+      forward: options.navigationEmojis && options.navigationEmojis.forward ? options.navigationEmojis.forward : '▶',
+      delete: options.navigationEmojis && options.navigationEmojis.delete ? options.navigationEmojis.delete : '🗑'
     };
   }
 
