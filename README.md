@@ -10,13 +10,17 @@ Installing the utility: `npm install gazmull/discord-paginationembed`
 Requires Discord.JS: `npm install discordjs/discord.js`
 
 # Compatibility
-Supports both v11 and v12.
+Supports both v11 (current stable) and v12 (current master) of Discord.JS.
 
 v11 installation: `npm install gazmull/discord-paginationembed#v11`
 
-# Examples
-> ### Under `message` event
+# Links
+* [**Documentation**](https://gazmull.github.io/discord-paginationembed "Go to My Documentation")
+* [**Discord.JS**](https://discord.js.org/#/docs/main/master/general/welcome "Go to Discord.JS Master Documentation")
 
+# Examples
+[In-action sample (click me)](https://github.com/gazmull/eros-bot/blob/master/commands/kamihime/info.js#L165)
+> ### Under `message` event
 ```js
 const { FieldsEmbed: FieldsEmbedMode } = require('discord-paginationembed');
 
@@ -61,11 +65,6 @@ new EmbedsMode()
   .build();
 ```
 ![image](https://user-images.githubusercontent.com/32944712/37118454-41116cbe-228f-11e8-9878-f39db26316a1.png)
-
-
-# Links
-* [**Documentation**](https://gazmull.github.io/discord-paginationembed "Go to My Documentation")
-* [**Discord.JS**](https://discord.js.org/#/docs/main/master/general/welcome "Go to Discord.JS Master Documentation")
 
 # Contributing
 * Fork this repository.
