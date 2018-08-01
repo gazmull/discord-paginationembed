@@ -21,6 +21,7 @@ v11 installation: `npm install gazmull/discord-paginationembed#v11`
 # Examples
 [In-action sample (click me)](https://github.com/gazmull/eros-bot/blob/master/commands/kamihime/info.js#L165)
 > ### Under `message` event
+
 ```js
 const { FieldsEmbed: FieldsEmbedMode } = require('discord-paginationembed');
 

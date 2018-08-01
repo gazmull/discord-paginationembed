@@ -1,90 +1,9 @@
 const { MessageEmbed } = require('discord.js');
 
 /**
- * Callback for a function emoji.
- * @typedef {Function} EmojiCallback
- * @param {User} user - The user who triggered the function emoji.
- * @param {PaginationEmbed} embed - The current instance of PaginationEmbed.
- */
-
-/**
- * An Emoji character or a custom Emoji ID (Guild Emojis).
- * @see [Discord.JS: EmojiIdentifier]{@link https://discord.js.org/#/docs/main/master/typedef/EmojiIdentifierResolvable}
- * @typedef {string} EmojiIdentifier
- */
-
-/**
- * Data that resolves as colour. e.g: <b>0xFF00AE</b>, <b>'PURPLE'</b>, <b>[255, 0, 255]</b>
- * @see [Discord.JS: ColorResolvable]{@link https://discord.js.org/#/docs/main/master/typedef/ColorResolvable}
- * @typedef {string|number|Array<number>} ColorResolvable
- */
-
-/**
- * A Message object.
- * @see [Discord.JS: Message]{@link https://discord.js.org/#/docs/main/master/class/Message}
- * @typedef {Object} Message
- */
-
-/**
- * A User object.
- * @see [Discord.JS: User]{@link https://discord.js.org/#/docs/main/master/class/User}
- * @typedef {Object} User
- */
-
-/**
- * A TextChannel Object.
- * @see [Discord.JS: TextChannel]{@link https://discord.js.org/#docs/main/master/class/TextChannel}
- * @typedef {Object} TextChannel
- */
-
-/**
- * Unique ID for an object (e.g. User).
- * @see [Discord.JS: Snowflake]{@link https://discord.js.org/#/docs/main/master/typedef/Snowflake}
- * @typedef {string} Snowflake
- */
-
-/**
  * @description Extends [MessageEmbed]{@link https://discord.js.org/#/docs/main/master/class/MessageEmbed}
  */
 class PaginationEmbed extends MessageEmbed {
-  /**
-   * Options for PaginationEmbed.clientMessage.
-   * @typedef {Object} ClientMessageOptions
-   * @property {Message} [message=null] - The message object sent by the client, if there is any.
-   * @property {string} [content='Preparing...'] - The custom message content while preparing the embed.
-   */
-
-  /**
-   * Options for PaginationEmbed.navigationEmojis.
-   * @typedef {Object} NavigationEmojis
-   * @property {EmojiIdentifier} [back='◀'] - The back emoji.
-   * @property {EmojiIdentifier} [jump='↗'] - The jump emoji.
-   * @property {EmojiIdentifier} [forward='▶'] - The forward emoji.
-   * @property {EmojiIdentifier} [delete='🗑'] - The delete emoji.
-   */
-
-  /**
-   * Options for PaginationEmbed.functionEmojis.
-   * @typedef {Object} FunctionEmoji
-   * @property {EmojiCallback} emojiNameOrID
-   */
-
-  /**
-   * Options for the constructor.
-   * @typedef {Object} PaginationEmbedOptions
-   * @property {Array<User<Snowflake>>} [authorizedUsers=[]] - The authorized users to navigate the pages.
-   * @property {TextChannel} channel - The channel where to send the embed.
-   * @property {ClientMessageOptions} [clientMessage=null] - Settings for the message sent by the client.
-   * @property {Array<*>} array - An array of elements to paginate.
-   * @property {boolean} [pageIndicator=true] - Whether page number indicator on client's message is shown or not.
-   * @property {boolean} [deleteOnTimeout=false] - The boolean determining if the message will be deleted on timeout.
-   * @property {number|string} [page=1] - Jumps to a certain page upon PaginationEmbed.build().
-   * @property {number} [timeout=30000] - The time for awaiting a user action before timeout in ms.
-   * @property {NavigationEmojis} [navigationEmojis={back:'◀',jump:'↗',forward:'▶',delete:'🗑'}] - The emojis used for navigation emojis.
-   * @property {Object<FunctionEmoji>} [functionEmojis={}] - The emojis used for function emojis.
-   * @property {Array<string>} [disabledNavigationEmojis=[]] - The disabled navigation emojis.
-   */
-
   /**
    * @param {PaginationEmbedOptions} [options={}] Options for PaginationEmbed.
    */
@@ -653,5 +572,90 @@ class PaginationEmbed extends MessageEmbed {
     }
   }
 }
+
+/**
+ * Options for PaginationEmbed.clientMessage.
+ * @typedef {Object} ClientMessageOptions
+ * @property {Message} [message=null] - The message object sent by the client, if there is any.
+ * @property {string} [content='Preparing...'] - The custom message content while preparing the embed.
+ */
+
+/**
+ * Options for PaginationEmbed.navigationEmojis.
+ * @typedef {Object} NavigationEmojis
+ * @property {EmojiIdentifier} [back='◀'] - The back emoji.
+ * @property {EmojiIdentifier} [jump='↗'] - The jump emoji.
+ * @property {EmojiIdentifier} [forward='▶'] - The forward emoji.
+ * @property {EmojiIdentifier} [delete='🗑'] - The delete emoji.
+ */
+
+/**
+ * Options for PaginationEmbed.functionEmojis.
+ * @typedef {Object} FunctionEmoji
+ * @property {EmojiCallback} emojiNameOrID
+ */
+
+/**
+ * Options for the constructor.
+ * @typedef {Object} PaginationEmbedOptions
+ * @property {Array<User<Snowflake>>} [authorizedUsers=[]] - The authorized users to navigate the pages.
+ * @property {TextChannel} channel - The channel where to send the embed.
+ * @property {ClientMessageOptions} [clientMessage=null] - Settings for the message sent by the client.
+ * @property {Array<*>} array - An array of elements to paginate.
+ * @property {boolean} [pageIndicator=true] - Whether page number indicator on client's message is shown or not.
+ * @property {boolean} [deleteOnTimeout=false] - The boolean determining if the message will be deleted on timeout.
+ * @property {number|string} [page=1] - Jumps to a certain page upon PaginationEmbed.build().
+ * @property {number} [timeout=30000] - The time for awaiting a user action before timeout in ms.
+ * @property {NavigationEmojis} [navigationEmojis={back:'◀',jump:'↗',forward:'▶',delete:'🗑'}] - The emojis used for navigation emojis.
+ * @property {Object<FunctionEmoji>} [functionEmojis={}] - The emojis used for function emojis.
+ * @property {Array<string>} [disabledNavigationEmojis=[]] - The disabled navigation emojis.
+ */
+
+/**
+ * Callback for a function emoji.
+ * @typedef {Function} EmojiCallback
+ * @param {User} user - The user who triggered the function emoji.
+ * @param {PaginationEmbed} embed - The current instance of PaginationEmbed.
+ */
+
+/**
+ * An Emoji character or a custom Emoji ID (Guild Emojis).
+ * @see [Discord.JS: EmojiIdentifier]{@link https://discord.js.org/#/docs/main/master/typedef/EmojiIdentifierResolvable}
+ * @typedef {string} EmojiIdentifier
+ */
+
+/**
+ * Data that resolves as colour.
+ * e.g:
+ *  - `0xFF00AE`
+ *  - `'PURPLE'`
+ *  - `[255, 0, 255]`
+ * @see [Discord.JS: ColorResolvable]{@link https://discord.js.org/#/docs/main/master/typedef/ColorResolvable}
+ * @typedef {string|number|Array<number>} ColorResolvable
+ */
+
+/**
+ * A Message object.
+ * @see [Discord.JS: Message]{@link https://discord.js.org/#/docs/main/master/class/Message}
+ * @typedef {Object} Message
+ */
+
+/**
+ * A User object.
+ * @see [Discord.JS: User]{@link https://discord.js.org/#/docs/main/master/class/User}
+ * @typedef {Object} User
+ */
+
+/**
+ * A TextChannel Object.
+ * @see [Discord.JS: TextChannel]{@link https://discord.js.org/#docs/main/master/class/TextChannel}
+ * @typedef {Object} TextChannel
+ */
+
+/**
+ * Unique ID for an object (e.g. User).
+ * @see [Discord.JS: Snowflake]{@link https://discord.js.org/#/docs/main/master/typedef/Snowflake}
+ * @typedef {string} Snowflake
+ */
 
 module.exports = PaginationEmbed;
