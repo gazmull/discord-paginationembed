@@ -11,21 +11,6 @@ const { MessageEmbed } = require('discord.js');
 class Embeds extends PaginationEmbed {
 
   /**
-   * Options for the constructor.
-   * @typedef {Object} EmbedsOptions
-   * @property {string} [title=null] - The title of all embeds.
-   * @property {string} [description=null] - The description of all embeds.
-   * @property {string} [url=null] - The URL of all embeds.
-   * @property {number} [color=null] - The color of all embeds.
-   * @property {boolean} [timestamp=null] - Whether to show timestamp to all embeds or not.
-   * @property {Array<Object>} [fields=null] - The fields of all embeds.
-   * @property {string} [thumbnail=null] - The thumbnail of all embeds.
-   * @property {{}} [image=null] - The image of all embeds.
-   * @property {{}} [author=null] - The author of all embeds.
-   * @property {{}} [footer=null] - The footer of all embeds.
-   */
-
-  /**
    * @param {EmbedsOptions} [options={}] Options for Embeds.
    */
   constructor(options = {}) {
@@ -430,5 +415,20 @@ class Embeds extends PaginationEmbed {
     super._loadList(callNavigation);
   }
 }
+
+/**
+ * Options for the constructor.
+ * @typedef {Object} EmbedsOptions
+ * @property {string} [title=null] - The title of all embeds.
+ * @property {string} [description=null] - The description of all embeds.
+ * @property {string} [url=null] - The URL of all embeds.
+ * @property {number} [color=null] - The color of all embeds.
+ * @property {boolean} [timestamp=null] - Whether to show timestamp to all embeds or not.
+ * @property {Array<Object>} [fields=null] - The fields of all embeds.
+ * @property {string} [thumbnail=null] - The thumbnail of all embeds.
+ * @property {{}} [image=null] - The image of all embeds.
+ * @property {{}} [author=null] - The author of all embeds.
+ * @property {{}} [footer=null] - The footer of all embeds.
+ */
 
 module.exports = Embeds;

@@ -6,30 +6,9 @@ const PaginationEmbed = require('./base/PaginationEmbed');
 const { MessageEmbed } = require('discord.js');
 
 /**
- * Function for Formatting Fields.
- * @typedef {Function} FieldFormatFunction
- * @param {*} element - The current element.
- */
-
-/**
  * @description Extends {@link PaginationEmbed}
  */
 class FieldsEmbed extends PaginationEmbed {
-
-  /**
-   * Options for FieldsEmbed.fields.
-   * @typedef {Object[]} FieldOptions
-   * @property {string} name - Name of the field.
-   * @property {Function} value - Value of the field. Function for Array.prototype.map().join('\n').
-   * @property {boolean} [inline=true] - Whether the field is inline with other field or not.
-   */
-
-  /**
-   * Options for the constructor.
-   * @typedef {Object} FieldsEmbedOptions
-   * @property {number} [elementsPerPage=10] - Items per page.
-   * @property {FieldOptions} fields - An array formatted fields to input.
-   */
 
   /**
    * @param {FieldsEmbedOptions} [options={}] Options for pagination utility.
@@ -229,5 +208,26 @@ class FieldsEmbed extends PaginationEmbed {
     super._loadList(callNavigation);
   }
 }
+
+/**
+ * Function for Formatting Fields.
+ * @typedef {Function} FieldFormatFunction
+ * @param {*} element - The current element.
+ */
+
+/**
+ * Options for FieldsEmbed.fields.
+ * @typedef {Object[]} FieldOptions
+ * @property {string} name - Name of the field.
+ * @property {Function} value - Value of the field. Function for Array.prototype.map().join('\n').
+ * @property {boolean} [inline=true] - Whether the field is inline with other field or not.
+ */
+
+/**
+ * Options for the constructor.
+ * @typedef {Object} FieldsEmbedOptions
+ * @property {number} [elementsPerPage=10] - Items per page.
+ * @property {FieldOptions} fields - An array formatted fields to input.
+ */
 
 module.exports = FieldsEmbed;

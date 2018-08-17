@@ -4,6 +4,7 @@ const { MessageEmbed } = require('discord.js');
  * @description Extends [MessageEmbed]{@link https://discord.js.org/#/docs/main/master/class/MessageEmbed}
  */
 class PaginationEmbed extends MessageEmbed {
+
   /**
    * @param {PaginationEmbedOptions} [options={}] Options for PaginationEmbed.
    */
@@ -625,29 +626,28 @@ class PaginationEmbed extends MessageEmbed {
  */
 
 /**
- * Data that resolves as colour.
- * e.g:
- *  - `0xFF00AE`
- *  - `'PURPLE'`
- *  - `[255, 0, 255]`
+ * Data that resolves as colour. e.g:
+ * - `0xFF00AE`
+ * - `'PURPLE'`
+ * - `[255, 0, 255]`
  * @see [Discord.JS: ColorResolvable]{@link https://discord.js.org/#/docs/main/master/typedef/ColorResolvable}
  * @typedef {string|number|Array<number>} ColorResolvable
  */
 
 /**
- * A Message object.
+ * A Message object obtained from a message sent to Discord.
  * @see [Discord.JS: Message]{@link https://discord.js.org/#/docs/main/master/class/Message}
  * @typedef {Object} Message
  */
 
 /**
- * A User object.
+ * A User object obtained from an existing user in Discord.
  * @see [Discord.JS: User]{@link https://discord.js.org/#/docs/main/master/class/User}
  * @typedef {Object} User
  */
 
 /**
- * A TextChannel Object.
+ * A TextChannel Object from a guild in Discord.
  * @see [Discord.JS: TextChannel]{@link https://discord.js.org/#docs/main/master/class/TextChannel}
  * @typedef {Object} TextChannel
  */

@@ -7,13 +7,14 @@
         "includePattern": ".js$",
         "excludePattern": "(node_modules/|docs)"
     },
-    "plugins": [],
+    "plugins": ["plugins/markdown"],
     "opts": {
-        "template": "node_modules/docdash",
+        "template": "./node_modules/docdash",
         "encoding": "utf8",
         "destination": "../discord-paginationembed-docs/",
         "recurse": true,
-        "verbose": true
+        "verbose": true,
+        "sort": true
     },
     "templates": {
         "cleverLinks": true,
@@ -23,6 +24,13 @@
         }
     },
     "docdash": {
+        "sectionOrder": ["Classes"],
+        "search": true,
+        "collapse": true,
+        "typedefs": true,
         "sort": true
+    },
+    "markdown": {
+        "hardwrap": true
     }
 }
