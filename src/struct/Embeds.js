@@ -404,11 +404,8 @@ class Embeds extends PaginationEmbed {
     const shouldIndicate = this.pageIndicator
       ? this.pages === 1
         ? null
-        : `Page ${this.page} of ${this.pages}${
-          this.clientMessage.content
-            ? `\n\n${this.clientMessage.content}`
-            : ''}`
-      : this.clientMessage.content;
+        : `Page ${this.page} of ${this.pages}`
+      : null;
 
     await this.clientMessage.message.edit(shouldIndicate, { embed: this.currentEmbed });
 
