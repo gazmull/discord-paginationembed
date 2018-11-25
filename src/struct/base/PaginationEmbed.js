@@ -561,7 +561,7 @@ class PaginationEmbed extends MessageEmbed {
       await prompt.delete();
 
       if (this.clientMessage.message.guild)
-        await response.delete().catch();
+        await response.delete();
 
       if (cancel.includes(content)) return this._awaitResponse();
 
