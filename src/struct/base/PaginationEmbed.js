@@ -525,9 +525,9 @@ class PaginationEmbed extends MessageEmbed {
       }
     } catch (c) {
       if (clientMessage.guild)
-        await clientMessage.reactions.removeAll();
+        await clientMessage.reactions.removeAll().catch();
       if (this.deleteOnTimeout)
-        await clientMessage.delete();
+        await clientMessage.delete().catch();
 
       if (c instanceof Error) throw c;
     }
@@ -551,7 +551,7 @@ class PaginationEmbed extends MessageEmbed {
       );
     };
     const channel = this.clientMessage.message.channel;
-    const prompt = await channel.send(`${user.toString()}, To what page would you like to jump? Say \`cancel\` or \`0\` to cancel the prompt.`);
+    const prompt = await channel.send(`${user.toString()}, To what page would you like to jump? Say \`cancel\` or \`0\` to cancel the prompt.`).catch();
 
     try {
       const responses = await channel.awaitMessages(filter, { max: 1, time: this.timeout, errors: ['time'] });
@@ -567,7 +567,7 @@ class PaginationEmbed extends MessageEmbed {
 
       this._loadPage(parseInt(content));
     } catch (c) {
-      await prompt.delete();
+      await prompt.delete().catch();
 
       if (c instanceof Error) throw c;
     }
