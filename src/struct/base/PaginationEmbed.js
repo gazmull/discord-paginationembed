@@ -551,9 +551,9 @@ class PaginationEmbed extends MessageEmbed {
       );
     };
     const channel = this.clientMessage.message.channel;
-    const prompt = await channel.send(`${user.toString()}, To what page would you like to jump? Say \`cancel\` or \`0\` to cancel the prompt.`).catch();
 
     try {
+      const prompt = await channel.send(`${user.toString()}, To what page would you like to jump? Say \`cancel\` or \`0\` to cancel the prompt.`);
       const responses = await channel.awaitMessages(filter, { max: 1, time: this.timeout, errors: ['time'] });
       const response = responses.first();
       const content = response.content;
