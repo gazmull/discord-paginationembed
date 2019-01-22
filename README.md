@@ -10,9 +10,11 @@ Installing the utility: `npm install gazmull/discord-paginationembed`
 Requires Discord.JS: `npm install discordjs/discord.js`
 
 # Compatibility
-Supports both v11 (current stable) and v12 (current master) of Discord.JS.
+Supports ~~both v11 (current stable) and~~ v12 (current master) of Discord.JS.
 
-v11 installation: `npm install gazmull/discord-paginationembed#v11`
+~~v11 installation: `npm install gazmull/discord-paginationembed#v11`~~
+
+### v11 branch has been dropped and is now deprecated.
 
 # Links
 * [**Documentation**](https://gazmull.github.io/discord-paginationembed "Go to My Documentation")
