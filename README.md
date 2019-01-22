@@ -1,3 +1,8 @@
+# This branch has been dropped and is now deprecated. Consider using v12 (master) instead.
+<sub>~~DJS v12 is better anyway~~</sub>
+
+---
+
 <div align="center">
 <a href="https://travis-ci.org/gazmull/discord-paginationembed"><img src="https://travis-ci.org/gazmull/discord-paginationembed.svg?branch=v11" alt="Build Status" /></a>
 </div>
