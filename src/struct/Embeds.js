@@ -44,7 +44,7 @@ class Embeds extends PaginationEmbed {
     this.color = options.color || null;
 
     /**
-     * Whether to show timestamp to all embeds or not.
+     * The timestamp of all embeds.
      * @type {boolean}
      */
     this.timestamp = options.timestamp || null;
@@ -231,8 +231,8 @@ class Embeds extends PaginationEmbed {
       }
     }
 
-    if (this.options.timestamp !== null && this.options.timestamp)
-      this.setTimestamp();
+    if (this.options.timestamp)
+      this.setTimestamp(this.timestamp);
 
     await this._loadList();
   }
@@ -243,7 +243,7 @@ class Embeds extends PaginationEmbed {
    * @returns {PaginationEmbed}
    */
   setArray(array) {
-    const isValidArray = array instanceof Array && Boolean(array.length);
+    const isValidArray = Array.isArray(array) && Boolean(array.length);
 
     if (!isValidArray) throw new Error('Cannot invoke Embeds class without initialising the array to paginate.');
 
@@ -357,13 +357,14 @@ class Embeds extends PaginationEmbed {
 
   /**
    * Sets the timestamp of all embeds.
+   * @param {number|Date} timestamp - The timestamp of all embeds.
    * @returns {PaginationEmbed}
    */
-  setTimestamp() {
+  setTimestamp(timestamp = Date.now()) {
     const arr = this.array;
 
     for (let i = 0; i < arr.length; i++)
-      arr[i].timestamp = new Date().getTime();
+      arr[i].setTimeStamp(timestamp);
 
     return this;
   }
@@ -396,6 +397,24 @@ class Embeds extends PaginationEmbed {
 
     for (let i = 0; i < arr.length; i++)
       arr[i].setURL(url);
+
+    return this;
+  }
+
+  /**
+   * Removes, replaces, and inserts fields in the embed (max 25).
+   * @param {number} index The index to start at
+   * @param {number} deleteCount The number of fields to remove
+   * @param {StringResolvable} [name] The name of the field
+   * @param {StringResolvable} [value] The value of the field
+   * @param {boolean} [inline=false] Set the field to display inline
+   * @returns {PaginationEmbed}
+   */
+  spliceField(index, deleteCount, name, value, inline) {
+    const arr = this.array;
+
+    for (let i = 0; i < arr.length; i++)
+      arr[i].spliceField(index, deleteCount, name, value, inline);
 
     return this;
   }
