@@ -10,18 +10,17 @@ Installing the utility: `npm install gazmull/discord-paginationembed`
 Requires Discord.JS: `npm install discordjs/discord.js`
 
 # Compatibility
-Supports ~~both v11 (current stable) and~~ v12 (current master) of Discord.JS.
-
-~~v11 installation: `npm install gazmull/discord-paginationembed#v11`~~
-
-### v11 branch has been dropped and is now deprecated.
+Supports v12 (current master) of Discord.JS.
 
 # Links
 * [**Documentation**](https://gazmull.github.io/discord-paginationembed "Go to My Documentation")
-* [**Discord.JS**](https://discord.js.org/#/docs/main/master/general/welcome "Go to Discord.JS Master Documentation")
+* [**Discord.JS Documentation**](https://discord.js.org/#/docs/main/master/general/welcome "Go to Discord.JS Master Documentation")
 
 # Examples
-[In-action sample (click me)](https://github.com/gazmull/eros-bot/blob/master/commands/kamihime/info.js#L165)
+[In-action sample (click me)](https://github.com/gazmull/eros-bot/blob/master/src/commands/kamihime/info.ts#L177)
+
+More examples provided at the documentation.
+
 > ### Under `message` event
 
 ```js
@@ -67,17 +66,23 @@ new EmbedsMode()
   .addField('Test Field 2', 'Test Field 2', true)
   .build();
 ```
-![image](https://user-images.githubusercontent.com/32944712/37118454-41116cbe-228f-11e8-9878-f39db26316a1.png)
+
+## FieldsEmbed Mode
+![FieldsEmbed](demo/FieldsEmbed.gif)
+
+## Embeds Mode
+![Embeds](demo/Embeds.gif)
 
 # Contributing
 * Fork this repository.
 * Execute `npm install`
 * Code and code and code and code and... code!
-* `npm test` to verify if your additions/adjustments are following ESLint's rules and to verify if the docs are valid.
+* For API changes, please make sure they're reflected at [**index.d.ts**](src/index.d.ts).
+* `npm test` to verify if your additions/adjustments are following the project's codebase rules and to verify if the docs are valid.
 * Please make sure that you have tested your changes very well.
   * There is a test bot script under `test` folder. To get started:
     * Copy `credentials.sample.js` to `credentials.js` and fill up your private credentials (token, test channel, etc)
-    * Execute `npm run bot-test`.
+    * Execute `npm run test:bot`.
 * File a [Pull Request](https://github.com/gazmull/discord-paginationembed/compare)!
 
 # License
