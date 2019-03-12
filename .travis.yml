@@ -3,6 +3,8 @@ node_js:
   - 11
   - 10
 install: yarn
+before_script:
+  - yarn add discordjs/discord.js
 jobs:
   include:
     - stage: deploy
