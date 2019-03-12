@@ -26,4 +26,4 @@ git add --all .
 git config user.name "Travis CI"
 git config user.email "${COMMIT_EMAIL}"
 git commit -m "Docs build: ${SHA}" || true
-git push "https://${GITHUB_TOKEN}@github.com/MrJacz/discord.js-lavalink.git" $TARGET_BRANCH
+git push "https://${GITHUB_TOKEN}@github.com/gazmull/discord-paginationembed.git" $TARGET_BRANCH
