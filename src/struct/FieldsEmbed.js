@@ -115,7 +115,7 @@ class FieldsEmbed extends PaginationEmbed {
 
     await this._verify(this.pages);
 
-    const isValidFields = this.fields instanceof Array && Boolean(this.fields.length);
+    const isValidFields = Array.isArray(this.fields) && Boolean(this.fields.length);
 
     if (!isValidFields) throw new Error('Cannot invoke FieldsEmbed class without initialising at least one field.');
 
@@ -179,13 +179,6 @@ class FieldsEmbed extends PaginationEmbed {
       files: this.files
     });
 
-    if (this.pageIndicator && this.pages > 1)
-      embed.setDescription(
-        this.description
-          ? `${this.description}\n\nPage ${this.page} of ${this.pages}`
-          : `Page ${this.page} of ${this.pages}`
-      );
-
     for (let i = 0; i < this.fields.length; i++) {
       const field = this.fields[i];
 
@@ -203,7 +196,13 @@ class FieldsEmbed extends PaginationEmbed {
 
   async _loadList(callNavigation = true) {
     const embed = this._drawList();
-    await this.clientMessage.message.edit({ embed });
+    const shouldIndicate = this.pageIndicator
+      ? this.pages === 1
+        ? null
+        : `Page ${this.page} of ${this.pages}`
+      : null;
+
+    await this.clientMessage.message.edit(shouldIndicate, { embed });
 
     super._loadList(callNavigation);
   }

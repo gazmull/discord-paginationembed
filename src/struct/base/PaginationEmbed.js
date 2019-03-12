@@ -180,7 +180,7 @@ class PaginationEmbed extends MessageEmbed {
    * @returns {PaginationEmbed}
    */
   setArray(array) {
-    const isValidArray = array instanceof Array && Boolean(array.length);
+    const isValidArray = Array.isArray(array) && Boolean(array.length);
 
     if (!isValidArray) throw new Error('Cannot invoke PaginationEmbed class without initializing the array to paginate.');
 
@@ -195,7 +195,7 @@ class PaginationEmbed extends MessageEmbed {
    * @returns {PaginationEmbed}
    */
   setAuthorizedUsers(users) {
-    if (!(users instanceof Array)) throw new Error('Cannot invoke PaginationEmbed class without initializing the authorized users properly.');
+    if (!Array.isArray(users)) throw new Error('Cannot invoke PaginationEmbed class without initializing the authorized users properly.');
 
     this.authorizedUsers = users;
 
@@ -240,7 +240,7 @@ class PaginationEmbed extends MessageEmbed {
    * <PaginationEmbed>.setDisabledNavigationEmojis(['all']);
    */
   setDisabledNavigationEmojis(emojis) {
-    if (!(emojis instanceof Array)) throw new Error('Cannot invoke PaginationEmbed class without initialising disabledNavigationEmojis properly.');
+    if (!Array.isArray(emojis)) throw new Error('Cannot invoke PaginationEmbed class without initialising disabledNavigationEmojis properly.');
 
     const invalid = [];
     const sanitised = [];
