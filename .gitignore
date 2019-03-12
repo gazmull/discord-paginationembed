@@ -1,10 +1,10 @@
 # NPM and Yarn
-package-lock.json
-yarn.lock
 node_modules/
+yarn-error.log
 
 # VSC
 .vscode
 
 # Tests
 test/credentials.js
+docs
