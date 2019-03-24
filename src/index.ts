@@ -1,3 +1,5 @@
+// @ts-ignore
+import { version as DPE_VERSION } from '../package.json';
 import E from './struct/Embeds';
 import FE from './struct/FieldsEmbed';
 
@@ -12,3 +14,5 @@ export const Embeds = E;
  * @extends [[PaginationEmbed]]
  */
 export const FieldsEmbed = FE;
+
+export const version: string = DPE_VERSION;

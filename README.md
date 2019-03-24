@@ -4,8 +4,8 @@ A pagination utility for MessageEmbed in Discord.JS
 [![Travis (.org) branch](https://img.shields.io/travis/gazmull/discord-paginationembed/master.svg?logo=travis&style=for-the-badge)](https://travis-ci.org/gazmull/discord-paginationembed)
 
 ## 📣 Notice Board
-- [**Changelog**](CHANGELOG.md)
-- [**Updating from `v0.8.0` to `v1.0.0`**](UPDATING_V1.md)
+- [**Changelog**](https://github.com/gazmull/discord-paginationembed/blob/master/CHANGELOG.md)
+- [**Updating from `v0.8.0` to `v1.0.0`**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md)
 
 ## 🎉 Welcome
 - ✔ **Typings** included

@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [1.0.0-beta.0] - 2019-03-25
 [**Updating from `v0.8.0`**](UPDATING_V1.md)
+
+If the link above is unavailable, you may proceed to the [**documentation**](https://docs.thegzm.space/discord-paginationembed) site instead.
 
 ### Added
 - NPM publish
@@ -109,7 +113,8 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/0.8.0...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.0...HEAD
+[1.0.0-beta.0]: https://github.com/gazmull/discord-paginationembed/compare/0.8.0...1.0.0-beta.0
 [0.8.0]: https://github.com/gazmull/discord-paginationembed/compare/0.7.7...0.8.0
 [0.7.7]: https://github.com/gazmull/discord-paginationembed/compare/0.2.3...0.7.7
 [0.7.7-v11]: https://github.com/gazmull/discord-paginationembed/compare/0.2.3-v11...0.7.7-v11
