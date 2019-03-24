@@ -5,7 +5,7 @@ set -e
 
 if [ "$TRAVIS_BRANCH" != "master" -o -n "$TRAVIS_TAG" -o "$TRAVIS_PULL_REQUEST" != "false" ]; then
   echo -e "Not building for a non master branch push - building without deploying."
-  yarn run docs:build
+  yarn run gh:build
   exit 0
 fi
 
