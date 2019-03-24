@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-      "module": "commonjs",
-      "target": "es6",
-      "noImplicitAny": true,
-      "strictNullChecks": true,
-      "noEmit": true,
-      "forceConsistentCasingInFileNames": true
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "outDir": "bin",
+    "removeComments": false,
+    "target": "es2018"
   },
-  "files": [
-      "src/index.d.ts"
+  "include": [
+    "src"
   ]
 }

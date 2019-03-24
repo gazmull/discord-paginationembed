@@ -4,6 +4,6 @@
   "mode": "file",
   "name": "Discord PaginationEmbed - Docs",
   "out": "docs",
-  "readme": "none",
+  "readme": "README.md",
   "theme": "minimal"
 }

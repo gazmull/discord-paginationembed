@@ -1,5 +1,5 @@
 const { Client, MessageEmbed } = require('discord.js');
-const PaginationEmbed = require('../src/index');
+const PaginationEmbed = require('../');
 
 const credentials = require('./credentials');
 
@@ -11,8 +11,14 @@ const error = msg => {
   process.exit(1);
 };
 
+const done = () => {
+  console.log('Test done!');
+
+  process.exit(0);
+}
+
 bot
-  .on('ready', () => {
+  .on('ready', async () => {
     const channel = bot.channels.get(credentials.channel);
 
     if (!channel)
@@ -33,19 +39,19 @@ bot
       for (let i = 0; i < 5; ++i)
         embeds.push(new MessageEmbed().addField('Page', i + 1));
 
-      new PaginationEmbed.Embeds({
-        array: embeds,
-        authorizedUsers: users,
-        channel,
-        pageIndicator: true,
-        title: 'Test Title',
-        description: 'Test Description',
-        footer: 'Test Footer Text',
-        url: 'https://gazmull.github.io/discord-paginationembed',
-        color: 0xFF00AE,
-        deleteOnTimeout,
-        disabledNavigationEmojis,
-        functionEmojis: {
+      const Embeds = new PaginationEmbed.Embeds()
+        .setArray(embeds)
+        .setAuthorizedUsers(users)
+        .setChannel(channel)
+        .showPageIndicator(true)
+        .setTitle('Test Title')
+        .setDescription('Test Description')
+        .setFooter('Test Footer Text')
+        .setURL('https://gazmull.github.io/discord-paginationembed')
+        .setColor(0xFF00AE)
+        .setDeleteOnTimeout(deleteOnTimeout)
+        .setDisabledNavigationEmojis(disabledNavigationEmojis)
+        .setFunctionEmojis({
           '⬆': (_, instance) => {
             for (const embed of instance.array)
               embed.fields[0].value++;
@@ -54,23 +60,25 @@ bot
             for (const embed of instance.array)
               embed.fields[0].value--;
           }
-        }
-      })
-        .build();
-    } else if (test === 'fieldsembed')
-      new PaginationEmbed.FieldsEmbed()
+        });
+
+      await Embeds.build();
+
+      return done();
+    } else if (test === 'fieldsembed') {
+      const FieldsEmbed = new PaginationEmbed.FieldsEmbed()
         .setArray([{ name: 'John Doe' }, { name: 'Jane Doe' }])
         .setAuthorizedUsers(users)
         .setChannel(channel)
         .setElementsPerPage(1)
-        .setPage(1)
-        .showPageIndicator(false)
+        .setPage(2)
+        .showPageIndicator(true)
         .formatField('Name', i => i.name)
         .setDeleteOnTimeout(deleteOnTimeout)
         .setDisabledNavigationEmojis(disabledNavigationEmojis)
         .setFunctionEmojis({
           '🔄': (user, instance) => {
-            const field = instance.fields[0];
+            const field = instance.embed.fields[0];
 
             if (field.name === 'Name')
               field.name = user.tag;
@@ -79,16 +87,22 @@ bot
           }
         })
         .addFunctionEmoji('🅱', (_, instance) => {
-          const field = instance.fields[0];
+          const field = instance.embed.fields[0];
 
           if (field.name.includes('🅱'))
             field.name = 'Name';
           else
             field.name = 'Na🅱e';
-        })
+        });
+
+      FieldsEmbed.embed
         .setColor(0xFF00AE)
         .setDescription('Test Description')
-        .build();
-    else error('Invalid pagination mode. Either choose \'embeds\' or \'fieldsembed\'');
+        .addField('Test Static Field', 'and its value');
+
+      await FieldsEmbed.build();
+
+      return done();
+    } else error('Invalid pagination mode. Either choose \'embeds\' or \'fieldsembed\'');
   })
   .login(credentials.token);
