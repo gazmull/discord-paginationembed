@@ -1,18 +1,24 @@
 {
   "name": "discord-paginationembed",
-  "version": "0.8.0",
-  "description": "Pagination Embed for Discord.JS",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "version": "1.0.0-beta.0",
+  "description": "A pagination utility for MessageEmbed in Discord.JS",
+  "main": "./bin/index.js",
+  "typings": "./bin",
+  "engines": {
+    "node": ">= 10.0.0"
+  },
   "scripts": {
-    "test": "yarn run lint && yarn run docs:build",
-    "test:bot": "node test/bot.js",
-    "lint": "yarn run src:lint && yarn run types:lint",
-    "src:lint": "eslint ./src",
-    "src:lint-fix": "yarn run src:lint --fix",
-    "types:lint": "tslint -c tslint.json src/index.d.ts",
-    "types:lint-fix": "yarn run types:lint --fix",
-    "docs:build": "typedoc src"
+    "test": "npm run lint && npm run compile",
+    "compile": "tsc -p .",
+    "test:bot": "node ./test/bot.js",
+    "lint": "tslint -c ./.tslint.js -p .",
+    "lint-fix": "npm run lint --fix",
+    "dev:start": "nodemon ./test/bot.js --config .nodemon.json",
+    "dev:watch": "tsc -p . --watch",
+    "docs:parse": "npm run gh:build -- --json ./bin/docs.json",
+    "gh:build": "typedoc src",
+    "prepublishOnly": "npm test",
+    "pub": "npm publish"
   },
   "repository": {
     "type": "git",
@@ -38,11 +44,11 @@
     "discord.js": "github:discordjs/discord.js"
   },
   "devDependencies": {
-    "@types/node": "^11.11.1",
-    "eslint": "^4.19.1",
-    "tslint": "4.5.1",
-    "tslint-config-typings": "^0.3.1",
+    "@types/node": "^11.11.6",
+    "tslint": "5.14.0",
+    "tslint-eslint-rules": "^5.4.0",
     "typedoc": "^0.14.2",
-    "typescript": "^3.3.3333"
+    "typedoc-plugin-no-inherit": "^1.1.6",
+    "typescript": "^3.3.4000"
   }
 }

@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "watch": [ "test" ],
+  "env": { "NODE_ENV": "development" },
+  "ext": "js"
+}

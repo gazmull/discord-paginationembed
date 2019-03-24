@@ -1,6 +1,7 @@
 # NPM and Yarn
 node_modules/
 yarn-error.log
+yarn.lock
 
 # VSC
 .vscode
@@ -8,3 +9,7 @@ yarn-error.log
 # Tests
 test/credentials.js
 docs
+bin
+
+# Node
+report.*
