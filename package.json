@@ -3,15 +3,13 @@
   "version": "1.0.0-beta.0",
   "description": "A pagination utility for MessageEmbed in Discord.JS",
   "main": "./bin/index.js",
-  "typings": "./bin",
+  "types": "./typings",
   "engines": {
     "node": ">= 10.0.0"
   },
   "scripts": {
-    "test": "npm run lint && npm run compile",
-    "compile": "tsc -p .",
+    "test": "gulp",
     "test:bot": "node ./test/bot.js",
-    "lint": "tslint -c ./.tslint.js -p .",
     "lint-fix": "npm run lint --fix",
     "dev:start": "nodemon ./test/bot.js --config .nodemon.json",
     "dev:watch": "tsc -p . --watch",
@@ -45,6 +43,11 @@
   },
   "devDependencies": {
     "@types/node": "^11.11.6",
+    "del": "^4.0.0",
+    "gulp": "^4.0.0",
+    "gulp-terser": "^1.1.7",
+    "gulp-tslint": "^8.1.4",
+    "gulp-typescript": "^5.0.1",
     "tslint": "5.14.0",
     "tslint-eslint-rules": "^5.4.0",
     "typedoc": "^0.14.2",
