@@ -1,7 +1,13 @@
 # Discord.JS - PaginationEmbed
 A pagination utility for MessageEmbed in Discord.JS
 
-[![Travis (.org) branch](https://img.shields.io/travis/gazmull/discord-paginationembed/master.svg?logo=travis&style=for-the-badge)](https://travis-ci.org/gazmull/discord-paginationembed)
+[![Discord Server](https://discordapp.com/api/guilds/370614673122263041/embed.png)](https://discord.gg/eDUzT87)
+[![Travis (.org) branch](https://img.shields.io/travis/gazmull/discord-paginationembed/master.svg?logo=travis&style=flat-square)](https://travis-ci.org/gazmull/discord-paginationembed)
+[![npm bundle size](https://img.shields.io/bundlephobia/min/discord-paginationembed.svg?logo=npm&style=flat-square)](https://nodei.co/npm/discord-paginationembed/)
+[![npm peer dependency version](https://img.shields.io/npm/dependency-version/discord-paginationembed/peer/discord.js.svg?logo=npm&style=flat-square)](https://nodei.co/npm/discord-paginationembed/)
+[![npm type definitions](https://img.shields.io/npm/types/discord-paginationembed.svg?logo=npm&style=flat-square)](https://nodei.co/npm/discord-paginationembed/)
+
+[![NPM](https://nodei.co/npm/discord-paginationembed.png?downloads=true&stars=true)](https://nodei.co/npm/discord-paginationembed/)
 
 ## 📣 Notice Board
 - [**Changelog**](https://github.com/gazmull/discord-paginationembed/blob/master/CHANGELOG.md)
@@ -10,6 +16,7 @@ A pagination utility for MessageEmbed in Discord.JS
 ## 🎉 Welcome
 - ✔ **Typings** included
 - ✔ [**Documentation**](https://gazmull.github.io/discord-paginationembed "Go to My Documentation") for online references
+- ✔ **Asynchronous** workflow
 - ✔ Supports [**Discord.JS v12 (current master)**](https://discord.js.org/#/docs/main/master/general/welcome "Go to Discord.JS Master Documentation")
 - ❌ Currently does not support **Discord.JS v11 (current stable)**
 - ❔ Nothing found within docs or need a nudge? You may visit the [**Discord server**](https://discord.gg/eDUzT87)
@@ -25,7 +32,7 @@ A pagination utility for MessageEmbed in Discord.JS
 - [**Pages of command description**](https://github.com/gazmull/eros-bot/blob/master/src/commands/general/guide.ts#L35)
 - [**Toggle between character and its weapon, and toggle image visibility**](https://github.com/gazmull/eros-bot/blob/master/src/commands/kamihime/info.ts#L180)
 - [**EXP Leaderboard**](https://github.com/gazmull/eros-bot/blob/master/src/commands/level/leaderboard.ts#L23)
-- [**Music Queue**](https://github.com/gazmull/ramiel-bot/blob/master/src/commands/music/queue.ts#L33)
+- [**Music Queue**](https://github.com/gazmull/ramiel-bot/blob/master/src/commands/music/queue.ts#L38)
 
 <br><br>
 > ### Under `message` event
