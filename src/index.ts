@@ -1,7 +1,7 @@
 // @ts-ignore
 import { version as DPE_VERSION } from '../package.json';
-import E from './struct/Embeds';
-import FE from './struct/FieldsEmbed';
+import E from './Embeds';
+import FE from './FieldsEmbed';
 
 /**
  * A pagination mode that uses an array of MessageEmbed to paginate.

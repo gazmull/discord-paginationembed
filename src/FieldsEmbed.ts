@@ -1,5 +1,5 @@
 import { MessageEmbed } from 'discord.js';
-import PaginationEmbed from './base/PaginationEmbed';
+import PaginationEmbed from './base';
 
 /** @noInheritDoc */
 export default class FieldsEmbed<Element> extends PaginationEmbed<Element> {
