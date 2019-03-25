@@ -88,6 +88,8 @@ export default class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     if (!hasPaginateField)
       throw new Error('Cannot invoke FieldsEmbed class without at least one formatted field to paginate.');
 
+    this.emit('start');
+
     return this._loadList();
   }
 

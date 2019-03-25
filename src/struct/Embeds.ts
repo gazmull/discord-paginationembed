@@ -119,6 +119,7 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
     this.pages = this.array.length;
 
     await this._verify();
+    this.emit('start');
 
     return this._loadList();
   }
