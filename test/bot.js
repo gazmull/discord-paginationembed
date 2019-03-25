@@ -6,7 +6,7 @@ const credentials = require('./credentials');
 const bot = new Client();
 
 const error = msg => {
-  console.log(msg);
+  console.error(msg);
 
   process.exit(1);
 };
@@ -60,7 +60,12 @@ bot
             for (const embed of instance.array)
               embed.fields[0].value--;
           }
-        });
+        })
+        .on('start', () => console.log('Started!'))
+        .on('finish', (user) => console.log(`Finished! User: ${user.username}`))
+        .on('react', (user, emoji) => console.log(`Reacted! User: ${user.username} | Emoji: ${emoji.name} (${emoji.id})`))
+        .on('expire', () => console.warn('Expired!'))
+        .on('error', console.error);
 
       await Embeds.build();
 
