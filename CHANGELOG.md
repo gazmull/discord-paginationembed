@@ -5,6 +5,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.0.0-beta.1] - 2019-03-26
+[**Updating from `v0.8.0`**](UPDATING_V1.md)
+
+### Added
+- New features testing for the test unit
+- `Updating to v1` readme
+- Badges for README
+- Gulp tasks
+
+### Changed
+- Files structure
+
+### Removed
+- Unnecessary NPM package assets being included on publish
+- NPM tasks related to package building in favour of Gulp tasks
+
+### Fixed
+- Typings for events and superclass
+- Superclass `EventEmitter`'s methods/properties from docs (docs noises)
+- `start` event not being fired at all
+
 ## [1.0.0-beta.0] - 2019-03-25
 [**Updating from `v0.8.0`**](UPDATING_V1.md)
 
@@ -113,7 +134,8 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.0...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.1...HEAD
+[1.0.0-beta.1]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.0...1.0.0-beta.1
 [1.0.0-beta.0]: https://github.com/gazmull/discord-paginationembed/compare/0.8.0...1.0.0-beta.0
 [0.8.0]: https://github.com/gazmull/discord-paginationembed/compare/0.7.7...0.8.0
 [0.7.7]: https://github.com/gazmull/discord-paginationembed/compare/0.2.3...0.7.7
