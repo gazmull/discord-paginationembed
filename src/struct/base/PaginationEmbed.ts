@@ -4,7 +4,9 @@ import Embeds from '../Embeds';
 import FieldsEmbed from '../FieldsEmbed';
 
 /**
- * @extends [[EventEmitter]]
+ * The base class for Pagination Modes. **Do not invoke**.
+ * @extends [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
+ * @noInheritDoc
  */
 export default class PaginationEmbed<Element> extends EventEmitter {
 
@@ -549,39 +551,60 @@ export default class PaginationEmbed<Element> extends EventEmitter {
     }
   }
 
-   /** Emitted upon successful `build()`. */
+   /**
+    * Emitted upon successful `build()`.
+    * @event
+    */
    public on (event: 'start', listener: () => void): this;
 
    /**
     * Emitted when the instance is finished by a user reacting with `DELETE` navigation emoji.
-    * @param user - The user who responded to the instance.
+    * @event
     */
-   public on (event: 'finish', listener: (user: User) => void): this;
+   public on (event: 'finish', listener: ListenerUser): this;
 
    /**
     * Emitted upon a user reacting on the instance.
-    * @param user - The user who responded to the instance.
-    * @param emoji - The emoji that was reacted to the instance.
+    * @event
     */
-   public on (event: 'react', listener: (user: User, emoji: Emoji) => void): this;
+   public on (event: 'react', listener: ListenerReact): this;
 
-   /** Emitted when the awaiting timeout is reached. */
+   /**
+    * Emitted when the awaiting timeout is reached.
+    * @event
+    */
    // tslint:disable-next-line: unified-signatures
    public on (event: 'expire', listener: () => void): this;
 
    /**
     * Emitted upon an occurance of non-internal error.
-    * @param err - The error object.
+    * @event
     */
    // @ts-ignore
-   public on (event: 'error', listener: (err: Error) => void): this;
+   public on (event: 'error', listener: ListenerError): this;
 
-   public once (event: 'finish', listener: (user: User) => void): this;
+   /** @event */
+   public once (event: 'finish', listener: ListenerUser): this;
+   /** @event */
    public once (event: 'start' | 'expire', listener: () => void): this;
-   public once (event: 'react', listener: (user: User, emoji: Emoji) => void): this;
+   /** @event */
+   public once (event: 'react', listener: ListenerReact): this;
+   /** @event */
    // @ts-ignore
-   public once (event: 'error', listener: (err: Error) => void): this;
+   public once (event: 'error', listener: ListenerError): this;
 }
+
+/**  @param user The user who responded to the instance. */
+type ListenerUser = (user: User) => void;
+
+/**
+ * @param user The user who responded to the instance.
+ * @param emoji The emoji that was reacted to the instance.
+ */
+type ListenerReact = (user: User, emoji: Emoji) => void;
+
+/** @param err The error object. */
+type ListenerError = (err: Error) => void;
 
 /** Options for [[PaginationEmbed.disabledNavigationEmojis]]. */
 export type DisabledNavigationEmojis = NavigationEmojiIdentifier[];
