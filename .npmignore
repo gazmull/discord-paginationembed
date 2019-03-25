@@ -1,11 +1,13 @@
 .vscode
 
 deploy
+demo
 docs
 test
 report.*
 
 .gitignore
+.gitattributes
 .nodemon.json
 .travis.yml
 .tslint.js
