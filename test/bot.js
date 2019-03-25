@@ -61,6 +61,7 @@ bot
               embed.fields[0].value--;
           }
         })
+        .setClientAssets({ prompt: 'yAAAaA— what page {{user}}?' })
         .on('start', () => console.log('Started!'))
         .on('finish', (user) => console.log(`Finished! User: ${user.username}`))
         .on('react', (user, emoji) => console.log(`Reacted! User: ${user.username} | Emoji: ${emoji.name} (${emoji.id})`))
