@@ -1,20 +1,19 @@
 .vscode
 
-deploy
 demo
+deploy
 docs
+src
 test
-report.*
 
-.gitignore
 .gitattributes
+.gitignore
 .nodemon.json
 .travis.yml
 .tslint.js
+Gulpfile.js
+report.*
 tsconfig.json
 typedoc.json
-
+UPDATING_V1.md
 yarn.lock
-
-src
-typings
