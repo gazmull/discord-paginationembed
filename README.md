@@ -27,6 +27,7 @@ A pagination utility for MessageEmbed in Discord.JS
     - ❗ Requires [**Git**](https://git-scm.com/)
 
 ## 🔰 Examples
+> [**Test Unit Example**](https://github.com/gazmull/discord-paginationembed/blob/master/test)
 
 ### In-action samples:
 - [**Pages of command description**](https://github.com/gazmull/eros-bot/blob/master/src/commands/general/guide.ts#L35)
@@ -35,51 +36,115 @@ A pagination utility for MessageEmbed in Discord.JS
 - [**Music Queue**](https://github.com/gazmull/ramiel-bot/blob/master/src/commands/music/queue.ts#L38)
 
 <br><br>
+> ### Import Node Module
+
+```js
+const Pagination = require('discord-paginationembed');
+```
+
 > ### Under `message` event
 
-### FieldsEmbed Mode
-```js
-const { FieldsEmbed: FieldsEmbedMode } = require('discord-paginationembed');
+### `FieldsEmbed` Mode
 
-const FieldsEmbedModeInstance = new FieldsEmbedMode()
-  .setArray([ { word: 'they are' }, { word: 'being treated' } ])
+```js
+const FieldsEmbed = new Pagination.FieldsEmbed()
+  // A must: an array to paginate, can be an array of any type
+  .setArray([{ word: 'they are' }, { word: 'being treated' }])
+  // Set users who can only interact with the instance, set as `[]` if everyone can interact.
   .setAuthorizedUsers([message.author.id])
+   // A must: sets the channel where to send the embed
   .setChannel(message.channel)
+  // Elements to show per page. Default: 10 elements per page
   .setElementsPerPage(2)
-  .setPage(2)
-  .showPageIndicator(false)
+   // Have a page indicator (shown on message content)
+  .setPageIndicator(false)
+   // Format based on the array, in this case we're formatting the page based on each object's `word` property
   .formatField('Continue...', el => el.word);
 
-// Customise the Embed
-FieldsEmbedModeInstance.embed
+// Customise embed
+FieldsEmbed.embed
   .setColor(0x00FFFF)
   .setTitle('Jesus Yamato Saves the Day by Obliterating a Swarm of Abyssal Bombers!')
   .setDescription('Akagi and Kaga give their thanks to their holy saviour today as...')
   .setImage('https://lh5.googleusercontent.com/-TIcwCxc7a-A/AAAAAAAAAAI/AAAAAAAAAAA/Hij7_7Qa1j0/s900-c-k-no/photo.jpg');
 
-embed.build();
+// Deploy embed
+FieldsEmbed.build();
 ```
-![FieldsEmbed](https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed.gif?raw=true)
+![FieldsEmbed](https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed.png?raw=true)
 
-### Embeds Mode
+#### Working with Asynchronous Behaviour
+> This assumes this is under an `async` function
+
 ```js
-const { Embeds: EmbedsMode } = require('discord-paginationembed');
-const { MessageEmbed } = require('discord.js');
+const FieldsEmbed = new Pagination.FieldsEmbed()
+  .setArray([{ name: 'John Doe' }, { name: 'Jane Doe' }])
+  .setAuthorizedUsers([message.author.id])
+  .setChannel(message.channel)
+  .setElementsPerPage(1)
+  // Initial page on deploy
+  .setPage(2)
+  .showPageIndicator(true)
+  .formatField('Name', i => i.name)
+  // Deletes the embed upon awaiting timeout
+  .setDeleteOnTimeout(true)
+  // Disable built-in navigation emojis, in this case: 🗑 (Delete Embed)
+  .setDisabledNavigationEmojis(['DELETE'])
+  // Set your own customised emojis
+  .setFunctionEmojis({
+    '🔄': (user, instance) => {
+      const field = instance.embed.fields[0];
 
+      if (field.name === 'Name')
+        field.name = user.tag;
+      else
+        field.name = 'Name';
+    }
+  })
+  // Similar to setFunctionEmojis() but this one takes only one emoji
+  .addFunctionEmoji('🅱', (_, instance) => {
+    const field = instance.embed.fields[0];
+
+    if (field.name.includes('🅱'))
+      field.name = 'Name';
+    else
+      field.name = 'Na🅱e';
+  });
+
+FieldsEmbed.embed
+  .setColor(0xFF00AE)
+  .setDescription('Test Description');
+
+await FieldsEmbed.build();
+
+// Will not log until FieldsEmbed.build() is finished
+console.log('done');
+```
+![FieldsEmbed2](https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed2.gif?raw=true)
+
+> ### Declare Embeds
+
+```js
+const { MessageEmbed } = require('discord.js');
 const embeds = [];
 
 for (let i = 0; i < 5; ++i)
   embeds.push(new MessageEmbed().addField('Page', i + 1));
+```
 
+### `Embeds` Mode
+
+```js
 const myImage = message.author.displayAvatarURL();
 
-new EmbedsMode()
+new Pagination.Embeds()
   .setArray(embeds)
   .setAuthorizedUsers([message.author.id])
   .setChannel(message.channel)
-  .showPageIndicator(true)
+  .setPageIndicator(true)
   .setPage(3)
-  .setImage(myImage) // Methods here and below are for customising all embeds
+   // Methods below are for customising all embeds
+  .setImage(myImage)
   .setThumbnail(myImage)
   .setTitle('Test Title')
   .setDescription('Test Description')
@@ -91,7 +156,48 @@ new EmbedsMode()
   .addField('Test Field 2', 'Test Field 2', true)
   .build();
 ```
-![Embeds](https://github.com/gazmull/discord-paginationembed/blob/master/demo/Embeds.gif?raw=true)
+![Embeds](https://user-images.githubusercontent.com/32944712/37118454-41116cbe-228f-11e8-9878-f39db26316a1.png)
+
+> This assumes this is under an `async` function
+
+```js
+const Embeds = new PaginationEmbed.Embeds()
+  .setArray(embeds)
+  .setAuthorizedUsers([message.author.id])
+  .setChannel(message.channel)
+  .setPageIndicator(true)
+  .setTitle('Test Title')
+  .setDescription('Test Description')
+  .setFooter('Test Footer Text')
+  .setURL('https://gazmull.github.io/discord-paginationembed')
+  .setColor(0xFF00AE)
+  .setDeleteOnTimeout(true)
+  .setDisabledNavigationEmojis(['DELETE'])
+  .setFunctionEmojis({
+    '⬆': (_, instance) => {
+      for (const embed of instance.array)
+        embed.fields[0].value++;
+    },
+    '⬇': (_, instance) => {
+      for (const embed of instance.array)
+        embed.fields[0].value--;
+    }
+  })
+  // Listeners for PaginationEmbed's events
+  // Upon successfull `build()`
+  .on('start', () => console.log('Started!'))
+  // Upon a user deleting the embed
+  .on('finish', (user) => console.log(`Finished! User: ${user.username}`))
+  // Upon a user reacting to the embed
+  .on('react', (user, emoji) => console.log(`Reacted! User: ${user.username} | Emoji: ${emoji.name} (${emoji.id})`))
+  // Upon the awaiting time expired
+  .on('expire', () => console.warn('Expired!'))
+  // Upon non-PaginationEmbed error (e.g: Discord API Error)
+  .on('error', console.error);
+
+await Embeds.build();
+```
+![Embeds2](https://github.com/gazmull/discord-paginationembed/blob/master/demo/Embeds.gif?raw=true)
 
 ## 💡🐛💻 Contributing
 ### Bug Reports

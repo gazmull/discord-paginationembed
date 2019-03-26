@@ -1,22 +1,25 @@
 # Updating From `v0.8.0`
 
 ## Notice
-If you are from stable branch (v11), then this will no longer work for you as its support has been suspended (this package only).
+If you are from **stable branch (v11)**, then this will no longer work for you as its support has been suspended (this package only).
 
 ## Installation
 New way to install the utility is from NPM: `npm install discord-paginationembed`
 
+### ❗ Heads Up!
+There might be a decision to suddenly resume support for **v11**. So if it ever happens, **master branch (v12)**'s installation would be `npm install discord-paginationembed@canary`
+
 ## TypeScript
 For importing types to your TypeScript project:
 ```ts
-import Embeds from 'discord-paginationembed/typings/Embeds';
-import FieldsEmbed from 'discord-paginationembed/typings/FieldsEmbed';
-
-// Unlikely
-import { IClientAssets } from 'discord-paginationembed/typings/base';
+import { Embeds, FieldsEmbed, IClientAssets } from 'discord-paginationembed';
 ```
 
 ## API Changes
+### `showPageIndicator` ➡ `setPageIndicator`
+
+---
+
 ### Passing an object to the constructor removed
 Method `object as constructor` no longer exists, instead use the methods provided such as `setArray()`.
 
@@ -36,7 +39,7 @@ new FieldsEmbed()
 ---
 
 ### `clientMessage` ➡ `clientAssets`
-`clientMessage` has been renamed to `clientAssets`. Another option, `prompt`, has been added for customising the message content for `when prompted to jump to a page`.
+`clientMessage` has been replaced with `clientAssets`: similar API but the latter takes an object as the only parameter. Another option, `prompt`, has been added for customising the message content for `when prompted to jump to a page`.
 
 #### `clientMessage` (Old way)
 ```js
