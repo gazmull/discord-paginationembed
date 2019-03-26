@@ -979,6 +979,9 @@ img { max-width: 100%; }
 				</li>
 			</ul>
 			<h2 id="-examples">🔰 Examples</h2>
+			<blockquote>
+				<p><a href="https://github.com/gazmull/discord-paginationembed/blob/master/test"><strong>Test Unit Example</strong></a></p>
+			</blockquote>
 			<h3 id="in-action-samples-">In-action samples:</h3>
 			<ul>
 				<li><a href="https://github.com/gazmull/eros-bot/blob/master/src/commands/general/guide.ts#L35"><strong>Pages of command description</strong></a></li>
@@ -988,47 +991,103 @@ img { max-width: 100%; }
 			</ul>
 			<p><br><br></p>
 			<blockquote>
+				<h3 id="import-node-module">Import Node Module</h3>
+			</blockquote>
+			<pre><code class="language-js"><span class="hljs-keyword">const</span> Pagination = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord-paginationembed'</span>);</code></pre>
+			<blockquote>
 				<h3 id="under-message-event">Under <code>message</code> event</h3>
 			</blockquote>
-			<h3 id="fieldsembed-mode">FieldsEmbed Mode</h3>
-			<pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-attr">FieldsEmbed</span>: FieldsEmbedMode } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord-paginationembed'</span>);
-
-<span class="hljs-keyword">const</span> FieldsEmbedModeInstance = <span class="hljs-keyword">new</span> FieldsEmbedMode()
-  .setArray([ { <span class="hljs-attr">word</span>: <span class="hljs-string">'they are'</span> }, { <span class="hljs-attr">word</span>: <span class="hljs-string">'being treated'</span> } ])
+			<h3 id="fieldsembed-mode"><code>FieldsEmbed</code> Mode</h3>
+			<pre><code class="language-js"><span class="hljs-keyword">const</span> FieldsEmbed = <span class="hljs-keyword">new</span> Pagination.FieldsEmbed()
+  <span class="hljs-comment">// A must: an array to paginate, can be an array of any type</span>
+  .setArray([{ <span class="hljs-attr">word</span>: <span class="hljs-string">'they are'</span> }, { <span class="hljs-attr">word</span>: <span class="hljs-string">'being treated'</span> }])
+  <span class="hljs-comment">// Set users who can only interact with the instance, set as `[]` if everyone can interact.</span>
   .setAuthorizedUsers([message.author.id])
+   <span class="hljs-comment">// A must: sets the channel where to send the embed</span>
   .setChannel(message.channel)
+  <span class="hljs-comment">// Elements to show per page. Default: 10 elements per page</span>
   .setElementsPerPage(<span class="hljs-number">2</span>)
-  .setPage(<span class="hljs-number">2</span>)
-  .showPageIndicator(<span class="hljs-literal">false</span>)
+   <span class="hljs-comment">// Have a page indicator (shown on message content)</span>
+  .setPageIndicator(<span class="hljs-literal">false</span>)
+   <span class="hljs-comment">// Format based on the array, in this case we're formatting the page based on each object's `word` property</span>
   .formatField(<span class="hljs-string">'Continue...'</span>, el =&gt; el.word);
 
-<span class="hljs-comment">// Customise the Embed</span>
-FieldsEmbedModeInstance.embed
+<span class="hljs-comment">// Customise embed</span>
+FieldsEmbed.embed
   .setColor(<span class="hljs-number">0x00FFFF</span>)
   .setTitle(<span class="hljs-string">'Jesus Yamato Saves the Day by Obliterating a Swarm of Abyssal Bombers!'</span>)
   .setDescription(<span class="hljs-string">'Akagi and Kaga give their thanks to their holy saviour today as...'</span>)
   .setImage(<span class="hljs-string">'https://lh5.googleusercontent.com/-TIcwCxc7a-A/AAAAAAAAAAI/AAAAAAAAAAA/Hij7_7Qa1j0/s900-c-k-no/photo.jpg'</span>);
 
-embed.build();</code></pre>
-			<p><img src="https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed.gif?raw=true" alt="FieldsEmbed"></p>
-			<h3 id="embeds-mode">Embeds Mode</h3>
-			<pre><code class="language-js"><span class="hljs-keyword">const</span> { <span class="hljs-attr">Embeds</span>: EmbedsMode } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord-paginationembed'</span>);
-<span class="hljs-keyword">const</span> { MessageEmbed } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord.js'</span>);
+<span class="hljs-comment">// Deploy embed</span>
+FieldsEmbed.build();</code></pre>
+			<p><img src="https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed.png?raw=true" alt="FieldsEmbed"></p>
+			<h4 id="working-with-asynchronous-behaviour">Working with Asynchronous Behaviour</h4>
+			<blockquote>
+				<p>This assumes this is under an <code>async</code> function</p>
+			</blockquote>
+			<pre><code class="language-js"><span class="hljs-keyword">const</span> FieldsEmbed = <span class="hljs-keyword">new</span> Pagination.FieldsEmbed()
+  .setArray([{ <span class="hljs-attr">name</span>: <span class="hljs-string">'John Doe'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Jane Doe'</span> }])
+  .setAuthorizedUsers([message.author.id])
+  .setChannel(message.channel)
+  .setElementsPerPage(<span class="hljs-number">1</span>)
+  <span class="hljs-comment">// Initial page on deploy</span>
+  .setPage(<span class="hljs-number">2</span>)
+  .showPageIndicator(<span class="hljs-literal">true</span>)
+  .formatField(<span class="hljs-string">'Name'</span>, i =&gt; i.name)
+  <span class="hljs-comment">// Deletes the embed upon awaiting timeout</span>
+  .setDeleteOnTimeout(<span class="hljs-literal">true</span>)
+  <span class="hljs-comment">// Disable built-in navigation emojis, in this case: 🗑 (Delete Embed)</span>
+  .setDisabledNavigationEmojis([<span class="hljs-string">'DELETE'</span>])
+  <span class="hljs-comment">// Set your own customised emojis</span>
+  .setFunctionEmojis({
+    <span class="hljs-string">'🔄'</span>: <span class="hljs-function">(<span class="hljs-params">user, instance</span>) =&gt;</span> {
+      <span class="hljs-keyword">const</span> field = instance.embed.fields[<span class="hljs-number">0</span>];
 
+      <span class="hljs-keyword">if</span> (field.name === <span class="hljs-string">'Name'</span>)
+        field.name = user.tag;
+      <span class="hljs-keyword">else</span>
+        field.name = <span class="hljs-string">'Name'</span>;
+    }
+  })
+  <span class="hljs-comment">// Similar to setFunctionEmojis() but this one takes only one emoji</span>
+  .addFunctionEmoji(<span class="hljs-string">'🅱'</span>, (_, instance) =&gt; {
+    <span class="hljs-keyword">const</span> field = instance.embed.fields[<span class="hljs-number">0</span>];
+
+    <span class="hljs-keyword">if</span> (field.name.includes(<span class="hljs-string">'🅱'</span>))
+      field.name = <span class="hljs-string">'Name'</span>;
+    <span class="hljs-keyword">else</span>
+      field.name = <span class="hljs-string">'Na🅱e'</span>;
+  });
+
+FieldsEmbed.embed
+  .setColor(<span class="hljs-number">0xFF00AE</span>)
+  .setDescription(<span class="hljs-string">'Test Description'</span>);
+
+<span class="hljs-keyword">await</span> FieldsEmbed.build();
+
+<span class="hljs-comment">// Will not log until FieldsEmbed.build() is finished</span>
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'done'</span>);</code></pre>
+			<p><img src="https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed2.gif?raw=true" alt="FieldsEmbed2"></p>
+			<blockquote>
+				<h3 id="declare-embeds">Declare Embeds</h3>
+			</blockquote>
+			<pre><code class="language-js"><span class="hljs-keyword">const</span> { MessageEmbed } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord.js'</span>);
 <span class="hljs-keyword">const</span> embeds = [];
 
 <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; ++i)
-  embeds.push(<span class="hljs-keyword">new</span> MessageEmbed().addField(<span class="hljs-string">'Page'</span>, i + <span class="hljs-number">1</span>));
+  embeds.push(<span class="hljs-keyword">new</span> MessageEmbed().addField(<span class="hljs-string">'Page'</span>, i + <span class="hljs-number">1</span>));</code></pre>
+			<h3 id="embeds-mode"><code>Embeds</code> Mode</h3>
+			<pre><code class="language-js"><span class="hljs-keyword">const</span> myImage = message.author.displayAvatarURL();
 
-<span class="hljs-keyword">const</span> myImage = message.author.displayAvatarURL();
-
-<span class="hljs-keyword">new</span> EmbedsMode()
+<span class="hljs-keyword">new</span> Pagination.Embeds()
   .setArray(embeds)
   .setAuthorizedUsers([message.author.id])
   .setChannel(message.channel)
-  .showPageIndicator(<span class="hljs-literal">true</span>)
+  .setPageIndicator(<span class="hljs-literal">true</span>)
   .setPage(<span class="hljs-number">3</span>)
-  .setImage(myImage) <span class="hljs-comment">// Methods here and below are for customising all embeds</span>
+   <span class="hljs-comment">// Methods below are for customising all embeds</span>
+  .setImage(myImage)
   .setThumbnail(myImage)
   .setTitle(<span class="hljs-string">'Test Title'</span>)
   .setDescription(<span class="hljs-string">'Test Description'</span>)
@@ -1039,7 +1098,46 @@ embed.build();</code></pre>
   .addField(<span class="hljs-string">'Test Field 1'</span>, <span class="hljs-string">'Test Field 1'</span>, <span class="hljs-literal">true</span>)
   .addField(<span class="hljs-string">'Test Field 2'</span>, <span class="hljs-string">'Test Field 2'</span>, <span class="hljs-literal">true</span>)
   .build();</code></pre>
-			<p><img src="https://github.com/gazmull/discord-paginationembed/blob/master/demo/Embeds.gif?raw=true" alt="Embeds"></p>
+			<p><img src="https://user-images.githubusercontent.com/32944712/37118454-41116cbe-228f-11e8-9878-f39db26316a1.png" alt="Embeds"></p>
+			<blockquote>
+				<p>This assumes this is under an <code>async</code> function</p>
+			</blockquote>
+			<pre><code class="language-js"><span class="hljs-keyword">const</span> Embeds = <span class="hljs-keyword">new</span> PaginationEmbed.Embeds()
+  .setArray(embeds)
+  .setAuthorizedUsers([message.author.id])
+  .setChannel(message.channel)
+  .setPageIndicator(<span class="hljs-literal">true</span>)
+  .setTitle(<span class="hljs-string">'Test Title'</span>)
+  .setDescription(<span class="hljs-string">'Test Description'</span>)
+  .setFooter(<span class="hljs-string">'Test Footer Text'</span>)
+  .setURL(<span class="hljs-string">'https://gazmull.github.io/discord-paginationembed'</span>)
+  .setColor(<span class="hljs-number">0xFF00AE</span>)
+  .setDeleteOnTimeout(<span class="hljs-literal">true</span>)
+  .setDisabledNavigationEmojis([<span class="hljs-string">'DELETE'</span>])
+  .setFunctionEmojis({
+    <span class="hljs-string">'⬆'</span>: <span class="hljs-function">(<span class="hljs-params">_, instance</span>) =&gt;</span> {
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> embed <span class="hljs-keyword">of</span> instance.array)
+        embed.fields[<span class="hljs-number">0</span>].value++;
+    },
+    <span class="hljs-string">'⬇'</span>: <span class="hljs-function">(<span class="hljs-params">_, instance</span>) =&gt;</span> {
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> embed <span class="hljs-keyword">of</span> instance.array)
+        embed.fields[<span class="hljs-number">0</span>].value--;
+    }
+  })
+  <span class="hljs-comment">// Listeners for PaginationEmbed's events</span>
+  <span class="hljs-comment">// Upon successfull `build()`</span>
+  .on(<span class="hljs-string">'start'</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Started!'</span>))
+  <span class="hljs-comment">// Upon a user deleting the embed</span>
+  .on(<span class="hljs-string">'finish'</span>, (user) =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Finished! User: <span class="hljs-subst">${user.username}</span>`</span>))
+  <span class="hljs-comment">// Upon a user reacting to the embed</span>
+  .on(<span class="hljs-string">'react'</span>, (user, emoji) =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Reacted! User: <span class="hljs-subst">${user.username}</span> | Emoji: <span class="hljs-subst">${emoji.name}</span> (<span class="hljs-subst">${emoji.id}</span>)`</span>))
+  <span class="hljs-comment">// Upon the awaiting time expired</span>
+  .on(<span class="hljs-string">'expire'</span>, () =&gt; <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">'Expired!'</span>))
+  <span class="hljs-comment">// Upon non-PaginationEmbed error (e.g: Discord API Error)</span>
+  .on(<span class="hljs-string">'error'</span>, <span class="hljs-built_in">console</span>.error);
+
+<span class="hljs-keyword">await</span> Embeds.build();</code></pre>
+			<p><img src="https://github.com/gazmull/discord-paginationembed/blob/master/demo/Embeds.gif?raw=true" alt="Embeds2"></p>
 			<h2 id="-contributing">💡🐛💻 Contributing</h2>
 			<h3 id="bug-reports">Bug Reports</h3>
 			<p>Please provide reproducible steps and results proofs (e.g: images). Also, solutions are welcome!</p>
@@ -1123,7 +1221,7 @@ embed.build();</code></pre>
 				<div class="tsd-signature tsd-kind-icon">Disabled<wbr>Navigation<wbr>Emojis<span class="tsd-signature-symbol">:</span> <a href="globals.html#navigationemojiidentifier" class="tsd-signature-type">NavigationEmojiIdentifier</a><span class="tsd-signature-symbol">[]</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/8f66f0a/src/base/index.ts#L610">base/index.ts:610</a></li>
+						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/af74023/src/base/index.ts#L616">base/index.ts:616</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1138,7 +1236,7 @@ embed.build();</code></pre>
 				<div class="tsd-signature tsd-kind-icon">Listener<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/8f66f0a/src/base/index.ts#L607">base/index.ts:607</a></li>
+						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/af74023/src/base/index.ts#L613">base/index.ts:613</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1176,7 +1274,7 @@ embed.build();</code></pre>
 				<div class="tsd-signature tsd-kind-icon">Listener<wbr>React<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/8f66f0a/src/base/index.ts#L604">base/index.ts:604</a></li>
+						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/af74023/src/base/index.ts#L610">base/index.ts:610</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1220,7 +1318,7 @@ embed.build();</code></pre>
 				<div class="tsd-signature tsd-kind-icon">Listener<wbr>User<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/8f66f0a/src/base/index.ts#L598">base/index.ts:598</a></li>
+						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/af74023/src/base/index.ts#L604">base/index.ts:604</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1258,7 +1356,7 @@ embed.build();</code></pre>
 				<div class="tsd-signature tsd-kind-icon">Navigation<wbr>Emoji<wbr>Identifier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"BACK"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"JUMP"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"FORWARD"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"DELETE"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"ALL"</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/8f66f0a/src/base/index.ts#L636">base/index.ts:636</a></li>
+						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/af74023/src/base/index.ts#L642">base/index.ts:642</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1267,11 +1365,11 @@ embed.build();</code></pre>
 			<h2>Variables</h2>
 			<section class="tsd-panel tsd-member tsd-kind-variable">
 				<a name="version" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagConst">Const</span> version</h3>
-				<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;DPE_VERSION</span></div>
+				<h3>version</h3>
+				<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/8f66f0a/src/index.ts#L18">index.ts:18</a></li>
+						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/af74023/src/index.ts#L6">index.ts:6</a></li>
 					</ul>
 				</aside>
 			</section>
