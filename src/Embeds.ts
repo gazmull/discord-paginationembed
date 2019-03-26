@@ -1,8 +1,12 @@
 import { ColorResolvable, EmbedField, MessageEmbed, StringResolvable } from 'discord.js';
-import PaginationEmbed from './base';
+import { PaginationEmbed } from './base';
 
-/** @noInheritDoc */
-export default class Embeds extends PaginationEmbed<MessageEmbed> {
+/**
+ * A pagination mode that uses an array of MessageEmbed to paginate.
+ * @extends [[PaginationEmbed]]
+ * @noInheritDoc
+ */
+export class Embeds extends PaginationEmbed<MessageEmbed> {
 
   /** The title of all embeds. */
   public title: string;
@@ -51,6 +55,8 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param inline - Whether the field is inline or not to the other fields.
    */
   public addBlankField (inline = false) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
+
     for (const el of this.array)
       el.addBlankField(inline);
 
@@ -64,6 +70,7 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param inline - Whether the field is inline or not to the other fields.
    */
   public addField (name: string, value: StringResolvable, inline = false) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
     if (!name && !value) return this;
 
     for (const el of this.array)
@@ -91,7 +98,7 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
    *    .setChannel(message.channel)
    *    .setClientAssets({ prepare: 'Preparing the embed...' })
    *    .setArray(embeds)
-   *    .showPageIndicator(false)
+   *    .setPageIndicator(false)
    *    .setPage(1)
    *    .setTimeout(69000)
    *    .setNavigationEmojis({
@@ -150,6 +157,7 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param url - The URL of the author.
    */
   public setAuthor (name: string, iconURL?: string, url?: string) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
     if (!name) return this;
 
     for (const el of this.array)
@@ -163,6 +171,7 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param color - The color of all embeds.
    */
   public setColor (color: ColorResolvable) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
     if (!color) return this;
 
     for (const el of this.array)
@@ -176,6 +185,7 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param description - The description of all embeds.
    */
   public setDescription (description: StringResolvable) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
     if (!description) return this;
 
     for (const el of this.array)
@@ -190,6 +200,7 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param iconURL - URL for the footer's icon.
    */
   public setFooter (text: StringResolvable, iconURL?: string) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
     if (!text) return this;
 
     for (const el of this.array)
@@ -203,6 +214,7 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param url - The image of all embeds.
    */
   public setImage (url: string ) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
     if (!url) return this;
 
     for (const el of this.array)
@@ -216,6 +228,7 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param url - The thumbnail of all embeds.
    */
   public setThumbnail (url: string) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
     if (!url) return this;
 
     for (const el of this.array)
@@ -229,6 +242,8 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param timestamp - The timestamp or date.
    */
   public setTimestamp (timestamp?: Date | number) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
+
     for (const el of this.array)
       el.setTimestamp(timestamp);
 
@@ -240,6 +255,7 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param title - The title of all embeds.
    */
   public setTitle (title: StringResolvable) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
     if (!title) return this;
 
     for (const el of this.array)
@@ -253,6 +269,7 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param url - The URL of all embeds.
    */
   public setURL (url: string) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
     if (!url) return this;
 
     for (const el of this.array)
@@ -276,6 +293,8 @@ export default class Embeds extends PaginationEmbed<MessageEmbed> {
     value?: StringResolvable,
     inline?: boolean
   ) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
+
     for (const el of this.array)
       el.spliceField(index, deleteCount, name, value, inline);
 
