@@ -1,14 +1,14 @@
 import { DMChannel, Emoji, Message, MessageReaction, Snowflake, TextChannel, User } from 'discord.js';
 import { EventEmitter } from 'events';
-import Embeds from '../Embeds';
-import FieldsEmbed from '../FieldsEmbed';
+import { Embeds } from '../Embeds';
+import { FieldsEmbed } from '../FieldsEmbed';
 
 /**
  * The base class for Pagination Modes. **Do not invoke**.
  * @extends [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
  * @noInheritDoc
  */
-export default class PaginationEmbed<Element> extends EventEmitter {
+export class PaginationEmbed<Element> extends EventEmitter {
 
   constructor () {
     super();
@@ -148,7 +148,7 @@ export default class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /**
-   * Sets the array of elements to paginate.
+   * Sets the array of elements to paginate. This must be called first before any other methods.
    * @param array - An array of elements to paginate.
    */
   public setArray (array: Element[]) {
@@ -333,8 +333,8 @@ export default class PaginationEmbed<Element> extends EventEmitter {
    * Sets whether page number indicator on client's message is shown or not.
    * @param indicator - Show page indicator?
    */
-  public showPageIndicator (boolean: boolean) {
-    if (typeof boolean !== 'boolean') throw new TypeError('showPageIndicator() only accepts boolean type.');
+  public setPageIndicator (boolean: boolean) {
+    if (typeof boolean !== 'boolean') throw new TypeError('setPageIndicator() only accepts boolean type.');
 
     this.pageIndicator = boolean;
 
@@ -359,6 +359,12 @@ export default class PaginationEmbed<Element> extends EventEmitter {
    */
   public async _verify () {
     this.setClientAssets(this.clientAssets);
+
+    if (!this.clientAssets.message && !this.channel)
+      throw new Error('Cannot invoke PaginationEmbed class without either a message object or a channel object set.');
+
+    if (!(this.page >= 1 && this.page <= this.pages))
+      throw new Error(`Page number is out of bounds. Max pages: ${this.pages}`);
 
     const message = (this.clientAssets.message
       ? await this.clientAssets.message.edit(this.clientAssets.prepare)
