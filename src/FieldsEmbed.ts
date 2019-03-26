@@ -1,8 +1,12 @@
 import { MessageEmbed } from 'discord.js';
-import PaginationEmbed from './base';
+import { PaginationEmbed } from './base';
 
-/** @noInheritDoc */
-export default class FieldsEmbed<Element> extends PaginationEmbed<Element> {
+/**
+ * A pagination mode that uses a MessageEmbed with a field(s) containing the elements to paginate.
+ * @extends [[PaginationEmbed]]
+ * @noInheritDoc
+ */
+export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
 
   constructor () {
     super();
@@ -47,7 +51,7 @@ export default class FieldsEmbed<Element> extends PaginationEmbed<Element> {
    *    .setClientAssets({ prepare: 'Preparing the embed...' })
    *    .setArray([{ name: 'John Doe' }, { name: 'Jane Doe' }])
    *    .setElementsPerPage(1)
-   *    .showPageIndicator(false)
+   *    .setPageIndicator(false)
    *    .formatField('Name', el => el.name)
    *    .setPage(1)
    *    .setTimeout(69000)

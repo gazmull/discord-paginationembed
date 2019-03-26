@@ -43,10 +43,10 @@ bot
         .setArray(embeds)
         .setAuthorizedUsers(users)
         .setChannel(channel)
-        .showPageIndicator(true)
+        .setPageIndicator(true)
         .setTitle('Test Title')
         .setDescription('Test Description')
-        .setFooter('Test Footer Text')
+        .setFooter(`version: ${PaginationEmbed.version}`)
         .setURL('https://gazmull.github.io/discord-paginationembed')
         .setColor(0xFF00AE)
         .setDeleteOnTimeout(deleteOnTimeout)
@@ -104,6 +104,7 @@ bot
       FieldsEmbed.embed
         .setColor(0xFF00AE)
         .setDescription('Test Description')
+        .setFooter(`version: ${PaginationEmbed.version}`)
         .addField('Test Static Field', 'and its value');
 
       await FieldsEmbed.build();
