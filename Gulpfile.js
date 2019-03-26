@@ -12,10 +12,6 @@ const paths = {
   typings: 'typings',
 };
 
-const tsFiles = {
-  dest: paths.bin,
-};
-
 const terserFiles = {
   dest: paths.bin,
   src: paths.bin + '/**/*.js',
@@ -37,7 +33,7 @@ gulp.task('ts', () => {
   const res = tsProject.src()
     .pipe(tsProject());
 
-  res.js.pipe(gulp.dest(tsFiles.dest))
+  res.js.pipe(gulp.dest(paths.bin))
 
   return res.dts.pipe(gulp.dest(paths.typings));
 });

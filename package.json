@@ -1,6 +1,6 @@
 {
   "name": "discord-paginationembed",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "A pagination utility for MessageEmbed in Discord.JS",
   "main": "./bin/index.js",
   "types": "./typings",
@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "gulp",
+    "test:build": "gulp build",
     "test:bot": "node ./test/bot.js",
     "lint-fix": "npm run lint --fix",
     "dev:start": "nodemon ./test/bot.js --config .nodemon.json",
