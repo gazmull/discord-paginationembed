@@ -5,6 +5,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.0.0-beta.2] - 2019-03-27
+[**Updating from `v0.8.0`**](UPDATING_V1.md) (Updated, please read again)
+
+### Added
+- Examples for README
+
+### Changed
+- Updated `UPDATING_V1.md`
+- File structure: typings imports for TypeScript projects has been changed:
+  #### Old way
+  ```ts
+  import Embeds from 'discord-paginationembed/typings/Embeds';
+  import FieldsEmbed from 'discord-paginationembed/typings/FieldsEmbed';
+  
+  // Unlikely
+  import { IClientAssets } from 'discord-paginationembed/typings/base';
+  ```
+
+  #### New way
+  ```ts
+  import { Embeds, FieldsEmbed, IClientAssets } from 'discord-paginationembed';
+  ```
+- `showPageIndicator` ➡ `setPageIndicator`
+
+### Fixed
+- Non-working examples
+- Page number that is out of bounds being ignored on `build()`
+- Missing message **and** channel objects being ignored
+- Undefined array being ignored on `Embeds` mode methods
+
 ## [1.0.0-beta.1] - 2019-03-26
 [**Updating from `v0.8.0`**](UPDATING_V1.md)
 
@@ -134,7 +164,8 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.1...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.2...HEAD
+[1.0.0-beta.2]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.1...1.0.0-beta.2
 [1.0.0-beta.1]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.0...1.0.0-beta.1
 [1.0.0-beta.0]: https://github.com/gazmull/discord-paginationembed/compare/0.8.0...1.0.0-beta.0
 [0.8.0]: https://github.com/gazmull/discord-paginationembed/compare/0.7.7...0.8.0
