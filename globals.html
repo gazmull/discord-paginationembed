@@ -966,13 +966,19 @@ img { max-width: 100%; }
 				<li>✔ <strong>Typings</strong> included</li>
 				<li>✔ <a href="https://gazmull.github.io/discord-paginationembed" title="Go to My Documentation"><strong>Documentation</strong></a> for online references</li>
 				<li>✔ <strong>Asynchronous</strong> workflow</li>
-				<li>✔ Supports <a href="https://discord.js.org/#/docs/main/master/general/welcome" title="Go to Discord.JS Master Documentation"><strong>Discord.JS v12 (current master)</strong></a></li>
-				<li>❌ Currently does not support <strong>Discord.JS v11 (current stable)</strong></li>
+				<li>✔ Supports <a href="https://discord.js.org/#/docs/main/master/general/welcome" title="Go to Discord.JS Master Documentation"><strong>Discord.JS v12</strong></a></li>
+				<li>❌ Currently does not support <strong>Discord.JS v11</strong></li>
 				<li>❔ Nothing found within docs or need a nudge? You may visit the <a href="https://discord.gg/eDUzT87"><strong>Discord server</strong></a></li>
 			</ul>
 			<h2 id="-installation">🛠 Installation</h2>
 			<ul>
-				<li><strong>PaginationEmbed</strong>: <code>npm install discord-paginationembed</code></li>
+				<li><strong>PaginationEmbed</strong>: <code>npm install discord-paginationembed</code><ul>
+						<li>Master branch: <code>npm install gazmull/discord-paginationembed</code><ul>
+								<li>❗ Requires <a href="https://git-scm.com/"><strong>Git</strong></a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
 				<li><strong>Discord.JS</strong>: <code>npm install discordjs/discord.js</code><ul>
 						<li>❗ Requires <a href="https://git-scm.com/"><strong>Git</strong></a></li>
 					</ul>
@@ -981,6 +987,9 @@ img { max-width: 100%; }
 			<h2 id="-examples">🔰 Examples</h2>
 			<blockquote>
 				<p><a href="https://github.com/gazmull/discord-paginationembed/blob/master/test"><strong>Test Unit Example</strong></a></p>
+			</blockquote>
+			<blockquote>
+				<p><a href="https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md#TypeScript"><strong>Preface for TypeScript Projects</strong></a></p>
 			</blockquote>
 			<h3 id="in-action-samples-">In-action samples:</h3>
 			<ul>
@@ -1220,7 +1229,7 @@ FieldsEmbed.embed
 				<div class="tsd-signature tsd-kind-icon">Disabled<wbr>Navigation<wbr>Emojis<span class="tsd-signature-symbol">:</span> <a href="globals.html#navigationemojiidentifier" class="tsd-signature-type">NavigationEmojiIdentifier</a><span class="tsd-signature-symbol">[]</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/af74023/src/base/index.ts#L616">base/index.ts:616</a></li>
+						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/a947aaa/src/base/index.ts#L616">base/index.ts:616</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1235,7 +1244,7 @@ FieldsEmbed.embed
 				<div class="tsd-signature tsd-kind-icon">Listener<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/af74023/src/base/index.ts#L613">base/index.ts:613</a></li>
+						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/a947aaa/src/base/index.ts#L613">base/index.ts:613</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1273,7 +1282,7 @@ FieldsEmbed.embed
 				<div class="tsd-signature tsd-kind-icon">Listener<wbr>React<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/af74023/src/base/index.ts#L610">base/index.ts:610</a></li>
+						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/a947aaa/src/base/index.ts#L610">base/index.ts:610</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1317,7 +1326,7 @@ FieldsEmbed.embed
 				<div class="tsd-signature tsd-kind-icon">Listener<wbr>User<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/af74023/src/base/index.ts#L604">base/index.ts:604</a></li>
+						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/a947aaa/src/base/index.ts#L604">base/index.ts:604</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1355,7 +1364,7 @@ FieldsEmbed.embed
 				<div class="tsd-signature tsd-kind-icon">Navigation<wbr>Emoji<wbr>Identifier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"BACK"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"JUMP"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"FORWARD"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"DELETE"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"ALL"</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/af74023/src/base/index.ts#L642">base/index.ts:642</a></li>
+						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/a947aaa/src/base/index.ts#L642">base/index.ts:642</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1368,7 +1377,7 @@ FieldsEmbed.embed
 				<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/af74023/src/index.ts#L6">index.ts:6</a></li>
+						<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/a947aaa/src/index.ts#L6">index.ts:6</a></li>
 					</ul>
 				</aside>
 			</section>
