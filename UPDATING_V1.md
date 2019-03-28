@@ -15,6 +15,18 @@ For importing types to your TypeScript project:
 import { Embeds, FieldsEmbed, IClientAssets } from 'discord-paginationembed';
 ```
 
+Typings also provide type parameter for `FieldsEmbed` mode to help you identify your element's properties:
+```ts
+interface LegendaryInterface {
+  pakaluPapito: string;
+  hotel?: 'Trivago';
+}
+
+const fieldsEmbed = new FieldsEmbed<LegendaryInterface>();
+```
+
+![Types](https://github.com/gazmull/discord-paginationembed/blob/master/demo/Types.png?raw=true)
+
 ## API Changes
 ### `showPageIndicator` ➡ `setPageIndicator`
 
