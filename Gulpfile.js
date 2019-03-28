@@ -9,12 +9,12 @@ const tsProject = ts.createProject('tsconfig.json');
 const paths = {
   bin: 'bin',
   src: 'src',
-  typings: 'typings',
+  typings: 'typings'
 };
 
 const terserFiles = {
   dest: paths.bin,
-  src: paths.bin + '/**/*.js',
+  src: paths.bin + '/**/*.js'
 };
 
 gulp.task('clean', () => {
@@ -33,14 +33,23 @@ gulp.task('ts', () => {
   const res = tsProject.src()
     .pipe(tsProject());
 
-  res.js.pipe(gulp.dest(paths.bin))
+  res.js.pipe(gulp.dest(paths.bin));
 
   return res.dts.pipe(gulp.dest(paths.typings));
 });
 
 gulp.task('terser', () => {
   return gulp.src(terserFiles.src)
-    .pipe(terser({ module: true }))
+    .pipe(terser({
+      toplevel: true,
+      output: {
+        beautify: true,
+        comments: false,
+        ecma: 8,
+        indent_level: 2,
+        max_line_len: 120
+      }
+    }))
     .pipe(gulp.dest(terserFiles.dest));
 });
 
