@@ -143,7 +143,7 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
 
   /** @ignore */
   public async _loadList (callNavigation = true) {
-    const embed = await this._drawList() as unknown as MessageEmbed;
+    const embed = await this._drawList();
     const shouldIndicate = this.pageIndicator
       ? this.pages === 1
         ? null
