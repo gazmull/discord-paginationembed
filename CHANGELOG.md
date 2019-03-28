@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- More TypeScript notices
+- Master branch (unreleased) installation
+
+### Changed
+- Beautify Terser output for debugging locally from NPM package
+
+### Fixed
+- Gulpfile code style
+- Unnecessary recasting of MessageEmbed on FieldsEmbed#_loadList
 
 ## [1.0.0-beta.2] - 2019-03-27
 [**Updating from `v0.8.0`**](UPDATING_V1.md) (Updated, please read again)
