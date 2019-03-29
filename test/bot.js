@@ -78,7 +78,7 @@ bot
         .setChannel(channel)
         .setElementsPerPage(1)
         .setPage(2)
-        .showPageIndicator(true)
+        .setPageIndicator(true)
         .formatField('Name', i => i.name)
         .setDeleteOnTimeout(deleteOnTimeout)
         .setDisabledNavigationEmojis(disabledNavigationEmojis)
