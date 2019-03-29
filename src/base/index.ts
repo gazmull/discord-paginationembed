@@ -3,6 +3,8 @@ import { EventEmitter } from 'events';
 import { Embeds } from '../Embeds';
 import { FieldsEmbed } from '../FieldsEmbed';
 
+const MESSAGE_DELETED = 'Client\'s message was deleted before being processed.';
+
 /**
  * The base class for Pagination Modes. **Do not invoke**.
  * @extends [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
@@ -39,7 +41,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
     };
   }
 
-  /** The authorized users to navigate the pages. */
+  /** The authorized users to navigate the pages. Default: `everyone` */
   public authorizedUsers: Snowflake[];
 
   /** The channel where to send the embed. */
@@ -51,16 +53,16 @@ export class PaginationEmbed<Element> extends EventEmitter {
   /** An array of elements to paginate. */
   public array: Element[];
 
-  /** Whether page number indicator on client's message is shown or not. */
+  /** Whether page number indicator on client's message is shown or not. Default: `true` */
   public pageIndicator: boolean;
 
-  /**  Whether the client's message will be deleted upon timeout or not. */
+  /**  Whether the client's message will be deleted upon timeout or not. Default: `false` */
   public deleteOnTimeout: boolean;
 
-  /** Jumps to a certain page upon PaginationEmbed.build(). */
+  /** Jumps to a certain page upon PaginationEmbed.build(). Default: `1` */
   public page: number;
 
-  /** The time for awaiting a user action before timeout in ms. */
+  /** The time for awaiting a user action before timeout in ms. Default: `30000` */
   public timeout: number;
 
   /** The emojis used for navigation emojis. */
@@ -461,8 +463,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
       this.emit('react', user, response.emoji);
 
-      if (clientMessage.guild)
-        await response.users.remove(user);
+      if (clientMessage.guild) await response.users.remove(user);
 
       switch (emoji[0] || emoji[1]) {
         case this.navigationEmojis.back:
@@ -493,15 +494,9 @@ export class PaginationEmbed<Element> extends EventEmitter {
           return this._loadPage(this.page);
       }
     } catch (c) {
-      if (clientMessage.guild)
-        await clientMessage.reactions.removeAll().catch();
-      if (this.deleteOnTimeout)
-        await clientMessage.delete().catch();
-
-      if (c instanceof Error) {
-        this.emit('error', c);
-        throw c;
-      }
+      if (clientMessage.guild && !clientMessage.deleted) await clientMessage.reactions.removeAll();
+      if (this.deleteOnTimeout && clientMessage.deletable) await clientMessage.delete();
+      if (c instanceof Error) return this.emit('error', c);
 
       this.emit('expire');
 
@@ -527,29 +522,24 @@ export class PaginationEmbed<Element> extends EventEmitter {
     };
     const channel = this.clientAssets.message.channel;
     const prompt = await channel
-      .send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, user.toString()))
-      .catch() as Message;
+      .send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, user.toString())) as Message;
 
     try {
       const responses = await channel.awaitMessages(filter, { max: 1, time: this.timeout, errors: [ 'time' ] });
       const response = responses.first();
       const content = response.content;
 
+      if (this.clientAssets.message.deleted)
+        return this.emit('error', new Error(MESSAGE_DELETED));
+
       await prompt.delete();
-
-      if (this.clientAssets.message.guild)
-        await response.delete();
-
+      if (response.deletable) await response.delete();
       if (cancel.includes(content)) return this._awaitResponse();
 
       return this._loadPage(parseInt(content));
     } catch (c) {
-      await prompt.delete().catch();
-
-      if (c instanceof Error) {
-        this.emit('error', c);
-        throw c;
-      }
+      if (prompt.deletable) await prompt.delete();
+      if (c instanceof Error) return this.emit('error', c);
 
       this.emit('expire');
 
@@ -583,7 +573,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    public on (event: 'expire', listener: () => void): this;
 
    /**
-    * Emitted upon an occurance of non-internal error.
+    * Emitted upon an occurance of error.
     * @event
     */
    // @ts-ignore
