@@ -115,8 +115,8 @@ exports.PaginationEmbed = class extends e.EventEmitter {
     if (this.setClientAssets(this.clientAssets), !this.clientAssets.message && !this.channel) throw new Error("Cannot invoke PaginationEmbed class without either a message object or a channel object set.");
     if (!(this.page >= 1 && this.page <= this.pages)) throw new Error(`Page number is out of bounds. Max pages: ${this.pages}`);
     const e = this.clientAssets.message ? await this.clientAssets.message.edit(this.clientAssets.prepare) : await this.channel.send(this.clientAssets.prepare);
-    if (this.clientAssets.message = e, this.setClientAssets(this.clientAssets), e.guild) {
-      const t = e.channel.permissionsFor(e.client.user).missing([ "ADD_REACTIONS", "MANAGE_MESSAGES", "EMBED_LINKS" ]);
+    if (this.clientAssets.message = e, e.guild) {
+      const t = e.channel.permissionsFor(e.client.user).missing([ "ADD_REACTIONS", "MANAGE_MESSAGES", "EMBED_LINKS", "VIEW_CHANNEL", "SEND_MESSAGES" ]);
       if (t.length) throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${t.join(", ")}`);
     }
     return !0;
