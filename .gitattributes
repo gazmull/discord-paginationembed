@@ -2,3 +2,5 @@
 
 *.png binary
 *.gif binary
+
+bin linguist-vendored
