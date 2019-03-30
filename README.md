@@ -226,7 +226,7 @@ Please be explicit about the feature's description and provide a valid reason (e
 - For the PR comment, it goes the same with **`Suggestions / Discussions`**.
 
 # License
-> [**MIT**](LICENSE)
+> [**MIT**](https://github.com/gazmull/discord-paginationembed/blob/master/LICENSE)
 
 © 2018-present [**Euni (gazmull)**](https://github.com/gazmull)
 

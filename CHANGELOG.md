@@ -4,16 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [1.0.0-beta.3] - 2019-03-31
 ### Added
 - More TypeScript notices
 - Master branch (unreleased) installation
 
 ### Changed
-- Beautify Terser output for debugging locally from NPM package
+- Beautify bin output
 
 ### Fixed
-- Gulpfile code style
 - Unnecessary recasting of MessageEmbed on FieldsEmbed#_loadList
+- Error handling
+- Unnecessary re-setting clientAssets on `_verify()`
 
 ## [1.0.0-beta.2] - 2019-03-27
 [**Updating from `v0.8.0`**](UPDATING_V1.md) (Updated, please read again)
@@ -174,7 +177,8 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.2...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.3...HEAD
+[1.0.0-beta.3]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.2...1.0.0-beta.3
 [1.0.0-beta.2]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.1...1.0.0-beta.2
 [1.0.0-beta.1]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.0...1.0.0-beta.1
 [1.0.0-beta.0]: https://github.com/gazmull/discord-paginationembed/compare/0.8.0...1.0.0-beta.0
