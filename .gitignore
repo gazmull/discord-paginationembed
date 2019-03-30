@@ -9,8 +9,6 @@ yarn.lock
 # Tests
 test/credentials.js
 docs
-bin
-typings
 
 # Node
 report.*
