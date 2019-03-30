@@ -371,14 +371,12 @@ export class PaginationEmbed<Element> extends EventEmitter {
     const message = (this.clientAssets.message
       ? await this.clientAssets.message.edit(this.clientAssets.prepare)
       : await this.channel.send(this.clientAssets.prepare)) as Message;
-    this.clientAssets.message = message as Message;
-
-    this.setClientAssets(this.clientAssets);
+    this.clientAssets.message = message;
 
     if (message.guild) {
       const missing = (message.channel as TextChannel)
         .permissionsFor(message.client.user)
-        .missing([ 'ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS' ]);
+        .missing([ 'ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS', 'VIEW_CHANNEL', 'SEND_MESSAGES' ]);
 
       if (missing.length)
         throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${missing.join(', ')}`);
