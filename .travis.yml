@@ -8,7 +8,7 @@ before_script:
 jobs:
   include:
     - stage: deploy
-      script: bash ./deploy/travis-deploy.sh
+      script: bash ./deploy/travis.sh
 cache:
   directories:
     - node_modules
