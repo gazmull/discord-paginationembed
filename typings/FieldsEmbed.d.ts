@@ -63,7 +63,7 @@ export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
      * Same as MessageEmbed.addField, but value takes a function instead.
      * @param name - Name of the field.
      * @param value - Value of the field. Function for `Array.prototype.map().join('\n')`.
-     * @param inline - Whether the field is inline with other field or not. Default: `true`
+     * @param inline - Whether the field is inline with other field. Default: `true`
      */
     formatField(name: string, value: (element: Element) => any, inline?: boolean): this;
     /**
