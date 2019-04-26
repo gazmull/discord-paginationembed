@@ -20,7 +20,7 @@ exports.FieldsEmbed = class extends t.PaginationEmbed {
     this.embed.fields = [];
     for (const t of e) "function" == typeof t.value ? this.formatField(t.name, t.value, t.inline) : this.embed.addField(t.name, t.value, t.inline);
     if (!this.embed.fields.filter(e => "function" == typeof e.value).length) throw new Error("Cannot invoke FieldsEmbed class without at least one formatted field to paginate.");
-    return this.emit("start"), this._loadList();
+    return this.listenerCount("start") && this.emit("start"), this._loadList();
   }
   formatField(e, t, s = !0) {
     if ("function" != typeof t) throw new TypeError("formatField() value parameter only takes a function.");
@@ -42,7 +42,9 @@ exports.FieldsEmbed = class extends t.PaginationEmbed {
   }
   async _loadList(e = !0) {
     const t = await this._drawList(), s = this.pageIndicator ? 1 === this.pages ? null : `Page ${this.page} of ${this.pages}` : null;
-    return await this.clientAssets.message.edit(s, {
+    return this.clientAssets.message ? await this.clientAssets.message.edit(s, {
+      embed: t
+    }) : this.clientAssets.message = await this.channel.send(s, {
       embed: t
     }), super._loadList(e);
   }

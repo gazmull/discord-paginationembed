@@ -1,9 +1,10 @@
 {
   "excludeExternals": true,
+  "excludeProtected": true,
   "includeDeclarations": true,
   "mode": "file",
   "name": "Discord PaginationEmbed - Docs",
   "out": "docs",
   "readme": "README.md",
-  "theme": "minimal"
+  "theme": "default"
 }

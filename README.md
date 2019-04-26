@@ -3,7 +3,6 @@ A pagination utility for MessageEmbed in Discord.JS
 
 [![Discord Server](https://discordapp.com/api/guilds/370614673122263041/embed.png)](https://discord.gg/eDUzT87)
 [![Travis (.org) branch](https://img.shields.io/travis/gazmull/discord-paginationembed/master.svg?logo=travis&style=flat-square)](https://travis-ci.org/gazmull/discord-paginationembed)
-[![npm bundle size](https://img.shields.io/bundlephobia/min/discord-paginationembed.svg?logo=npm&style=flat-square)](https://nodei.co/npm/discord-paginationembed/)
 [![npm peer dependency version](https://img.shields.io/npm/dependency-version/discord-paginationembed/peer/discord.js.svg?logo=npm&style=flat-square)](https://nodei.co/npm/discord-paginationembed/)
 [![npm type definitions](https://img.shields.io/npm/types/discord-paginationembed.svg?logo=npm&style=flat-square)](https://nodei.co/npm/discord-paginationembed/)
 
@@ -11,14 +10,14 @@ A pagination utility for MessageEmbed in Discord.JS
 
 ## 📣 Notice Board
 - [**Changelog**](https://github.com/gazmull/discord-paginationembed/blob/master/CHANGELOG.md)
-- [**Updating from `v0.8.0` to `v1.0.0`**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md)
+- [**Updating from `v0.8.0` to `v1.0.0`**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md) — Updated **2019-04-26**
 
 ## 🎉 Welcome
 - ✔ **Typings** included
 - ✔ [**Documentation**](https://gazmull.github.io/discord-paginationembed "Go to My Documentation") for online references
 - ✔ **Asynchronous** workflow
 - ✔ Supports [**Discord.JS v12**](https://discord.js.org/#/docs/main/master/general/welcome "Go to Discord.JS Master Documentation")
-- ❌ Currently does not support **Discord.JS v11**
+- ❌ Currently does not support **Discord.JS v11** (Last version: [**v0.7.7-v11**](https://github.com/gazmull/discord-paginationembed/tree/0.7.7-v11))
 - ❔ Nothing found within docs or need a nudge? You may visit the [**Discord server**](https://discord.gg/eDUzT87)
 
 ## 🛠 Installation
@@ -113,7 +112,9 @@ const FieldsEmbed = new Pagination.FieldsEmbed()
       field.name = 'Name';
     else
       field.name = 'Na🅱e';
-  });
+  })
+  // Sets whether function emojis should be deployed after navigation emojis
+  .setEmojisFunctionAfterNavigation(false);
 
 FieldsEmbed.embed
   .setColor(0xFF00AE)
@@ -175,6 +176,11 @@ const Embeds = new PaginationEmbed.Embeds()
   .setFooter('Test Footer Text')
   .setURL('https://gazmull.github.io/discord-paginationembed')
   .setColor(0xFF00AE)
+  // Sets the client's assets to utilise. Available options:
+  //  - message: the client's Message object (edits the message instead of sending new one for this instance)
+  //  - prompt: custom content for the message sent when prompted to jump to a page
+  //      {{user}} is the placeholder for the user mention
+  .setClientAssets({ message, prompt: 'Page plz {{user}}' })
   .setDeleteOnTimeout(true)
   .setDisabledNavigationEmojis(['DELETE'])
   .setFunctionEmojis({

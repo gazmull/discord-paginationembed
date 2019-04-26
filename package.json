@@ -1,6 +1,6 @@
 {
   "name": "discord-paginationembed",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "description": "A pagination utility for MessageEmbed in Discord.JS",
   "main": "./bin/index.js",
   "types": "./typings",
@@ -43,16 +43,16 @@
     "discord.js": "github:discordjs/discord.js"
   },
   "devDependencies": {
-    "@types/node": "^11.11.6",
-    "del": "^4.0.0",
-    "gulp": "^4.0.0",
+    "@types/node": "^11.13.7",
+    "del": "^4.1.0",
+    "gulp": "^4.0.1",
     "gulp-terser": "^1.1.7",
     "gulp-tslint": "^8.1.4",
     "gulp-typescript": "^5.0.1",
-    "tslint": "5.14.0",
+    "tslint": "^5.16.0",
     "tslint-eslint-rules": "^5.4.0",
     "typedoc": "^0.14.2",
     "typedoc-plugin-no-inherit": "^1.1.6",
-    "typescript": "^3.3.4000"
+    "typescript": "^3.4.5"
   }
 }

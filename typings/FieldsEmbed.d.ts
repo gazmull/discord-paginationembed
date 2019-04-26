@@ -32,7 +32,7 @@ export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
      *   new FieldsEmbed()
      *    .setAuthorizedUsers([message.author.id])
      *    .setChannel(message.channel)
-     *    .setClientAssets({ prepare: 'Preparing the embed...' })
+     *    .setClientAssets({ prompt: 'Yo {{user}} wat peige?!?!?' })
      *    .setArray([{ name: 'John Doe' }, { name: 'Jane Doe' }])
      *    .setElementsPerPage(1)
      *    .setPageIndicator(false)
@@ -57,13 +57,13 @@ export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
      *    })
      *    .build();```
      */
-    build(): Promise<any>;
+    build(): Promise<void>;
     /**
      * Adds a field to the embed.
      * Same as MessageEmbed.addField, but value takes a function instead.
      * @param name - Name of the field.
      * @param value - Value of the field. Function for `Array.prototype.map().join('\n')`.
-     * @param inline - Whether the field is inline with other field or not. Default: `true`
+     * @param inline - Whether the field is inline with other field. Default: `true`
      */
     formatField(name: string, value: (element: Element) => any, inline?: boolean): this;
     /**
@@ -73,5 +73,5 @@ export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     setElementsPerPage(max: number): this;
     protected _drawList(): Promise<MessageEmbed>;
     /** @ignore */
-    _loadList(callNavigation?: boolean): Promise<any>;
+    _loadList(callNavigation?: boolean): Promise<void>;
 }

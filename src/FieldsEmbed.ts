@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { Message, MessageEmbed } from 'discord.js';
 import { PaginationEmbed } from './base';
 
 /**
@@ -48,7 +48,7 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
    *   new FieldsEmbed()
    *    .setAuthorizedUsers([message.author.id])
    *    .setChannel(message.channel)
-   *    .setClientAssets({ prepare: 'Preparing the embed...' })
+   *    .setClientAssets({ prompt: 'Yo {{user}} wat peige?!?!?' })
    *    .setArray([{ name: 'John Doe' }, { name: 'Jane Doe' }])
    *    .setElementsPerPage(1)
    *    .setPageIndicator(false)
@@ -92,7 +92,7 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     if (!hasPaginateField)
       throw new Error('Cannot invoke FieldsEmbed class without at least one formatted field to paginate.');
 
-    this.emit('start');
+    if (this.listenerCount('start')) this.emit('start');
 
     return this._loadList();
   }
@@ -102,7 +102,7 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
    * Same as MessageEmbed.addField, but value takes a function instead.
    * @param name - Name of the field.
    * @param value - Value of the field. Function for `Array.prototype.map().join('\n')`.
-   * @param inline - Whether the field is inline with other field or not. Default: `true`
+   * @param inline - Whether the field is inline with other field. Default: `true`
    */
   public formatField (name: string, value: (element: Element) => any, inline = true) {
     if (typeof value !== 'function') throw new TypeError('formatField() value parameter only takes a function.');
@@ -150,7 +150,10 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
         : `Page ${this.page} of ${this.pages}`
       : null;
 
-    await this.clientAssets.message.edit(shouldIndicate, { embed });
+    if (this.clientAssets.message)
+      await this.clientAssets.message.edit(shouldIndicate, { embed });
+    else
+      this.clientAssets.message = await this.channel.send(shouldIndicate, { embed }) as Message;
 
     return super._loadList(callNavigation);
   }

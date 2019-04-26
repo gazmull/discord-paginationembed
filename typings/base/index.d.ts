@@ -18,9 +18,9 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     clientAssets: IClientAssets;
     /** An array of elements to paginate. */
     array: Element[];
-    /** Whether page number indicator on client's message is shown or not. Default: `true` */
+    /** Whether page number indicator on client's message is shown. Default: `true` */
     pageIndicator: boolean;
-    /**  Whether the client's message will be deleted upon timeout or not. Default: `false` */
+    /**  Whether the client's message will be deleted upon timeout. Default: `false` */
     deleteOnTimeout: boolean;
     /** Jumps to a certain page upon PaginationEmbed.build(). Default: `1` */
     page: number;
@@ -40,6 +40,8 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      * - 'ALL'
      */
     disabledNavigationEmojis: Array<'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL'>;
+    /** Whether to set function emojis after navigation emojis. Default: `false` */
+    emojisFunctionAfterNavigation: boolean;
     /**
      * Number of pages for this instance.
      * @ignore
@@ -116,6 +118,11 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      */
     setDisabledNavigationEmojis(emojis: DisabledNavigationEmojis): this;
     /**
+     * Sets whether to set function emojis after navigation emojis.
+     * @param boolean - Set function emojis after navigation emojis?
+     */
+    setEmojisFunctionAfterNavigation(boolean: boolean): this;
+    /**
      * Sets the emojis used for function emojis.
      *
      * ### Example
@@ -150,12 +157,12 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      */
     setTimeout(timeout: number): this;
     /**
-     * Sets whether page number indicator on client's message is shown or not.
+     * Sets whether page number indicator on client's message is shown.
      * @param indicator - Show page indicator?
      */
     setPageIndicator(boolean: boolean): this;
     /**
-     * Sets whether the client's message will be deleted upon timeout or not.
+     * Sets whether the client's message will be deleted upon timeout.
      * @param deleteOnTimeout - Delete client's message upon timeout?
      */
     setDeleteOnTimeout(boolean: boolean): this;
@@ -165,31 +172,49 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      */
     _verify(): Promise<boolean>;
     /**
-     * Returns whether the given navigation emoji is enabled or not.
+     * Checks the permissions of the client before sending the embed.
+     * @ignore
+     */
+    _checkPermissions(): Promise<boolean>;
+    /**
+     * Returns whether the given navigation emoji is enabled.
      * @param emoji The navigation emoji to search.
      */
     protected _enabled(emoji: NavigationEmojiIdentifier): boolean;
     /** Deploys emoji reacts for the message sent by the client. */
-    protected _drawNavigation(): Promise<any>;
+    protected _drawEmojis(): Promise<void>;
+    /** Deploys function emojis. */
+    protected _drawFunctionEmojis(): Promise<void>;
+    /** Deploys navigation emojis. */
+    protected _drawNavigationEmojis(): Promise<void>;
     /**
      * Helper for intialising the MessageEmbed.
      * [For sub-class] Initialises the MessageEmbed.
-     * @param callNavigation - Whether to call _drawNavigation() or not.
+     * @param callNavigation - Whether to call _drawEmojis().
      * @ignore
      */
-    _loadList(callNavigation?: boolean): Promise<any>;
+    _loadList(callNavigation?: boolean): Promise<void>;
     /**
      * Calls PaginationEmbed.setPage() and then executes `_loadList()` and `_awaitResponse()`.
      * @param param - The page number to jump to.
      */
-    protected _loadPage(param?: number | 'back' | 'forward'): any;
-    /** Awaits the reaction from the user. */
-    protected _awaitResponse(): any;
+    protected _loadPage(param?: number | 'back' | 'forward'): Promise<void>;
+    /** Awaits the reaction from the user(s). */
+    protected _awaitResponse(): Promise<void>;
+    /**
+     * Only used for _awaitResponse:
+     * Deletes the client's message, and emites either error or finish depending on the passed parameters.
+     * @param err The error object.
+     * @param clientMessage The client's message.
+     * @param expired Whether the clean up is for `expired` event.
+     * @param user The user object (only for `finish` event).
+     */
+    protected _cleanUp(err: any, clientMessage: Message, expired?: boolean, user?: User): Promise<void>;
     /**
      * Awaits the custom page input from the user.
      * @param user - The user who reacted to jump on a certain page.
      */
-    protected _awaitResponseEx(user: User): any;
+    protected _awaitResponseEx(user: User): Promise<void>;
     /**
      * Emitted upon successful `build()`.
      * @event
@@ -246,8 +271,6 @@ export interface INavigationEmojis {
 export interface IClientAssets {
     /** The message object. */
     message?: Message;
-    /** The text during initialisation of the pagination. Default: `"Preparing..."` */
-    prepare?: string;
     /**
      * The text during a prompt for page jump.
      *

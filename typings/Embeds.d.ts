@@ -37,14 +37,14 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
     readonly currentEmbed: MessageEmbed;
     /**
      * Adds a blank field to the fields of all embeds.
-     * @param inline - Whether the field is inline or not to the other fields.
+     * @param inline - Whether the field is inline to the other fields.
      */
     addBlankField(inline?: boolean): this;
     /**
      * Adds a field to the fields of all embeds.
      * @param name - The name of the field.
      * @param value - The value of the field.
-     * @param inline - Whether the field is inline or not to the other fields.
+     * @param inline - Whether the field is inline to the other fields.
      */
     addField(name: string, value: StringResolvable, inline?: boolean): this;
     /**
@@ -64,7 +64,7 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      *   new Embeds()
      *    .setAuthorizedUsers([message.author.id])
      *    .setChannel(message.channel)
-     *    .setClientAssets({ prepare: 'Preparing the embed...' })
+     *    .setClientAssets({ prompt: 'Yo {{user}} wat peige?!?!?' })
      *    .setArray(embeds)
      *    .setPageIndicator(false)
      *    .setPage(1)
@@ -90,7 +90,7 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      *    .setTimestamp()
      *    .build();```
      */
-    build(): Promise<any>;
+    build(): Promise<void>;
     /**
      * Sets the array of MessageEmbed to paginate.
      * @param array - An array of MessageEmbed to paginate.
@@ -154,5 +154,5 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      */
     spliceField(index: number, deleteCount: number, name?: StringResolvable, value?: StringResolvable, inline?: boolean): this;
     /** @ignore */
-    _loadList(callNavigation?: boolean): Promise<any>;
+    _loadList(callNavigation?: boolean): Promise<void>;
 }

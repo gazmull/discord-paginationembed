@@ -7,6 +7,7 @@ yarn.lock
 .vscode
 
 # Tests
+*.tsbuildinfo
 test/credentials.js
 docs
 

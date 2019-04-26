@@ -1,13 +1,11 @@
 # Updating From `v0.8.0`
 
 ## Notice
-If you are from **stable branch (v11)**, then this will no longer work for you as its support has been suspended (this package only).
+- This documentation will be changed without prior notice for any changes in v1's source code. In some cases, commit messages will notify everyone that this documentation has been changed.
+- If you are from **stable branch (v11)**, then this will no longer work for you as its support has been suspended (this package only). Last version of v11 branch: `v0.7.7-v11`
 
 ## Installation
 New way to install the utility is from NPM: `npm install discord-paginationembed`
-
-### ❗ Heads Up!
-There might be a decision to suddenly resume support for **v11**. So if it ever happens, **master branch (v12)**'s installation would be `npm install discord-paginationembed@canary`
 
 ## TypeScript
 For importing types to your TypeScript project:
@@ -29,6 +27,14 @@ const fieldsEmbed = new FieldsEmbed<LegendaryInterface>();
 
 ## API Changes
 ### `showPageIndicator` ➡ `setPageIndicator`
+> Since **v1.0.0-beta.2**
+
+---
+
+### `channel` **must** be set
+> Since **v1.0.0-beta.4**
+
+Before, it's either `clientAssets.message` or `channel` is set, but this makes an unnecessary API call (could lead to ratelimit) via sending/editing a dummy message with `clientAssets.prepare`'s content. By removing `clientAssets.prepare`, setting the channel is now a must while `clientAssets.message` is still optional.
 
 ---
 
@@ -51,7 +57,9 @@ new FieldsEmbed()
 ---
 
 ### `clientMessage` ➡ `clientAssets`
-`clientMessage` has been replaced with `clientAssets`: similar API but the latter takes an object as the only parameter. Another option, `prompt`, has been added for customising the message content for `when prompted to jump to a page`.
+`clientMessage` has been replaced with `clientAssets`: similar API but the latter takes an object as the only parameter. Option `prompt` was added for customising the content for message to send when prompted to jump to a page.
+
+- [**since v1.0.0-beta.4**] `prepare` option has been removed due to unnecessary API call.
 
 #### `clientMessage` (Old way)
 ```js
@@ -65,7 +73,6 @@ new FieldsEmbed()
 new FieldsEmbed()
   .setClientAssets({
     message: clientMessage,
-    prepare: 'Preparing...', // Option for message content while preparing the paginated embed
     prompt: 'Yo {{user}} what page?' // Option for message content when prompted to jump to a page.
   });
 ```
