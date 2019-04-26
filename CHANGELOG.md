@@ -22,6 +22,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
         // Passing an error object will emit the `error` event.
     });
     ```
+- Added `PaginationEmbed#setEmojisFunctionAfterNavigation` method. This allows function emojis to either be the first/last set to be deployed before/after navigation emojis.
+  -  Default: `false`.
 
 ## Changed
 - PaginationEmbed no longer emits an event when there is no listener (invoking `.on`/`.once`)
@@ -32,7 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Fixed
 - Fixed possibly unnecessary API call on awaiting emoji reacts timeout.
-  - `clientMessage.delete()` now precedes `clientMessage.reactions.removeAll()`
+  - `clientMessage#delete` now precedes `clientMessage.reactions#removeAll`
 
 ## [1.0.0-beta.3] - 2019-03-31
 ### Added
