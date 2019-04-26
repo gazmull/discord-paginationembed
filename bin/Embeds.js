@@ -22,7 +22,7 @@ exports.Embeds = class extends t.PaginationEmbed {
     return this;
   }
   async build() {
-    return this.pages = this.array.length, await this._verify(), this.emit("start"), 
+    return this.pages = this.array.length, await this._verify(), this.listenerCount("start") && this.emit("start"), 
     this._loadList();
   }
   setArray(t) {
@@ -90,7 +90,9 @@ exports.Embeds = class extends t.PaginationEmbed {
   }
   async _loadList(r = !0) {
     const t = this.pageIndicator ? 1 === this.pages ? null : `Page ${this.page} of ${this.pages}` : null;
-    return await this.clientAssets.message.edit(t, {
+    return this.clientAssets.message ? await this.clientAssets.message.edit(t, {
+      embed: this.currentEmbed
+    }) : this.clientAssets.message = await this.channel.send(t, {
       embed: this.currentEmbed
     }), super._loadList(r);
   }

@@ -33,6 +33,8 @@ bot
       deleteOnTimeout
     } = credentials;
 
+    console.log('Mode:', test);
+
     if (test === 'embeds') {
       const embeds = [];
 
@@ -59,7 +61,8 @@ bot
           '⬇': (_, instance) => {
             for (const embed of instance.array)
               embed.fields[0].value--;
-          }
+          },
+          '⏹': () => Promise.reject('stopped')
         })
         .setClientAssets({ prompt: 'yAAAaA— what page {{user}}?' })
         .on('start', () => console.log('Started!'))

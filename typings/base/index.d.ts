@@ -165,31 +165,45 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      */
     _verify(): Promise<boolean>;
     /**
+     * Checks the permissions of the client before sending the embed.
+     * @ignore
+     */
+    _checkPermissions(): Promise<boolean>;
+    /**
      * Returns whether the given navigation emoji is enabled or not.
      * @param emoji The navigation emoji to search.
      */
     protected _enabled(emoji: NavigationEmojiIdentifier): boolean;
     /** Deploys emoji reacts for the message sent by the client. */
-    protected _drawNavigation(): Promise<any>;
+    protected _drawNavigation(): Promise<void>;
     /**
      * Helper for intialising the MessageEmbed.
      * [For sub-class] Initialises the MessageEmbed.
      * @param callNavigation - Whether to call _drawNavigation() or not.
      * @ignore
      */
-    _loadList(callNavigation?: boolean): Promise<any>;
+    _loadList(callNavigation?: boolean): Promise<void>;
     /**
      * Calls PaginationEmbed.setPage() and then executes `_loadList()` and `_awaitResponse()`.
      * @param param - The page number to jump to.
      */
-    protected _loadPage(param?: number | 'back' | 'forward'): any;
+    protected _loadPage(param?: number | 'back' | 'forward'): Promise<void>;
     /** Awaits the reaction from the user. */
-    protected _awaitResponse(): any;
+    protected _awaitResponse(): Promise<void>;
+    /**
+     * Only used for _awaitResponse:
+     * Deletes the client's message, and emites either error or finish depending on the passed parameters.
+     * @param err The error object.
+     * @param clientMessage The client's message.
+     * @param expired Whether the clean up is for `expired` event.
+     * @param user The user object (only for `finish` event).
+     */
+    protected _cleanUp(err: any, clientMessage: Message, expired?: boolean, user?: User): Promise<void>;
     /**
      * Awaits the custom page input from the user.
      * @param user - The user who reacted to jump on a certain page.
      */
-    protected _awaitResponseEx(user: User): any;
+    protected _awaitResponseEx(user: User): Promise<void>;
     /**
      * Emitted upon successful `build()`.
      * @event
@@ -246,8 +260,6 @@ export interface INavigationEmojis {
 export interface IClientAssets {
     /** The message object. */
     message?: Message;
-    /** The text during initialisation of the pagination. Default: `"Preparing..."` */
-    prepare?: string;
     /**
      * The text during a prompt for page jump.
      *
