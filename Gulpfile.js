@@ -1,4 +1,4 @@
-const { sync: del } = require('del');
+const { default: del } = require('del');
 const gulp = require('gulp');
 const ts = require('gulp-typescript');
 const tslint = require('gulp-tslint');
@@ -17,11 +17,7 @@ const terserFiles = {
   src: paths.bin + '/**/*.js'
 };
 
-gulp.task('clean', () => {
-  del([ paths.bin, paths.typings ]);
-
-  return Promise.resolve(true);
-});
+gulp.task('clean', () => del([ paths.bin, paths.typings ]));
 
 gulp.task('lint', () => {
   return gulp.src(paths.src)
