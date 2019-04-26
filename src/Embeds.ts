@@ -1,4 +1,4 @@
-import { ColorResolvable, EmbedField, MessageEmbed, StringResolvable } from 'discord.js';
+import { ColorResolvable, EmbedField, Message, MessageEmbed, StringResolvable } from 'discord.js';
 import { PaginationEmbed } from './base';
 
 /**
@@ -96,7 +96,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    *   new Embeds()
    *    .setAuthorizedUsers([message.author.id])
    *    .setChannel(message.channel)
-   *    .setClientAssets({ prepare: 'Preparing the embed...' })
+   *    .setClientAssets({ prompt: 'Yo {{user}} wat peige?!?!?' })
    *    .setArray(embeds)
    *    .setPageIndicator(false)
    *    .setPage(1)
@@ -126,7 +126,8 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
     this.pages = this.array.length;
 
     await this._verify();
-    this.emit('start');
+
+    if (this.listenerCount('start')) this.emit('start');
 
     return this._loadList();
   }
@@ -309,7 +310,10 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
         : `Page ${this.page} of ${this.pages}`
       : null;
 
-    await this.clientAssets.message.edit(shouldIndicate, { embed: this.currentEmbed });
+    if (this.clientAssets.message)
+      await this.clientAssets.message.edit(shouldIndicate, { embed: this.currentEmbed });
+    else
+      this.clientAssets.message = await this.channel.send(shouldIndicate, { embed: this.currentEmbed }) as Message;
 
     return super._loadList(callNavigation);
   }

@@ -194,13 +194,12 @@ export class PaginationEmbed<Element> extends EventEmitter {
     if (!assets) throw new TypeError('Cannot accept assets options as a non-object type.');
 
     const { message } = assets;
-    let { prepare, prompt } = assets;
+    let { prompt } = assets;
 
-    if (!prepare) prepare = 'Preparing...';
     if (!prompt)
       prompt = '{{user}}, To what page would you like to jump? Say `cancel` or `0` to cancel the prompt.';
 
-    Object.assign(this.clientAssets, { message, prepare, prompt });
+    Object.assign(this.clientAssets, { message, prompt });
 
     return this;
   }
@@ -363,20 +362,25 @@ export class PaginationEmbed<Element> extends EventEmitter {
   public async _verify () {
     this.setClientAssets(this.clientAssets);
 
-    if (!this.clientAssets.message && !this.channel)
-      throw new Error('Cannot invoke PaginationEmbed class without either a message object or a channel object set.');
+    if (!this.channel)
+      throw new Error('Cannot invoke PaginationEmbed class without a channel object set.');
 
     if (!(this.page >= 1 && this.page <= this.pages))
-      throw new Error(`Page number is out of bounds. Max pages: ${this.pages}`);
+      throw new RangeError(`Page number is out of bounds. Max pages: ${this.pages}`);
 
-    const message = (this.clientAssets.message
-      ? await this.clientAssets.message.edit(this.clientAssets.prepare)
-      : await this.channel.send(this.clientAssets.prepare)) as Message;
-    this.clientAssets.message = message;
+    return this._checkPermissions();
+  }
 
-    if (message.guild) {
-      const missing = (message.channel as TextChannel)
-        .permissionsFor(message.client.user)
+  /**
+   * Checks the permissions of the client before sending the embed.
+   * @ignore
+   */
+  public async _checkPermissions () {
+    const channel = this.channel as TextChannel;
+
+    if (channel.guild) {
+      const missing = channel
+        .permissionsFor(channel.client.user)
         .missing([ 'ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS', 'VIEW_CHANNEL', 'SEND_MESSAGES' ]);
 
       if (missing.length)
@@ -436,7 +440,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /** Awaits the reaction from the user. */
-  protected async _awaitResponse () {
+  protected async _awaitResponse (): Promise<void> {
     const emojis = Object.values(this.navigationEmojis);
     const filter = (r: MessageReaction, u: User) => {
       const enabledEmoji = this._enabled('ALL')
@@ -460,8 +464,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
       const user = response.users.last();
       const emoji = [ response.emoji.name, response.emoji.id ];
 
-      this.emit('react', user, response.emoji);
-
+      if (this.listenerCount('react')) this.emit('react', user, response.emoji);
       if (clientMessage.guild) await response.users.remove(user);
 
       switch (emoji[0] || emoji[1]) {
@@ -481,26 +484,48 @@ export class PaginationEmbed<Element> extends EventEmitter {
           return this._loadPage('forward');
 
         case this.navigationEmojis.delete:
-          this.emit('finish', user);
+          await clientMessage.delete();
 
-          return clientMessage.delete();
+          if (this.listenerCount('finish')) this.emit('finish', user);
+
+          return;
 
         default:
           const cb = this.functionEmojis[emoji[0]] || this.functionEmojis[emoji[1]];
 
-          await cb(user, this as unknown as Embeds | FieldsEmbed<Element>);
+          try {
+            await cb(user, this as unknown as Embeds | FieldsEmbed<Element>);
+          } catch (err) {
+            return this._cleanUp(err, clientMessage, false, user);
+          }
 
           return this._loadPage(this.page);
       }
-    } catch (c) {
-      if (clientMessage.guild && !clientMessage.deleted) await clientMessage.reactions.removeAll();
-      if (this.deleteOnTimeout && clientMessage.deletable) await clientMessage.delete();
-      if (c instanceof Error) return this.emit('error', c);
-
-      this.emit('expire');
-
-      return true;
+    } catch (err) {
+      return this._cleanUp(err, clientMessage);
     }
+  }
+
+  /**
+   * Only used for _awaitResponse:
+   * Deletes the client's message, and emites either error or finish depending on the passed parameters.
+   * @param err The error object.
+   * @param clientMessage The client's message.
+   * @param expired Whether the clean up is for `expired` event.
+   * @param user The user object (only for `finish` event).
+   */
+  protected async _cleanUp (err: any, clientMessage: Message, expired = true, user?: User) {
+    if (this.deleteOnTimeout && clientMessage.deletable) await clientMessage.delete();
+    if (clientMessage.guild && !clientMessage.deleted) await clientMessage.reactions.removeAll();
+    if (err instanceof Error) {
+      if (this.listenerCount('error')) this.emit('error', err);
+
+      return;
+    }
+
+    const eventType = expired ? 'expire' : 'finish';
+
+    if (this.listenerCount(eventType)) this.emit(eventType, user);
   }
 
   /**
@@ -528,8 +553,11 @@ export class PaginationEmbed<Element> extends EventEmitter {
       const response = responses.first();
       const content = response.content;
 
-      if (this.clientAssets.message.deleted)
-        return this.emit('error', new Error(MESSAGE_DELETED));
+      if (this.clientAssets.message.deleted) {
+        if (this.listenerCount('error')) this.emit('error', new Error(MESSAGE_DELETED));
+
+        return;
+      }
 
       await prompt.delete();
       if (response.deletable) await response.delete();
@@ -538,11 +566,13 @@ export class PaginationEmbed<Element> extends EventEmitter {
       return this._loadPage(parseInt(content));
     } catch (c) {
       if (prompt.deletable) await prompt.delete();
-      if (c instanceof Error) return this.emit('error', c);
+      if (c instanceof Error) {
+        if (this.listenerCount('error')) this.emit('error', c);
 
-      this.emit('expire');
+        return;
+      }
 
-      return true;
+      if (this.listenerCount('expire')) this.emit('expire');
     }
   }
 
@@ -616,8 +646,6 @@ export interface INavigationEmojis {
 export interface IClientAssets {
   /** The message object. */
   message?: Message;
-  /** The text during initialisation of the pagination. Default: `"Preparing..."` */
-  prepare?: string;
   /**
    * The text during a prompt for page jump.
    *

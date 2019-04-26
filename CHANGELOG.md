@@ -5,6 +5,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.0.0-beta.4] - 2019-04-26
+[**Updating from `v0.8.0`**](UPDATING_V1.md#api-changes) (Updated, please read again)
+
+## Added
+- Added ability to stop the instance from awaiting emoji reacts with function emojis:
+    ```js
+    <PaginationEmbed>.addFunctionEmoji('🛑', () => {
+        // Either
+        throw 'stopped';
+
+        // or
+        return Promise.reject('stopped');
+
+        // will stop the instance from awaiting reacts.
+        // Passing an error object will emit the `error` event.
+    });
+    ```
+
+## Changed
+- PaginationEmbed no longer emits an event when there is no listener (invoking `.on`/`.once`)
+
+## Removed
+- Option `prepare` for `clientAssets` has been removed. This affects:
+    - Setting the `channel` property is a must now. (Used to be either `clientAssets.message` or `channel` must be set)
+
+## Fixed
+- Fixed possibly unnecessary API call on awaiting emoji reacts timeout.
+  - `clientMessage.delete()` now precedes `clientMessage.reactions.removeAll()`
+
 ## [1.0.0-beta.3] - 2019-03-31
 ### Added
 - More TypeScript notices
@@ -31,7 +60,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   ```ts
   import Embeds from 'discord-paginationembed/typings/Embeds';
   import FieldsEmbed from 'discord-paginationembed/typings/FieldsEmbed';
-  
+
   // Unlikely
   import { IClientAssets } from 'discord-paginationembed/typings/base';
   ```
@@ -130,7 +159,7 @@ return 'done!';
 ### Added
   - `functionEmoji` - customised emojis with specific function (#8)
   - `deleteOnTimeout` - option to delete the message upon `awaiting response` timeout (#11)
-  - `test` folder for `FieldsEmbed` and `Embeds` test bot 
+  - `test` folder for `FieldsEmbed` and `Embeds` test bot
 
 ### Changed
   - Major [documentation](https://gazmull.github.io/discord-paginationembed) changes
@@ -177,7 +206,8 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.3...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.4...HEAD
+[1.0.0-beta.4]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.3...1.0.0-beta.4
 [1.0.0-beta.3]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.2...1.0.0-beta.3
 [1.0.0-beta.2]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.1...1.0.0-beta.2
 [1.0.0-beta.1]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.0...1.0.0-beta.1

@@ -11,7 +11,7 @@ A pagination utility for MessageEmbed in Discord.JS
 
 ## 📣 Notice Board
 - [**Changelog**](https://github.com/gazmull/discord-paginationembed/blob/master/CHANGELOG.md)
-- [**Updating from `v0.8.0` to `v1.0.0`**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md)
+- [**Updating from `v0.8.0` to `v1.0.0`**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md) — Updated **2019-04-26**
 
 ## 🎉 Welcome
 - ✔ **Typings** included
@@ -175,6 +175,11 @@ const Embeds = new PaginationEmbed.Embeds()
   .setFooter('Test Footer Text')
   .setURL('https://gazmull.github.io/discord-paginationembed')
   .setColor(0xFF00AE)
+  // Sets the client's assets to utilise. Available options:
+  //  - message: the client's Message object (edits the message instead of sending new one for this instance)
+  //  - prompt: custom content for the message sent when prompted to jump to a page
+  //      {{user}} is the placeholder for the user mention
+  .setClientAssets({ message, prompt: 'Page plz {{user}}' })
   .setDeleteOnTimeout(true)
   .setDisabledNavigationEmojis(['DELETE'])
   .setFunctionEmojis({
