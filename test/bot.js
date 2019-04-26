@@ -30,6 +30,7 @@ bot
       test,
       users,
       disabledNavigationEmojis,
+      emojisFunctionAfterNavigation,
       deleteOnTimeout
     } = credentials;
 
@@ -52,6 +53,7 @@ bot
         .setURL('https://gazmull.github.io/discord-paginationembed')
         .setColor(0xFF00AE)
         .setDeleteOnTimeout(deleteOnTimeout)
+        .setEmojisFunctionAfterNavigation(emojisFunctionAfterNavigation)
         .setDisabledNavigationEmojis(disabledNavigationEmojis)
         .setFunctionEmojis({
           '⬆': (_, instance) => {
@@ -85,6 +87,7 @@ bot
         .formatField('Name', i => i.name)
         .setDeleteOnTimeout(deleteOnTimeout)
         .setDisabledNavigationEmojis(disabledNavigationEmojis)
+        .setEmojisFunctionAfterNavigation(emojisFunctionAfterNavigation)
         .setFunctionEmojis({
           '🔄': (user, instance) => {
             const field = instance.embed.fields[0];

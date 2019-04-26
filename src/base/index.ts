@@ -31,6 +31,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
     };
     this.functionEmojis = {};
     this.disabledNavigationEmojis = [];
+    this.emojisFunctionAfterNavigation = false;
 
     this.pages = null;
     this._disabledNavigationEmojiValues = [];
@@ -54,10 +55,10 @@ export class PaginationEmbed<Element> extends EventEmitter {
   /** An array of elements to paginate. */
   public array: Element[];
 
-  /** Whether page number indicator on client's message is shown or not. Default: `true` */
+  /** Whether page number indicator on client's message is shown. Default: `true` */
   public pageIndicator: boolean;
 
-  /**  Whether the client's message will be deleted upon timeout or not. Default: `false` */
+  /**  Whether the client's message will be deleted upon timeout. Default: `false` */
   public deleteOnTimeout: boolean;
 
   /** Jumps to a certain page upon PaginationEmbed.build(). Default: `1` */
@@ -82,6 +83,9 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * - 'ALL'
    */
   public disabledNavigationEmojis: Array< 'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL' >;
+
+  /** Whether to set function emojis after navigation emojis. Default: `false` */
+  public emojisFunctionAfterNavigation: boolean;
 
   /**
    * Number of pages for this instance.
@@ -142,7 +146,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
   /** Deletes all function emojis, and then re-enables all navigation emojis. */
   public resetEmojis () {
-    for (const emoji in this.functionEmojis)
+    for (const emoji of Object.keys(this.functionEmojis))
       delete this.functionEmojis[emoji];
 
     this.navigationEmojis = this._defaultNavigationEmojis;
@@ -262,6 +266,19 @@ export class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /**
+   * Sets whether to set function emojis after navigation emojis.
+   * @param boolean - Set function emojis after navigation emojis?
+   */
+  public setEmojisFunctionAfterNavigation (boolean: boolean) {
+    if (typeof boolean !== 'boolean')
+      throw new TypeError('setEmojisFunctionAfterNavigation() only accepts boolean type.');
+
+    this.emojisFunctionAfterNavigation = boolean;
+
+    return this;
+  }
+
+  /**
    * Sets the emojis used for function emojis.
    *
    * ### Example
@@ -280,9 +297,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * @param emojis - An object containing customised emojis to use as function emojis.
    */
   public setFunctionEmojis (emojis: IFunctionEmoji<Element>) {
-    for (const emoji in emojis) {
-      if (!emoji) continue;
-
+    for (const emoji of Object.keys(emojis)) {
       const fn = emojis[emoji];
 
       this.addFunctionEmoji(emoji, fn);
@@ -332,7 +347,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /**
-   * Sets whether page number indicator on client's message is shown or not.
+   * Sets whether page number indicator on client's message is shown.
    * @param indicator - Show page indicator?
    */
   public setPageIndicator (boolean: boolean) {
@@ -344,7 +359,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /**
-   * Sets whether the client's message will be deleted upon timeout or not.
+   * Sets whether the client's message will be deleted upon timeout.
    * @param deleteOnTimeout - Delete client's message upon timeout?
    */
   public setDeleteOnTimeout (boolean: boolean) {
@@ -391,7 +406,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /**
-   * Returns whether the given navigation emoji is enabled or not.
+   * Returns whether the given navigation emoji is enabled.
    * @param emoji The navigation emoji to search.
    */
   protected _enabled (emoji: NavigationEmojiIdentifier) {
@@ -401,31 +416,45 @@ export class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /** Deploys emoji reacts for the message sent by the client. */
-  protected async _drawNavigation () {
-    if (Object.keys(this.functionEmojis).length)
-      for (const emoji in this.functionEmojis)
-        await this.clientAssets.message.react(emoji);
-
-    /* tslint:disable: max-line-length */
-
-    if (this._enabled('BACK') && this.pages > 1) await this.clientAssets.message.react(this.navigationEmojis.back);
-    if (this._enabled('JUMP') && this.pages > 2) await this.clientAssets.message.react(this.navigationEmojis.jump);
-    if (this._enabled('FORWARD') && this.pages > 1) await this.clientAssets.message.react(this.navigationEmojis.forward);
-    if (this._enabled('DELETE')) await this.clientAssets.message.react(this.navigationEmojis.delete);
-
-    /* tslint:enable: max-line-length */
+  protected async _drawEmojis () {
+    if (this.emojisFunctionAfterNavigation) {
+      await this._drawNavigationEmojis();
+      await this._drawFunctionEmojis();
+    } else {
+      await this._drawFunctionEmojis();
+      await this._drawNavigationEmojis();
+    }
 
     return this._awaitResponse();
+  }
+
+  /** Deploys function emojis. */
+  protected async _drawFunctionEmojis () {
+    if (Object.keys(this.functionEmojis).length)
+      for (const emoji of Object.keys(this.functionEmojis))
+        await this.clientAssets.message.react(emoji);
+  }
+
+  /** Deploys navigation emojis. */
+  protected async _drawNavigationEmojis () {
+    if (this._enabled('BACK') && this.pages > 1)
+      await this.clientAssets.message.react(this.navigationEmojis.back);
+    if (this._enabled('JUMP') && this.pages > 2)
+      await this.clientAssets.message.react(this.navigationEmojis.jump);
+    if (this._enabled('FORWARD') && this.pages > 1)
+      await this.clientAssets.message.react(this.navigationEmojis.forward);
+    if (this._enabled('DELETE'))
+      await this.clientAssets.message.react(this.navigationEmojis.delete);
   }
 
   /**
    * Helper for intialising the MessageEmbed.
    * [For sub-class] Initialises the MessageEmbed.
-   * @param callNavigation - Whether to call _drawNavigation() or not.
+   * @param callNavigation - Whether to call _drawEmojis().
    * @ignore
    */
   public _loadList (callNavigation = true) {
-    if (callNavigation) return this._drawNavigation();
+    if (callNavigation) return this._drawEmojis();
   }
 
   /**
@@ -439,7 +468,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
     return this._awaitResponse();
   }
 
-  /** Awaits the reaction from the user. */
+  /** Awaits the reaction from the user(s). */
   protected async _awaitResponse (): Promise<void> {
     const emojis = Object.values(this.navigationEmojis);
     const filter = (r: MessageReaction, u: User) => {
