@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import { Embeds } from '../Embeds';
 import { FieldsEmbed } from '../FieldsEmbed';
 
+/** @ignore */
 const MESSAGE_DELETED = 'Client\'s message was deleted before being processed.';
 
 /**
