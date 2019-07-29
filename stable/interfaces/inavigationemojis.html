@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IClientAssets | Discord PaginationEmbed - Docs</title>
+	<title>INavigationEmojis | Discord PaginationEmbed - Docs</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="iclientassets.html">IClientAssets</a>
+					<a href="inavigationemojis.html">INavigationEmojis</a>
 				</li>
 			</ul>
-			<h1>Interface IClientAssets</h1>
+			<h1>Interface INavigationEmojis</h1>
 		</div>
 	</div>
 </header>
@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Assets for the client (message).</p>
+						<p>An object containing emojis to use as navigation emojis.</p>
 					</div>
 				</div>
 			</section>
@@ -75,7 +75,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IClientAssets</span>
+						<span class="target">INavigationEmojis</span>
 					</li>
 				</ul>
 			</section>
@@ -86,8 +86,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iclientassets.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iclientassets.html#prompt" class="tsd-kind-icon">prompt</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="inavigationemojis.html#back" class="tsd-kind-icon">back</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="inavigationemojis.html#delete" class="tsd-kind-icon">delete</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="inavigationemojis.html#forward" class="tsd-kind-icon">forward</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="inavigationemojis.html#jump" class="tsd-kind-icon">jump</a></li>
 							</ul>
 						</section>
 					</div>
@@ -96,36 +98,44 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="message" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Message</span></div>
+					<a name="back" class="tsd-anchor"></a>
+					<h3>back</h3>
+					<div class="tsd-signature tsd-kind-icon">back<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"◀"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/604674a/src/base/index.ts#L703">base/index.ts:703</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/edf8d26/src/base/index.ts#L694">base/index.ts:694</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The message object.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="prompt" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> prompt</h3>
-					<div class="tsd-signature tsd-kind-icon">prompt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="delete" class="tsd-anchor"></a>
+					<h3>delete</h3>
+					<div class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"🗑"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/604674a/src/base/index.ts#L711">base/index.ts:711</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/edf8d26/src/base/index.ts#L697">base/index.ts:697</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The text during a prompt for page jump.</p>
-						</div>
-						<p>To include a user mention in the text, use <code>{{user}}</code> as placeholder.</p>
-						<p>Default: <code>&quot;{{user}}, To what page would you like to jump? Say &#39;cancel&#39; or &#39;0&#39; to cancel the prompt.&quot;</code></p>
-					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="forward" class="tsd-anchor"></a>
+					<h3>forward</h3>
+					<div class="tsd-signature tsd-kind-icon">forward<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"▶"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/edf8d26/src/base/index.ts#L696">base/index.ts:696</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="jump" class="tsd-anchor"></a>
+					<h3>jump</h3>
+					<div class="tsd-signature tsd-kind-icon">jump<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"↗"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/edf8d26/src/base/index.ts#L695">base/index.ts:695</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -148,27 +158,33 @@
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="../classes/paginationembed.html" class="tsd-kind-icon">Pagination<wbr>Embed</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iclientassets.html" class="tsd-kind-icon">IClient<wbr>Assets</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="ifunctionemoji.html" class="tsd-kind-icon">IFunction<wbr>Emoji</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="iclientassets.html" class="tsd-kind-icon">IClient<wbr>Assets</a>
+						<a href="inavigationemojis.html" class="tsd-kind-icon">INavigation<wbr>Emojis</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iclientassets.html#message" class="tsd-kind-icon">message</a>
+								<a href="inavigationemojis.html#back" class="tsd-kind-icon">back</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iclientassets.html#prompt" class="tsd-kind-icon">prompt</a>
+								<a href="inavigationemojis.html#delete" class="tsd-kind-icon">delete</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="inavigationemojis.html#forward" class="tsd-kind-icon">forward</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="inavigationemojis.html#jump" class="tsd-kind-icon">jump</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="ifunctionemoji.html" class="tsd-kind-icon">IFunction<wbr>Emoji</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="inavigationemojis.html" class="tsd-kind-icon">INavigation<wbr>Emojis</a>
-					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#disablednavigationemojis" class="tsd-kind-icon">Disabled<wbr>Navigation<wbr>Emojis</a>
 					</li>
