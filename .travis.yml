@@ -4,7 +4,7 @@ node_js:
   - 10
 install: yarn
 before_script:
-  - yarn add discordjs/discord.js --peer
+  - yarn add discord.js --peer
 jobs:
   include:
     - stage: deploy
