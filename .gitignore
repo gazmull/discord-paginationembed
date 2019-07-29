@@ -13,3 +13,7 @@ docs
 
 # Node
 report.*
+
+# Builds
+bin
+typings

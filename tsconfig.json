@@ -8,7 +8,6 @@
     "noUnusedLocals": true,
     "outDir": "bin",
     "removeComments": false,
-    "incremental": true,
     "target": "es2017"
   },
   "include": [
