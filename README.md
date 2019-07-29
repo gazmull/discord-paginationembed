@@ -1,5 +1,5 @@
 # Discord.JS - PaginationEmbed
-A pagination utility for MessageEmbed in Discord.JS
+A pagination utility for RichEmbed in Discord.JS
 
 [![Discord Server](https://discordapp.com/api/guilds/370614673122263041/embed.png)](https://discord.gg/eDUzT87)
 [![Travis (.org) branch](https://img.shields.io/travis/gazmull/discord-paginationembed/master.svg?logo=travis&style=flat-square)](https://travis-ci.org/gazmull/discord-paginationembed)
@@ -9,28 +9,33 @@ A pagination utility for MessageEmbed in Discord.JS
 [![NPM](https://nodei.co/npm/discord-paginationembed.png?downloads=true&stars=true)](https://nodei.co/npm/discord-paginationembed/)
 
 ## 📣 Notice Board
-- [**Changelog**](https://github.com/gazmull/discord-paginationembed/blob/master/CHANGELOG.md)
-- [**Updating from `v0.8.0` to `v1.0.0`**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md) — Updated **2019-04-26**
+- [**Changelog**](https://github.com/gazmull/discord-paginationembed/blob/stable/CHANGELOG.md)
+- [**Updating from `v0.7.7-v11` to `v1.0.0`**](https://github.com/gazmull/discord-paginationembed/blob/stable/UPDATING_V1.md) — Updated **2019-07-29**
+- This utility now supports Discord.JS version **^11.5.1 (stable)**! For version **12 (master)** landing site, please see this branch instead: [**Click Me!**](https://github.com/gazmull/discord-paginationembed/tree/master)
 
 ## 🎉 Welcome
 - ✔ **Typings** included
 - ✔ [**Documentation**](https://gazmull.github.io/discord-paginationembed "Go to My Documentation") for online references
 - ✔ **Asynchronous** workflow
-- ✔ Supports [**Discord.JS v12**](https://discord.js.org/#/docs/main/master/general/welcome "Go to Discord.JS Master Documentation")
-- ❌ Currently does not support **Discord.JS v11** (Last version: [**v0.7.7-v11**](https://github.com/gazmull/discord-paginationembed/tree/0.7.7-v11))
+- ✔ Supports [Discord.JS versions **12 (master)** and **^11.5.1 (stable)**](https://discord.js.org "Go to Discord.JS Documentation")
 - ❔ Nothing found within docs or need a nudge? You may visit the [**Discord server**](https://discord.gg/eDUzT87)
 
 ## 🛠 Installation
-- **PaginationEmbed**: `npm install discord-paginationembed`
-    - Master branch: `npm install gazmull/discord-paginationembed`
+- **PaginationEmbed**:
+    - **For Discord.JS ^11.5.1 (stable)**: `npm install discord-paginationembed`
+    - **For Discord.JS 12 (master)**:
+      - **Published**: `npm install discord-paginationembed@beta`
+      - **Unpublished**: `npm install gazmull/discord-paginationembed`
+        - ❗ Requires [**Git**](https://git-scm.com/)
+- **Discord.JS**:
+    - **^11.5.1 (stable)**: `npm install discord.js`
+    - **12 (master)**: `npm install discordjs/discord.js`
       - ❗ Requires [**Git**](https://git-scm.com/)
-- **Discord.JS**: `npm install discordjs/discord.js`
-    - ❗ Requires [**Git**](https://git-scm.com/)
 
 ## 🔰 Examples
-> [**Test Unit Example**](https://github.com/gazmull/discord-paginationembed/blob/master/test)
+> [**Test Unit Example**](https://github.com/gazmull/discord-paginationembed/blob/stable/test)
 
-> [**Preface for TypeScript Projects**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md#TypeScript)
+> [**Preface for TypeScript Projects**](https://github.com/gazmull/discord-paginationembed/blob/stable/UPDATING_V1.md#TypeScript)
 
 ### In-action samples:
 - [**Pages of command description**](https://github.com/gazmull/eros-bot/blob/master/src/commands/general/guide.ts#L35)
@@ -74,7 +79,7 @@ FieldsEmbed.embed
 // Deploy embed
 FieldsEmbed.build();
 ```
-![FieldsEmbed](https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed.png?raw=true)
+![FieldsEmbed](https://github.com/gazmull/discord-paginationembed/blob/stable/demo/FieldsEmbed.png?raw=true)
 
 #### Working with Asynchronous Behaviour
 > This assumes this is under an `async` function
@@ -125,22 +130,22 @@ await FieldsEmbed.build();
 // Will not log until FieldsEmbed.build() is finished
 console.log('done');
 ```
-![FieldsEmbed2](https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed2.gif?raw=true)
+![FieldsEmbed2](https://github.com/gazmull/discord-paginationembed/blob/stable/demo/FieldsEmbed2.gif?raw=true)
 
 > ### Declare Embeds
 
 ```js
-const { MessageEmbed } = require('discord.js');
+const { RichEmbed } = require('discord.js');
 const embeds = [];
 
 for (let i = 0; i < 5; ++i)
-  embeds.push(new MessageEmbed().addField('Page', i + 1));
+  embeds.push(new RichEmbed().addField('Page', i + 1));
 ```
 
 ### `Embeds` Mode
 
 ```js
-const myImage = message.author.displayAvatarURL();
+const myImage = message.author.displayAvatarURL;
 
 new Pagination.Embeds()
   .setArray(embeds)
@@ -207,7 +212,7 @@ const Embeds = new PaginationEmbed.Embeds()
 
 await Embeds.build();
 ```
-![Embeds2](https://github.com/gazmull/discord-paginationembed/blob/master/demo/Embeds.gif?raw=true)
+![Embeds2](https://github.com/gazmull/discord-paginationembed/blob/stable/demo/Embeds.gif?raw=true)
 
 ## 💡🐛💻 Contributing
 ### Bug Reports
@@ -232,7 +237,7 @@ Please be explicit about the feature's description and provide a valid reason (e
 - For the PR comment, it goes the same with **`Suggestions / Discussions`**.
 
 # License
-> [**MIT**](https://github.com/gazmull/discord-paginationembed/blob/master/LICENSE)
+> [**MIT**](https://github.com/gazmull/discord-paginationembed/blob/stable/LICENSE)
 
 © 2018-present [**Euni (gazmull)**](https://github.com/gazmull)
 

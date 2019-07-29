@@ -1,8 +1,7 @@
-# Updating From `v0.8.0`
+# Updating From `v0.7.7-v11`
 
 ## Notice
-- This documentation will be changed without prior notice for any changes in v1's source code. In some cases, commit messages will notify everyone that this documentation has been changed.
-- If you are from **stable branch (v11)**, then this will no longer work for you as its support has been suspended (this package only). Last version of v11 branch: `v0.7.7-v11`
+- This is for Discord.JS v11 (stable) variant. If you're looking for Discord.JS v12 (master) variant, please visit this instead: [Click me](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md)
 
 ## Installation
 New way to install the utility is from NPM: `npm install discord-paginationembed`
@@ -23,16 +22,14 @@ interface LegendaryInterface {
 const fieldsEmbed = new FieldsEmbed<LegendaryInterface>();
 ```
 
-![Types](https://github.com/gazmull/discord-paginationembed/blob/master/demo/Types.png?raw=true)
+![Types](https://github.com/gazmull/discord-paginationembed/blob/stable/demo/Types.png?raw=true)
 
 ## API Changes
 ### `showPageIndicator` ➡ `setPageIndicator`
-> Since **v1.0.0-beta.2**
 
 ---
 
 ### `channel` **must** be set
-> Since **v1.0.0-beta.4**
 
 Before, it's either `clientAssets.message` or `channel` is set, but this makes an unnecessary API call (could lead to ratelimit) via sending/editing a dummy message with `clientAssets.prepare`'s content. By removing `clientAssets.prepare`, setting the channel is now a must while `clientAssets.message` is still optional.
 
@@ -57,9 +54,7 @@ new FieldsEmbed()
 ---
 
 ### `clientMessage` ➡ `clientAssets`
-`clientMessage` has been replaced with `clientAssets`: similar API but the latter takes an object as the only parameter. Option `prompt` was added for customising the content for message to send when prompted to jump to a page.
-
-- [**since v1.0.0-beta.4**] `prepare` option has been removed due to unnecessary API call.
+`clientMessage` has been replaced with `clientAssets`: similar API but the latter takes an object as the only parameter. Option `prompt` has been added for customising the content for message to send when prompted to jump to a page while `prepare` option has been removed due to unnecessary API call.
 
 #### `clientMessage` (Old way)
 ```js
@@ -79,8 +74,8 @@ new FieldsEmbed()
 
 ---
 
-### Customised `FieldsEmbed`'s `MessageEmbed`
-All `MessageEmbed` methods for `FieldsEmbed` mode has been moved to `FieldsEmbed#embed`.
+### Customised `FieldsEmbed`'s `RichEmbed`
+All `RichEmbed` methods for `FieldsEmbed` mode has been moved to `FieldsEmbed#embed`.
 
 #### Old way
 ```js
