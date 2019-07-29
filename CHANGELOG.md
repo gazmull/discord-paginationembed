@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.0.0-beta.0] - 2019-07-29
+Nothing new, but incremented version to make way for updated Discord.JS v11 variant release.
+
+## [1.0.0] - 2019-07-29
+Latest release for [v11 branch](https://github.com/gazmull/discord-paginationembed/tree/v11). See changes below from 1.0.0-beta.0.
+
+**Master branch (For Discord.JS v12)** has been incremented to `2.0.0-beta.0`
+
 ## [1.0.0-beta.4] - 2019-04-26
 [**Updating from `v0.8.0`**](UPDATING_V1.md#api-changes) (Updated, please read again)
 
@@ -208,7 +216,9 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.4...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0...HEAD
+[2.0.0-beta.0]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.4...2.0.0-beta.0
+[1.0.0]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.4...1.0.0
 [1.0.0-beta.4]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.3...1.0.0-beta.4
 [1.0.0-beta.3]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.2...1.0.0-beta.3
 [1.0.0-beta.2]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.1...1.0.0-beta.2

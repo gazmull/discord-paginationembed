@@ -10,19 +10,20 @@ A pagination utility for MessageEmbed in Discord.JS
 
 ## 📣 Notice Board
 - [**Changelog**](https://github.com/gazmull/discord-paginationembed/blob/master/CHANGELOG.md)
-- [**Updating from `v0.8.0` to `v1.0.0`**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md) — Updated **2019-04-26**
+- [**Updating from `v0.8.0`**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md) — Updated **2019-07-29**
+- This utility now supports Discord.JS version [**^11.5.1 (stable)**]((https://github.com/gazmull/discord-paginationembed/tree/stable))!
 
 ## 🎉 Welcome
 - ✔ **Typings** included
 - ✔ [**Documentation**](https://gazmull.github.io/discord-paginationembed "Go to My Documentation") for online references
 - ✔ **Asynchronous** workflow
-- ✔ Supports [**Discord.JS v12**](https://discord.js.org/#/docs/main/master/general/welcome "Go to Discord.JS Master Documentation")
-- ❌ Currently does not support **Discord.JS v11** (Last version: [**v0.7.7-v11**](https://github.com/gazmull/discord-paginationembed/tree/0.7.7-v11))
+- ✔ Supports [Discord.JS versions **12 (master)** and **^11.5.1 (stable)**](https://discord.js.org "Go to Discord.JS Documentation")
 - ❔ Nothing found within docs or need a nudge? You may visit the [**Discord server**](https://discord.gg/eDUzT87)
 
 ## 🛠 Installation
-- **PaginationEmbed**: `npm install discord-paginationembed`
-    - Master branch: `npm install gazmull/discord-paginationembed`
+- **PaginationEmbed**:
+    - **Published**: `npm install discord-paginationembed@beta`
+    - **Unpublished**: `npm install gazmull/discord-paginationembed`
       - ❗ Requires [**Git**](https://git-scm.com/)
 - **Discord.JS**: `npm install discordjs/discord.js`
     - ❗ Requires [**Git**](https://git-scm.com/)

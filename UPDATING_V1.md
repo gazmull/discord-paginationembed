@@ -2,7 +2,7 @@
 
 ## Notice
 - This documentation will be changed without prior notice for any changes in v1's source code. In some cases, commit messages will notify everyone that this documentation has been changed.
-- If you are from **stable branch (v11)**, then this will no longer work for you as its support has been suspended (this package only). Last version of v11 branch: `v0.7.7-v11`
+- If you are from **stable branch (v11)**, then look [**here**](https://github.com/gazmull/discord-paginationembed/blob/stable/UPDATING_V1.md).
 
 ## Installation
 New way to install the utility is from NPM: `npm install discord-paginationembed`
