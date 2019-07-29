@@ -1,0 +1,459 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Discord PaginationEmbed - Docs</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">Discord PaginationEmbed - Docs</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> Discord PaginationEmbed - Docs</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#discordjs---paginationembed" id="discordjs---paginationembed" style="color: inherit; text-decoration: none;">
+					<h1>Discord.JS - PaginationEmbed</h1>
+				</a>
+				<p>A pagination utility for MessageEmbed in Discord.JS</p>
+				<p><a href="https://discord.gg/eDUzT87"><img src="https://discordapp.com/api/guilds/370614673122263041/embed.png" alt="Discord Server"></a>
+					<a href="https://travis-ci.org/gazmull/discord-paginationembed"><img src="https://img.shields.io/travis/gazmull/discord-paginationembed/master.svg?logo=travis&style=flat-square" alt="Travis (.org) branch"></a>
+					<a href="https://nodei.co/npm/discord-paginationembed/"><img src="https://img.shields.io/npm/dependency-version/discord-paginationembed/peer/discord.js.svg?logo=npm&style=flat-square" alt="npm peer dependency version"></a>
+				<a href="https://nodei.co/npm/discord-paginationembed/"><img src="https://img.shields.io/npm/types/discord-paginationembed.svg?logo=npm&style=flat-square" alt="npm type definitions"></a></p>
+				<p><a href="https://nodei.co/npm/discord-paginationembed/"><img src="https://nodei.co/npm/discord-paginationembed.png?downloads=true&stars=true" alt="NPM"></a></p>
+				<a href="#📣-notice-board" id="📣-notice-board" style="color: inherit; text-decoration: none;">
+					<h2>📣 Notice Board</h2>
+				</a>
+				<ul>
+					<li><a href="https://github.com/gazmull/discord-paginationembed/blob/master/CHANGELOG.md"><strong>Changelog</strong></a></li>
+					<li><a href="https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md"><strong>Updating from <code>v0.8.0</code></strong></a> — Updated <strong>2019-07-29</strong></li>
+					<li>This utility now supports Discord.JS version <a href="(https://github.com/gazmull/discord-paginationembed/tree/stable)"><strong>^11.5.1 (stable)</strong></a>!</li>
+				</ul>
+				<a href="#🎉-welcome" id="🎉-welcome" style="color: inherit; text-decoration: none;">
+					<h2>🎉 Welcome</h2>
+				</a>
+				<ul>
+					<li>✔ <strong>Typings</strong> included</li>
+					<li>✔ <a href="https://gazmull.github.io/discord-paginationembed" title="Go to My Documentation"><strong>Documentation</strong></a> for online references</li>
+					<li>✔ <strong>Asynchronous</strong> workflow</li>
+					<li>✔ Supports <a href="https://discord.js.org" title="Go to Discord.JS Documentation">Discord.JS versions <strong>12 (master)</strong> and <strong>^11.5.1 (stable)</strong></a></li>
+					<li>❔ Nothing found within docs or need a nudge? You may visit the <a href="https://discord.gg/eDUzT87"><strong>Discord server</strong></a></li>
+				</ul>
+				<a href="#🛠-installation" id="🛠-installation" style="color: inherit; text-decoration: none;">
+					<h2>🛠 Installation</h2>
+				</a>
+				<ul>
+					<li><strong>PaginationEmbed</strong>:<ul>
+							<li><strong>Published</strong>: <code>npm install discord-paginationembed@beta</code></li>
+							<li><strong>Unpublished</strong>: <code>npm install gazmull/discord-paginationembed</code><ul>
+									<li>❗ Requires <a href="https://git-scm.com/"><strong>Git</strong></a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li><strong>Discord.JS</strong>: <code>npm install discordjs/discord.js</code><ul>
+							<li>❗ Requires <a href="https://git-scm.com/"><strong>Git</strong></a></li>
+						</ul>
+					</li>
+				</ul>
+				<a href="#🔰-examples" id="🔰-examples" style="color: inherit; text-decoration: none;">
+					<h2>🔰 Examples</h2>
+				</a>
+				<blockquote>
+					<p><a href="https://github.com/gazmull/discord-paginationembed/blob/master/test"><strong>Test Unit Example</strong></a></p>
+				</blockquote>
+				<blockquote>
+					<p><a href="https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md#TypeScript"><strong>Preface for TypeScript Projects</strong></a></p>
+				</blockquote>
+				<a href="#in-action-samples" id="in-action-samples" style="color: inherit; text-decoration: none;">
+					<h3>In-action samples:</h3>
+				</a>
+				<ul>
+					<li><a href="https://github.com/gazmull/eros-bot/blob/master/src/commands/general/guide.ts#L35"><strong>Pages of command description</strong></a></li>
+					<li><a href="https://github.com/gazmull/eros-bot/blob/master/src/commands/kamihime/info.ts#L180"><strong>Toggle between character and its weapon, and toggle image visibility</strong></a></li>
+					<li><a href="https://github.com/gazmull/eros-bot/blob/master/src/commands/level/leaderboard.ts#L23"><strong>EXP Leaderboard</strong></a></li>
+					<li><a href="https://github.com/gazmull/ramiel-bot/blob/master/src/commands/music/queue.ts#L38"><strong>Music Queue</strong></a></li>
+				</ul>
+				<p><br><br></p>
+				<blockquote>
+					<a href="#import-node-module" id="import-node-module" style="color: inherit; text-decoration: none;">
+						<h3>Import Node Module</h3>
+					</a>
+				</blockquote>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> Pagination = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord-paginationembed'</span>);</code></pre>
+				<blockquote>
+					<a href="#under-codemessagecode-event" id="under-codemessagecode-event" style="color: inherit; text-decoration: none;">
+						<h3>Under <code>message</code> event</h3>
+					</a>
+				</blockquote>
+				<a href="#codefieldsembedcode-mode" id="codefieldsembedcode-mode" style="color: inherit; text-decoration: none;">
+					<h3><code>FieldsEmbed</code> Mode</h3>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> FieldsEmbed = <span class="hljs-keyword">new</span> Pagination.FieldsEmbed()
+  <span class="hljs-comment">// A must: an array to paginate, can be an array of any type</span>
+  .setArray([{ <span class="hljs-attr">word</span>: <span class="hljs-string">'they are'</span> }, { <span class="hljs-attr">word</span>: <span class="hljs-string">'being treated'</span> }])
+  <span class="hljs-comment">// Set users who can only interact with the instance, set as `[]` if everyone can interact.</span>
+  .setAuthorizedUsers([message.author.id])
+   <span class="hljs-comment">// A must: sets the channel where to send the embed</span>
+  .setChannel(message.channel)
+  <span class="hljs-comment">// Elements to show per page. Default: 10 elements per page</span>
+  .setElementsPerPage(<span class="hljs-number">2</span>)
+   <span class="hljs-comment">// Have a page indicator (shown on message content)</span>
+  .setPageIndicator(<span class="hljs-literal">false</span>)
+   <span class="hljs-comment">// Format based on the array, in this case we're formatting the page based on each object's `word` property</span>
+  .formatField(<span class="hljs-string">'Continue...'</span>, el =&gt; el.word);
+
+<span class="hljs-comment">// Customise embed</span>
+FieldsEmbed.embed
+  .setColor(<span class="hljs-number">0x00FFFF</span>)
+  .setTitle(<span class="hljs-string">'Jesus Yamato Saves the Day by Obliterating a Swarm of Abyssal Bombers!'</span>)
+  .setDescription(<span class="hljs-string">'Akagi and Kaga give their thanks to their holy saviour today as...'</span>)
+  .setImage(<span class="hljs-string">'https://lh5.googleusercontent.com/-TIcwCxc7a-A/AAAAAAAAAAI/AAAAAAAAAAA/Hij7_7Qa1j0/s900-c-k-no/photo.jpg'</span>);
+
+<span class="hljs-comment">// Deploy embed</span>
+FieldsEmbed.build();</code></pre>
+				<p><img src="https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed.png?raw=true" alt="FieldsEmbed"></p>
+				<a href="#working-with-asynchronous-behaviour" id="working-with-asynchronous-behaviour" style="color: inherit; text-decoration: none;">
+					<h4>Working with Asynchronous Behaviour</h4>
+				</a>
+				<blockquote>
+					<p>This assumes this is under an <code>async</code> function</p>
+				</blockquote>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> FieldsEmbed = <span class="hljs-keyword">new</span> Pagination.FieldsEmbed()
+  .setArray([{ <span class="hljs-attr">name</span>: <span class="hljs-string">'John Doe'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Jane Doe'</span> }])
+  .setAuthorizedUsers([message.author.id])
+  .setChannel(message.channel)
+  .setElementsPerPage(<span class="hljs-number">1</span>)
+  <span class="hljs-comment">// Initial page on deploy</span>
+  .setPage(<span class="hljs-number">2</span>)
+  .showPageIndicator(<span class="hljs-literal">true</span>)
+  .formatField(<span class="hljs-string">'Name'</span>, i =&gt; i.name)
+  <span class="hljs-comment">// Deletes the embed upon awaiting timeout</span>
+  .setDeleteOnTimeout(<span class="hljs-literal">true</span>)
+  <span class="hljs-comment">// Disable built-in navigation emojis, in this case: 🗑 (Delete Embed)</span>
+  .setDisabledNavigationEmojis([<span class="hljs-string">'DELETE'</span>])
+  <span class="hljs-comment">// Set your own customised emojis</span>
+  .setFunctionEmojis({
+    <span class="hljs-string">'🔄'</span>: <span class="hljs-function">(<span class="hljs-params">user, instance</span>) =&gt;</span> {
+      <span class="hljs-keyword">const</span> field = instance.embed.fields[<span class="hljs-number">0</span>];
+
+      <span class="hljs-keyword">if</span> (field.name === <span class="hljs-string">'Name'</span>)
+        field.name = user.tag;
+      <span class="hljs-keyword">else</span>
+        field.name = <span class="hljs-string">'Name'</span>;
+    }
+  })
+  <span class="hljs-comment">// Similar to setFunctionEmojis() but this one takes only one emoji</span>
+  .addFunctionEmoji(<span class="hljs-string">'🅱'</span>, (_, instance) =&gt; {
+    <span class="hljs-keyword">const</span> field = instance.embed.fields[<span class="hljs-number">0</span>];
+
+    <span class="hljs-keyword">if</span> (field.name.includes(<span class="hljs-string">'🅱'</span>))
+      field.name = <span class="hljs-string">'Name'</span>;
+    <span class="hljs-keyword">else</span>
+      field.name = <span class="hljs-string">'Na🅱e'</span>;
+  })
+  <span class="hljs-comment">// Sets whether function emojis should be deployed after navigation emojis</span>
+  .setEmojisFunctionAfterNavigation(<span class="hljs-literal">false</span>);
+
+FieldsEmbed.embed
+  .setColor(<span class="hljs-number">0xFF00AE</span>)
+  .setDescription(<span class="hljs-string">'Test Description'</span>);
+
+<span class="hljs-keyword">await</span> FieldsEmbed.build();
+
+<span class="hljs-comment">// Will not log until FieldsEmbed.build() is finished</span>
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'done'</span>);</code></pre>
+				<p><img src="https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed2.gif?raw=true" alt="FieldsEmbed2"></p>
+				<blockquote>
+					<a href="#declare-embeds" id="declare-embeds" style="color: inherit; text-decoration: none;">
+						<h3>Declare Embeds</h3>
+					</a>
+				</blockquote>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> { MessageEmbed } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord.js'</span>);
+<span class="hljs-keyword">const</span> embeds = [];
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; ++i)
+  embeds.push(<span class="hljs-keyword">new</span> MessageEmbed().addField(<span class="hljs-string">'Page'</span>, i + <span class="hljs-number">1</span>));</code></pre>
+				<a href="#codeembedscode-mode" id="codeembedscode-mode" style="color: inherit; text-decoration: none;">
+					<h3><code>Embeds</code> Mode</h3>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> myImage = message.author.displayAvatarURL();
+
+<span class="hljs-keyword">new</span> Pagination.Embeds()
+  .setArray(embeds)
+  .setAuthorizedUsers([message.author.id])
+  .setChannel(message.channel)
+  .setPageIndicator(<span class="hljs-literal">true</span>)
+  .setPage(<span class="hljs-number">3</span>)
+   <span class="hljs-comment">// Methods below are for customising all embeds</span>
+  .setImage(myImage)
+  .setThumbnail(myImage)
+  .setTitle(<span class="hljs-string">'Test Title'</span>)
+  .setDescription(<span class="hljs-string">'Test Description'</span>)
+  .setFooter(<span class="hljs-string">'Test Footer Text'</span>)
+  .setURL(myImage)
+  .setColor(<span class="hljs-number">0xFF00AE</span>)
+  .addBlankField()
+  .addField(<span class="hljs-string">'Test Field 1'</span>, <span class="hljs-string">'Test Field 1'</span>, <span class="hljs-literal">true</span>)
+  .addField(<span class="hljs-string">'Test Field 2'</span>, <span class="hljs-string">'Test Field 2'</span>, <span class="hljs-literal">true</span>)
+  .build();</code></pre>
+				<p><img src="https://user-images.githubusercontent.com/32944712/37118454-41116cbe-228f-11e8-9878-f39db26316a1.png" alt="Embeds"></p>
+				<blockquote>
+					<p>This assumes this is under an <code>async</code> function</p>
+				</blockquote>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> Embeds = <span class="hljs-keyword">new</span> PaginationEmbed.Embeds()
+  .setArray(embeds)
+  .setAuthorizedUsers([message.author.id])
+  .setChannel(message.channel)
+  .setPageIndicator(<span class="hljs-literal">true</span>)
+  .setTitle(<span class="hljs-string">'Test Title'</span>)
+  .setDescription(<span class="hljs-string">'Test Description'</span>)
+  .setFooter(<span class="hljs-string">'Test Footer Text'</span>)
+  .setURL(<span class="hljs-string">'https://gazmull.github.io/discord-paginationembed'</span>)
+  .setColor(<span class="hljs-number">0xFF00AE</span>)
+  <span class="hljs-comment">// Sets the client's assets to utilise. Available options:</span>
+  <span class="hljs-comment">//  - message: the client's Message object (edits the message instead of sending new one for this instance)</span>
+  <span class="hljs-comment">//  - prompt: custom content for the message sent when prompted to jump to a page</span>
+  <span class="hljs-comment">//      {{user}} is the placeholder for the user mention</span>
+  .setClientAssets({ message, <span class="hljs-attr">prompt</span>: <span class="hljs-string">'Page plz {{user}}'</span> })
+  .setDeleteOnTimeout(<span class="hljs-literal">true</span>)
+  .setDisabledNavigationEmojis([<span class="hljs-string">'DELETE'</span>])
+  .setFunctionEmojis({
+    <span class="hljs-string">'⬆'</span>: <span class="hljs-function">(<span class="hljs-params">_, instance</span>) =&gt;</span> {
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> embed <span class="hljs-keyword">of</span> instance.array)
+        embed.fields[<span class="hljs-number">0</span>].value++;
+    },
+    <span class="hljs-string">'⬇'</span>: <span class="hljs-function">(<span class="hljs-params">_, instance</span>) =&gt;</span> {
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> embed <span class="hljs-keyword">of</span> instance.array)
+        embed.fields[<span class="hljs-number">0</span>].value--;
+    }
+  })
+  <span class="hljs-comment">// Listeners for PaginationEmbed's events</span>
+  <span class="hljs-comment">// Upon successfull `build()`</span>
+  .on(<span class="hljs-string">'start'</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Started!'</span>))
+  <span class="hljs-comment">// Upon a user deleting the embed</span>
+  .on(<span class="hljs-string">'finish'</span>, (user) =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Finished! User: <span class="hljs-subst">${user.username}</span>`</span>))
+  <span class="hljs-comment">// Upon a user reacting to the embed</span>
+  .on(<span class="hljs-string">'react'</span>, (user, emoji) =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Reacted! User: <span class="hljs-subst">${user.username}</span> | Emoji: <span class="hljs-subst">${emoji.name}</span> (<span class="hljs-subst">${emoji.id}</span>)`</span>))
+  <span class="hljs-comment">// Upon the awaiting time expired</span>
+  .on(<span class="hljs-string">'expire'</span>, () =&gt; <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">'Expired!'</span>))
+  <span class="hljs-comment">// Upon non-PaginationEmbed error (e.g: Discord API Error)</span>
+  .on(<span class="hljs-string">'error'</span>, <span class="hljs-built_in">console</span>.error);
+
+<span class="hljs-keyword">await</span> Embeds.build();</code></pre>
+				<p><img src="https://github.com/gazmull/discord-paginationembed/blob/master/demo/Embeds.gif?raw=true" alt="Embeds2"></p>
+				<a href="#💡🐛💻-contributing" id="💡🐛💻-contributing" style="color: inherit; text-decoration: none;">
+					<h2>💡🐛💻 Contributing</h2>
+				</a>
+				<a href="#bug-reports" id="bug-reports" style="color: inherit; text-decoration: none;">
+					<h3>Bug Reports</h3>
+				</a>
+				<p>Please provide reproducible steps and results proofs (e.g: images). Also, solutions are welcome!</p>
+				<a href="#suggestions--discussions" id="suggestions--discussions" style="color: inherit; text-decoration: none;">
+					<h3>Suggestions / Discussions</h3>
+				</a>
+				<p>Please be explicit about the feature&#39;s description and provide a valid reason (e.g: beneficial to users or development time) why it should be added/changed/removed.</p>
+				<a href="#source-code" id="source-code" style="color: inherit; text-decoration: none;">
+					<h3>Source Code</h3>
+				</a>
+				<ul>
+					<li>Fork this repository.</li>
+					<li>Execute <code>npm install</code></li>
+					<li>Code and code and code and code and... code!<ul>
+							<li>To enable <a href="https://en.wikipedia.org/wiki/Incremental_compiler"><strong>incremental compilation</strong></a> to JS: <code>npm run dev:watch</code></li>
+						</ul>
+					</li>
+					<li><code>npm test</code> to verify if your additions/adjustments are following the project&#39;s codebase rules and to verify if the docs are valid.</li>
+					<li>Please make sure that you have tested your changes very well.<ul>
+							<li>There is a test bot script under <code>test</code> folder. To get started:<ul>
+									<li>Copy <code>credentials.sample.js</code> to <code>credentials.js</code> and fill up your private credentials (token, test channel, etc)</li>
+									<li>Execute either:<ul>
+											<li>One-time test: <code>npm run test:bot</code></li>
+											<li>Hot-reloading test (nodemon): <code>npm run dev:start</code></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>File a <a href="https://github.com/gazmull/discord-paginationembed/compare"><strong>Pull Request (PR)</strong></a>!</li>
+					<li>For the PR comment, it goes the same with <strong><code>Suggestions / Discussions</code></strong>.</li>
+				</ul>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h1>License</h1>
+				</a>
+				<blockquote>
+					<p><a href="https://github.com/gazmull/discord-paginationembed/blob/master/LICENSE"><strong>MIT</strong></a></p>
+				</blockquote>
+				<p>© 2018-present <a href="https://github.com/gazmull"><strong>Euni (gazmull)</strong></a></p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="classes/embeds.html" class="tsd-kind-icon">Embeds</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/fieldsembed.html" class="tsd-kind-icon">Fields<wbr>Embed</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/paginationembed.html" class="tsd-kind-icon">Pagination<wbr>Embed</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/iclientassets.html" class="tsd-kind-icon">IClient<wbr>Assets</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ifunctionemoji.html" class="tsd-kind-icon">IFunction<wbr>Emoji</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/inavigationemojis.html" class="tsd-kind-icon">INavigation<wbr>Emojis</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#disablednavigationemojis" class="tsd-kind-icon">Disabled<wbr>Navigation<wbr>Emojis</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="globals.html#listenererror" class="tsd-kind-icon">Listener<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="globals.html#listenerreact" class="tsd-kind-icon">Listener<wbr>React</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="globals.html#listeneruser" class="tsd-kind-icon">Listener<wbr>User</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#navigationemojiidentifier" class="tsd-kind-icon">Navigation<wbr>Emoji<wbr>Identifier</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#version" class="tsd-kind-icon">version</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
