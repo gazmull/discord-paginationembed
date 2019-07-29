@@ -1,5 +1,4 @@
-# This branch has been dropped and is now deprecated. Consider using v12 (master) instead.
-<sub>~~DJS v12 is better anyway~~</sub>
+# This branch's is obsolete and has been replaced with [`stable` branch](https://github.com/gazmull/discord-paginationembed/tree/stable)
 
 ---
 
