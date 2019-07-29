@@ -69,6 +69,16 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      *      field.name = 'Name';
      *    else
      *      field.name = 'Na🅱e';
+     *
+     *    // [OPTIONAL]
+     *    // Either
+     *    throw 'stopped';
+     *
+     *    // or
+     *    return Promise.reject('stopped');
+     *
+     *    // will stop the instance from awaiting reacts.
+     *    // Passing an error object will emit the `error` event.
      *  });
      * ```
      * @param emoji - The emoji to use as the function's emoji.
@@ -135,6 +145,16 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      *        field.name = user.tag;
      *      else
      *        field.name = 'Name';
+     *
+     *      // [OPTIONAL]
+     *      // Either
+     *      throw 'stopped';
+     *
+     *      // or
+     *      return Promise.reject('stopped');
+     *
+     *      // will stop the instance from awaiting reacts.
+     *      // Passing an error object will emit the `error` event.
      *    }
      *  });
      * ```
@@ -188,8 +208,8 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     /** Deploys navigation emojis. */
     protected _drawNavigationEmojis(): Promise<void>;
     /**
-     * Helper for intialising the MessageEmbed.
-     * [For sub-class] Initialises the MessageEmbed.
+     * Helper for intialising the RichEmbed.
+     * [For sub-class] Initialises the RichEmbed.
      * @param callNavigation - Whether to call _drawEmojis().
      * @ignore
      */

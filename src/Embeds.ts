@@ -1,12 +1,12 @@
-import { ColorResolvable, EmbedField, Message, MessageEmbed, StringResolvable } from 'discord.js';
+import { ColorResolvable, Message, MessageEmbedField, RichEmbed, StringResolvable } from 'discord.js';
 import { PaginationEmbed } from './base';
 
 /**
- * A pagination mode that uses an array of MessageEmbed to paginate.
+ * A pagination mode that uses an array of RichEmbed to paginate.
  * @extends [[PaginationEmbed]]
  * @noInheritDoc
  */
-export class Embeds extends PaginationEmbed<MessageEmbed> {
+export class Embeds extends PaginationEmbed<RichEmbed> {
 
   /** The title of all embeds. */
   public title: string;
@@ -24,7 +24,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
   public timestamp: number;
 
   /** The fields of all embeds. */
-  public fields: EmbedField[];
+  public fields: MessageEmbedField[];
 
   /** The thumbnail of all embeds. */
   public thumbnail: string;
@@ -46,7 +46,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
   };
 
   /** Embed in the current page. */
-  get currentEmbed (): MessageEmbed {
+  get currentEmbed (): RichEmbed {
     return this.array[this.page - 1];
   }
 
@@ -85,13 +85,13 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    * ### Example
    * ```js
    *   const { Embeds } = require('discord-paginationembed');
-   *   const { MessageEmbed } = require('discord.js');
+   *   const { RichEmbed } = require('discord.js');
    *
    *   // Under message event.
    *   const embeds = [];
    *
    *   for (let i = 0; i < 5; ++i)
-   *    embeds.push(new MessageEmbed().addField('Page', i + 1));
+   *    embeds.push(new RichEmbed().addField('Page', i + 1));
    *
    *   new Embeds()
    *    .setAuthorizedUsers([message.author.id])
@@ -133,18 +133,18 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
   }
 
   /**
-   * Sets the array of MessageEmbed to paginate.
-   * @param array - An array of MessageEmbed to paginate.
+   * Sets the array of RichEmbed to paginate.
+   * @param array - An array of RichEmbed to paginate.
    */
-  public setArray (array: MessageEmbed[]) {
+  public setArray (array: RichEmbed[]) {
     const isValidArray = Array.isArray(array) && Boolean(array.length);
 
     if (!isValidArray) throw new TypeError('Cannot invoke Embeds class without a valid array to paginate.');
 
     for (let i = 0; i < array.length; i++)
-      if (array[i] instanceof MessageEmbed) continue;
+      if (array[i] instanceof RichEmbed) continue;
       else
-        throw new TypeError(`(MessageEmbeds[${i}]) Cannot invoke Embeds class with an invalid MessageEmbed instance.`);
+        throw new TypeError(`(MessageEmbeds[${i}]) Cannot invoke Embeds class with an invalid RichEmbed instance.`);
 
     this.array = array;
 
@@ -275,29 +275,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
 
     for (const el of this.array)
       el.setURL(url);
-
-    return this;
-  }
-
-  /**
-   * Removes, replaces, and inserts fields in all embeds (max 25).
-   * @param index - The index to start at.
-   * @param deleteCount - The number of fields to remove.
-   * @param name - The name of the field.
-   * @param value - The value of the field.
-   * @param inline - Set the field to display inline.
-   */
-  public spliceField (
-    index: number,
-    deleteCount: number,
-    name?: StringResolvable,
-    value?: StringResolvable,
-    inline?: boolean
-  ) {
-    if (!this.array) throw new TypeError('this.array must be set first.');
-
-    for (const el of this.array)
-      el.spliceField(index, deleteCount, name, value, inline);
 
     return this;
   }

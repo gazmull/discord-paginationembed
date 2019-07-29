@@ -8,7 +8,7 @@ const e = require("discord.js"), t = require("./base");
 
 exports.FieldsEmbed = class extends t.PaginationEmbed {
   constructor() {
-    super(), this.elementsPerPage = 10, this.embed = new e.MessageEmbed();
+    super(), this.elementsPerPage = 10, this.embed = new e.RichEmbed();
   }
   get elementList() {
     const e = (this.page - 1) * this.elementsPerPage, t = e + this.elementsPerPage;
@@ -35,7 +35,7 @@ exports.FieldsEmbed = class extends t.PaginationEmbed {
     return this.elementsPerPage = e, this;
   }
   async _drawList() {
-    const t = new e.MessageEmbed(this.embed);
+    const t = new e.RichEmbed(this.embed);
     t.fields = [];
     for (const e of this.embed.fields) t.addField(e.name, "function" == typeof e.value ? this.elementList.map(e.value).join("\n") : e.value, e.inline);
     return t;

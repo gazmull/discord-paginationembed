@@ -27,7 +27,7 @@ exports.Embeds = class extends t.PaginationEmbed {
   }
   setArray(t) {
     if (!Array.isArray(t) || !Boolean(t.length)) throw new TypeError("Cannot invoke Embeds class without a valid array to paginate.");
-    for (let s = 0; s < t.length; s++) if (!(t[s] instanceof r.MessageEmbed)) throw new TypeError(`(MessageEmbeds[${s}]) Cannot invoke Embeds class with an invalid MessageEmbed instance.`);
+    for (let s = 0; s < t.length; s++) if (!(t[s] instanceof r.RichEmbed)) throw new TypeError(`(MessageEmbeds[${s}]) Cannot invoke Embeds class with an invalid RichEmbed instance.`);
     return this.array = t, this;
   }
   setAuthor(r, t, s) {
@@ -81,11 +81,6 @@ exports.Embeds = class extends t.PaginationEmbed {
     if (!this.array) throw new TypeError("this.array must be set first.");
     if (!r) return this;
     for (const t of this.array) t.setURL(r);
-    return this;
-  }
-  spliceField(r, t, s, e, i) {
-    if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const a of this.array) a.spliceField(r, t, s, e, i);
     return this;
   }
   async _loadList(r = !0) {

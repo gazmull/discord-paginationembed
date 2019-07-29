@@ -1,11 +1,11 @@
-import { ColorResolvable, EmbedField, MessageEmbed, StringResolvable } from 'discord.js';
+import { ColorResolvable, MessageEmbedField, RichEmbed, StringResolvable } from 'discord.js';
 import { PaginationEmbed } from './base';
 /**
- * A pagination mode that uses an array of MessageEmbed to paginate.
+ * A pagination mode that uses an array of RichEmbed to paginate.
  * @extends [[PaginationEmbed]]
  * @noInheritDoc
  */
-export declare class Embeds extends PaginationEmbed<MessageEmbed> {
+export declare class Embeds extends PaginationEmbed<RichEmbed> {
     /** The title of all embeds. */
     title: string;
     /** The description of all embeds. */
@@ -17,7 +17,7 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
     /** The timestamp of all embeds. */
     timestamp: number;
     /** The fields of all embeds. */
-    fields: EmbedField[];
+    fields: MessageEmbedField[];
     /** The thumbnail of all embeds. */
     thumbnail: string;
     /** The image of all embeds. */
@@ -34,7 +34,7 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
         iconURL?: string;
     };
     /** Embed in the current page. */
-    readonly currentEmbed: MessageEmbed;
+    readonly currentEmbed: RichEmbed;
     /**
      * Adds a blank field to the fields of all embeds.
      * @param inline - Whether the field is inline to the other fields.
@@ -53,13 +53,13 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      * ### Example
      * ```js
      *   const { Embeds } = require('discord-paginationembed');
-     *   const { MessageEmbed } = require('discord.js');
+     *   const { RichEmbed } = require('discord.js');
      *
      *   // Under message event.
      *   const embeds = [];
      *
      *   for (let i = 0; i < 5; ++i)
-     *    embeds.push(new MessageEmbed().addField('Page', i + 1));
+     *    embeds.push(new RichEmbed().addField('Page', i + 1));
      *
      *   new Embeds()
      *    .setAuthorizedUsers([message.author.id])
@@ -92,10 +92,10 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      */
     build(): Promise<void>;
     /**
-     * Sets the array of MessageEmbed to paginate.
-     * @param array - An array of MessageEmbed to paginate.
+     * Sets the array of RichEmbed to paginate.
+     * @param array - An array of RichEmbed to paginate.
      */
-    setArray(array: MessageEmbed[]): this;
+    setArray(array: RichEmbed[]): this;
     /**
      * Set the author of all embeds.
      * @param name - The name of the author.
@@ -144,15 +144,6 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      * @param url - The URL of all embeds.
      */
     setURL(url: string): this;
-    /**
-     * Removes, replaces, and inserts fields in all embeds (max 25).
-     * @param index - The index to start at.
-     * @param deleteCount - The number of fields to remove.
-     * @param name - The name of the field.
-     * @param value - The value of the field.
-     * @param inline - Set the field to display inline.
-     */
-    spliceField(index: number, deleteCount: number, name?: StringResolvable, value?: StringResolvable, inline?: boolean): this;
     /** @ignore */
     _loadList(callNavigation?: boolean): Promise<void>;
 }

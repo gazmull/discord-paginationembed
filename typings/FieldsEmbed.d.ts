@@ -1,7 +1,7 @@
-import { MessageEmbed } from 'discord.js';
+import { RichEmbed } from 'discord.js';
 import { PaginationEmbed } from './base';
 /**
- * A pagination mode that uses a MessageEmbed with a field(s) containing the elements to paginate.
+ * A pagination mode that uses a RichEmbed with a field(s) containing the elements to paginate.
  * @extends [[PaginationEmbed]]
  * @noInheritDoc
  */
@@ -10,15 +10,15 @@ export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     /** Maximum number of elements to be displayed per page. */
     elementsPerPage: number;
     /**
-     * The MessageEmbed being used for this mode.
+     * The RichEmbed being used for this mode.
      *
      * ### Notice
-     * To customise the MessageEmbed for this mode, please access this property. Example:
+     * To customise the RichEmbed for this mode, please access this property. Example:
      * ```js
      * <FieldsEmbed>.embed.setColor('red')
      * ```
      */
-    embed: MessageEmbed;
+    embed: RichEmbed;
     /** Elements in the current page. */
     readonly elementList: Element[];
     /**
@@ -60,7 +60,7 @@ export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     build(): Promise<void>;
     /**
      * Adds a field to the embed.
-     * Same as MessageEmbed.addField, but value takes a function instead.
+     * Same as RichEmbed.addField, but value takes a function instead.
      * @param name - Name of the field.
      * @param value - Value of the field. Function for `Array.prototype.map().join('\n')`.
      * @param inline - Whether the field is inline with other field. Default: `true`
@@ -71,7 +71,7 @@ export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
      * @param max - Maximum number of elements to be displayed per page.
      */
     setElementsPerPage(max: number): this;
-    protected _drawList(): Promise<MessageEmbed>;
+    protected _drawList(): Promise<RichEmbed>;
     /** @ignore */
     _loadList(callNavigation?: boolean): Promise<void>;
 }

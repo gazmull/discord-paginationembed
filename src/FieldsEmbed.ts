@@ -1,8 +1,8 @@
-import { Message, MessageEmbed } from 'discord.js';
+import { Message, RichEmbed } from 'discord.js';
 import { PaginationEmbed } from './base';
 
 /**
- * A pagination mode that uses a MessageEmbed with a field(s) containing the elements to paginate.
+ * A pagination mode that uses a RichEmbed with a field(s) containing the elements to paginate.
  * @extends [[PaginationEmbed]]
  * @noInheritDoc
  */
@@ -12,22 +12,22 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     super();
 
     this.elementsPerPage = 10;
-    this.embed = new MessageEmbed();
+    this.embed = new RichEmbed();
   }
 
   /** Maximum number of elements to be displayed per page. */
   public elementsPerPage: number;
 
   /**
-   * The MessageEmbed being used for this mode.
+   * The RichEmbed being used for this mode.
    *
    * ### Notice
-   * To customise the MessageEmbed for this mode, please access this property. Example:
+   * To customise the RichEmbed for this mode, please access this property. Example:
    * ```js
    * <FieldsEmbed>.embed.setColor('red')
    * ```
    */
-  public embed: MessageEmbed;
+  public embed: RichEmbed;
 
   /** Elements in the current page. */
   get elementList (): Element[] {
@@ -99,7 +99,7 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
 
   /**
    * Adds a field to the embed.
-   * Same as MessageEmbed.addField, but value takes a function instead.
+   * Same as RichEmbed.addField, but value takes a function instead.
    * @param name - Name of the field.
    * @param value - Value of the field. Function for `Array.prototype.map().join('\n')`.
    * @param inline - Whether the field is inline with other field. Default: `true`
@@ -126,7 +126,7 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
   }
 
   protected async _drawList () {
-    const embed = new MessageEmbed(this.embed);
+    const embed = new RichEmbed(this.embed);
     embed.fields = [];
 
     for (const field of this.embed.fields)

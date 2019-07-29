@@ -1,4 +1,5 @@
-import { DMChannel, Emoji, Message, MessageReaction, Snowflake, TextChannel, User } from 'discord.js';
+// tslint:disable-next-line: max-line-length
+import { DMChannel, Emoji, Message, MessageReaction, PermissionString, RecursiveArray, Snowflake, TextChannel, User } from 'discord.js';
 import { EventEmitter } from 'events';
 import { Embeds } from '../Embeds';
 import { FieldsEmbed } from '../FieldsEmbed';
@@ -117,6 +118,16 @@ export class PaginationEmbed<Element> extends EventEmitter {
    *      field.name = 'Name';
    *    else
    *      field.name = 'Na🅱e';
+   *
+   *    // [OPTIONAL]
+   *    // Either
+   *    throw 'stopped';
+   *
+   *    // or
+   *    return Promise.reject('stopped');
+   *
+   *    // will stop the instance from awaiting reacts.
+   *    // Passing an error object will emit the `error` event.
    *  });
    * ```
    * @param emoji - The emoji to use as the function's emoji.
@@ -291,6 +302,16 @@ export class PaginationEmbed<Element> extends EventEmitter {
    *        field.name = user.tag;
    *      else
    *        field.name = 'Name';
+   *
+   *      // [OPTIONAL]
+   *      // Either
+   *      throw 'stopped';
+   *
+   *      // or
+   *      return Promise.reject('stopped');
+   *
+   *      // will stop the instance from awaiting reacts.
+   *      // Passing an error object will emit the `error` event.
    *    }
    *  });
    * ```
@@ -396,7 +417,9 @@ export class PaginationEmbed<Element> extends EventEmitter {
     if (channel.guild) {
       const missing = channel
         .permissionsFor(channel.client.user)
-        .missing([ 'ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS', 'VIEW_CHANNEL', 'SEND_MESSAGES' ]);
+        .missing([
+          'ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS', 'VIEW_CHANNEL', 'SEND_MESSAGES',
+        ]) as RecursiveArray<PermissionString>;
 
       if (missing.length)
         throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${missing.join(', ')}`);
@@ -448,8 +471,8 @@ export class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /**
-   * Helper for intialising the MessageEmbed.
-   * [For sub-class] Initialises the MessageEmbed.
+   * Helper for intialising the RichEmbed.
+   * [For sub-class] Initialises the RichEmbed.
    * @param callNavigation - Whether to call _drawEmojis().
    * @ignore
    */
@@ -494,7 +517,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
       const emoji = [ response.emoji.name, response.emoji.id ];
 
       if (this.listenerCount('react')) this.emit('react', user, response.emoji);
-      if (clientMessage.guild) await response.users.remove(user);
+      if (clientMessage.guild) await response.remove(user);
 
       switch (emoji[0] || emoji[1]) {
         case this.navigationEmojis.back:
@@ -545,7 +568,9 @@ export class PaginationEmbed<Element> extends EventEmitter {
    */
   protected async _cleanUp (err: any, clientMessage: Message, expired = true, user?: User) {
     if (this.deleteOnTimeout && clientMessage.deletable) await clientMessage.delete();
-    if (clientMessage.guild && !clientMessage.deleted) await clientMessage.reactions.removeAll();
+    // @ts-ignore
+    // `deleted` actually exists but not on typings
+    if (clientMessage.guild && !clientMessage.deleted) await clientMessage.clearReactions();
     if (err instanceof Error) {
       if (this.listenerCount('error')) this.emit('error', err);
 
@@ -582,6 +607,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
       const response = responses.first();
       const content = response.content;
 
+      // @ts-ignore
       if (this.clientAssets.message.deleted) {
         if (this.listenerCount('error')) this.emit('error', new Error(MESSAGE_DELETED));
 
