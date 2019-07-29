@@ -19,7 +19,7 @@ git clone $REPO dist -b $TARGET_BRANCH
 
 yarn gh:build
 
-rsync --delete-before -avh docs/stable dist/stable
+rsync --delete-before -avh docs/stable dist/
 
 cd dist
 git add --all .
