@@ -43,16 +43,16 @@
     "discord.js": "github:discordjs/discord.js"
   },
   "devDependencies": {
-    "@types/node": "^11.13.7",
-    "del": "^4.1.0",
-    "gulp": "^4.0.1",
-    "gulp-terser": "^1.1.7",
+    "@types/node": "^12.6.8",
+    "del": "^5.0.0",
+    "gulp": "^4.0.2",
+    "gulp-terser": "^1.2.0",
     "gulp-tslint": "^8.1.4",
     "gulp-typescript": "^5.0.1",
-    "tslint": "^5.16.0",
+    "tslint": "^5.18.0",
     "tslint-eslint-rules": "^5.4.0",
-    "typedoc": "^0.14.2",
-    "typedoc-plugin-no-inherit": "^1.1.6",
-    "typescript": "^3.4.5"
+    "typedoc": "^0.15.0",
+    "typedoc-plugin-no-inherit": "^1.1.9",
+    "typescript": "^3.5.3"
   }
 }

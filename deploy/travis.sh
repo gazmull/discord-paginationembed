@@ -19,11 +19,11 @@ git clone $REPO dist -b $TARGET_BRANCH
 
 yarn gh:build
 
-rsync --delete-before --exclude='.git' --exclude='.nojekyll' -avh docs/ dist/
+rsync --delete-before -avh docs/master dist/
 
 cd dist
 git add --all .
 git config user.name "Travis CI"
 git config user.email "${COMMIT_EMAIL}"
-git commit -m "Build: ${SHA}" || true
+git commit -m "Build: [MASTER] ${SHA}" || true
 git push "https://${GITHUB_TOKEN}@github.com/gazmull/discord-paginationembed.git" $TARGET_BRANCH
