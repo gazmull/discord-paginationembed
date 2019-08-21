@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.0.2] - 2019-08-21
+### Fixed
+Message content containing `null` when there's only one page / indicator set to disabled ([issues/4#issuecomment-523163586](https://github.com/gazmull/discord-paginationembed/issues/4#issuecomment-523163586))
+
+## 1.0.1 - 2019-07-29
+An NPM-published version that cleans up the NPM package from unnecessary files
+
 ## [1.0.0] - 2019-07-29
 Latest release for [v11 branch](https://github.com/gazmull/discord-paginationembed/tree/v11). See changes below from 1.0.0-beta.0.
 
@@ -13,7 +20,7 @@ Latest release for [v11 branch](https://github.com/gazmull/discord-paginationemb
 ## [1.0.0-beta.4] - 2019-04-26
 [**Updating from `v0.8.0`**](UPDATING_V1.md#api-changes) (Updated, please read again)
 
-## Added
+### Added
 - Added ability to stop the instance from awaiting emoji reacts with function emojis:
     ```js
     <PaginationEmbed>.addFunctionEmoji('🛑', () => {
@@ -30,14 +37,14 @@ Latest release for [v11 branch](https://github.com/gazmull/discord-paginationemb
 - Added `PaginationEmbed#setEmojisFunctionAfterNavigation` method. This allows function emojis to either be the first/last set to be deployed before/after navigation emojis.
   -  Default: `false`.
 
-## Changed
+### Changed
 - PaginationEmbed no longer emits an event when there is no listener (invoking `.on`/`.once`)
 
-## Removed
+### Removed
 - Option `prepare` for `clientAssets` has been removed. This affects:
     - Setting the `channel` property is a must now. (Used to be either `clientAssets.message` or `channel` must be set)
 
-## Fixed
+### Fixed
 - Fixed possibly unnecessary API call on awaiting emoji reacts timeout.
   - `clientMessage#delete` now precedes `clientMessage.reactions#removeAll`
 
@@ -213,7 +220,8 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.2...HEAD
+[1.0.2]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0...1.0.2
 [1.0.0]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.4...1.0.0
 [1.0.0-beta.4]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.3...1.0.0-beta.4
 [1.0.0-beta.3]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.2...1.0.0-beta.3
