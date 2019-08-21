@@ -283,9 +283,9 @@ export class Embeds extends PaginationEmbed<RichEmbed> {
   public async _loadList (callNavigation = true) {
     const shouldIndicate = this.pageIndicator
       ? this.pages === 1
-        ? null
+        ? undefined
         : `Page ${this.page} of ${this.pages}`
-      : null;
+      : undefined;
 
     if (this.clientAssets.message)
       await this.clientAssets.message.edit(shouldIndicate, { embed: this.currentEmbed });
