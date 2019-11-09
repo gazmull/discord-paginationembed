@@ -22,7 +22,7 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     pageIndicator: boolean;
     /**  Whether the client's message will be deleted upon timeout. Default: `false` */
     deleteOnTimeout: boolean;
-    /** Jumps to a certain page upon PaginationEmbed.build(). Default: `1` */
+    /** The current page. Default: `1` */
     page: number;
     /** The time for awaiting a user action before timeout in ms. Default: `30000` */
     timeout: number;
@@ -42,10 +42,7 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     disabledNavigationEmojis: Array<'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL'>;
     /** Whether to set function emojis after navigation emojis. Default: `false` */
     emojisFunctionAfterNavigation: boolean;
-    /**
-     * Number of pages for this instance.
-     * @ignore
-     */
+    /** Number of pages for this instance. */
     pages: number;
     /** The disabled navigation emojis (in values). */
     protected _disabledNavigationEmojiValues: any[];
@@ -250,14 +247,14 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     once(event: 'error', listener: ListenerError): this;
 }
 /**  @param user The user who responded to the instance. */
-declare type ListenerUser = (user: User) => void;
+export declare type ListenerUser = (user: User) => void;
 /**
  * @param user The user who responded to the instance.
  * @param emoji The emoji that was reacted to the instance.
  */
-declare type ListenerReact = (user: User, emoji: Emoji) => void;
+export declare type ListenerReact = (user: User, emoji: Emoji) => void;
 /** @param err The error object. */
-declare type ListenerError = (err: Error) => void;
+export declare type ListenerError = (err: Error) => void;
 /** Options for [[PaginationEmbed.disabledNavigationEmojis]]. */
 export declare type DisabledNavigationEmojis = NavigationEmojiIdentifier[];
 /** An object containing emojis to use as navigation emojis. */
@@ -284,4 +281,3 @@ export declare type NavigationEmojiIdentifier = 'BACK' | 'JUMP' | 'FORWARD' | 'D
 export interface IFunctionEmoji<Element> {
     [emojiNameOrID: string]: (user: User, instance: Embeds | FieldsEmbed<Element>) => any;
 }
-export {};
