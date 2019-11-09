@@ -64,6 +64,24 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Function for a custom emoji</p>
+					</div>
+					<p>Example for stopping the instance from awaiting from further reacts:</p>
+					<pre><code class="language-js"> (user, instance) =&gt; {
+     <span class="hljs-comment">// Either</span>
+     <span class="hljs-keyword">throw</span> <span class="hljs-string">'stopped'</span>;
+
+     <span class="hljs-comment">// or</span>
+     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.reject(<span class="hljs-string">'stopped'</span>);
+
+     <span class="hljs-comment">// will stop the instance from awaiting reacts.</span>
+     <span class="hljs-comment">// Passing an error object will emit the `error` event.</span>
+ };</code></pre>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
@@ -83,6 +101,22 @@
 			<section class="tsd-panel tsd-kind-interface tsd-has-type-parameter">
 				<h3 class="tsd-before-signature">Indexable</h3>
 				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>emojiNameOrID: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">function</span></div>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Function for a custom emoji</p>
+					</div>
+					<p>Example for stopping the instance from awaiting from further reacts:</p>
+					<pre><code class="language-js"> (user, instance) =&gt; {
+     <span class="hljs-comment">// Either</span>
+     <span class="hljs-keyword">throw</span> <span class="hljs-string">'stopped'</span>;
+
+     <span class="hljs-comment">// or</span>
+     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.reject(<span class="hljs-string">'stopped'</span>);
+
+     <span class="hljs-comment">// will stop the instance from awaiting reacts.</span>
+     <span class="hljs-comment">// Passing an error object will emit the `error` event.</span>
+ };</code></pre>
+				</div>
 				<ul class="tsd-parameters">
 					<li class="tsd-parameter-siganture">
 						<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -141,13 +175,13 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#disablednavigationemojis" class="tsd-kind-icon">Disabled<wbr>Navigation<wbr>Emojis</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#listenererror" class="tsd-kind-icon">Listener<wbr>Error</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#listenerreact" class="tsd-kind-icon">Listener<wbr>React</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#listeneruser" class="tsd-kind-icon">Listener<wbr>User</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
