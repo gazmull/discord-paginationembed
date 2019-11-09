@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.0.0-beta.1] - 2019-11-09
+
+## Added
+- Documentation example for IFunctionEmoji: stopping the instance from awaiting reacts with function emojis
+
+## Changed
+- Documentation changes involving `page` and `pages` properties
+
+## Fixed
+- Incorrect installation note on `UPDATING_V1.md`
+- FieldsEmbed mode's `_loadList` overwriting existing message content
+
 ## [2.0.0-beta.0] - 2019-07-29
 Nothing new, but incremented version to make way for updated Discord.JS v11 variant release.
 
@@ -216,7 +228,8 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.1...HEAD
+[2.0.0-beta.1]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.0...2.0.0-beta.1
 [2.0.0-beta.0]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.4...2.0.0-beta.0
 [1.0.0]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.4...1.0.0
 [1.0.0-beta.4]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.3...1.0.0-beta.4
