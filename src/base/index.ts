@@ -32,8 +32,8 @@ export class PaginationEmbed<Element> extends EventEmitter {
     this.functionEmojis = {};
     this.disabledNavigationEmojis = [];
     this.emojisFunctionAfterNavigation = false;
-
     this.pages = null;
+
     this._disabledNavigationEmojiValues = [];
     this._defaultNavigationEmojis = {
       back: '◀',
@@ -61,7 +61,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   /**  Whether the client's message will be deleted upon timeout. Default: `false` */
   public deleteOnTimeout: boolean;
 
-  /** Jumps to a certain page upon PaginationEmbed.build(). Default: `1` */
+  /** The current page. Default: `1` */
   public page: number;
 
   /** The time for awaiting a user action before timeout in ms. Default: `30000` */
@@ -87,10 +87,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   /** Whether to set function emojis after navigation emojis. Default: `false` */
   public emojisFunctionAfterNavigation: boolean;
 
-  /**
-   * Number of pages for this instance.
-   * @ignore
-   */
+  /** Number of pages for this instance. */
   public pages: number;
 
   /** The disabled navigation emojis (in values). */
@@ -605,60 +602,60 @@ export class PaginationEmbed<Element> extends EventEmitter {
     }
   }
 
-   /**
-    * Emitted upon successful `build()`.
-    * @event
-    */
-   public on (event: 'start', listener: () => void): this;
+  /**
+   * Emitted upon successful `build()`.
+   * @event
+   */
+  public on (event: 'start', listener: () => void): this;
 
-   /**
-    * Emitted when the instance is finished by a user reacting with `DELETE` navigation emoji.
-    * @event
-    */
-   public on (event: 'finish', listener: ListenerUser): this;
+  /**
+   * Emitted when the instance is finished by a user reacting with `DELETE` navigation emoji.
+   * @event
+   */
+  public on (event: 'finish', listener: ListenerUser): this;
 
-   /**
-    * Emitted upon a user reacting on the instance.
-    * @event
-    */
-   public on (event: 'react', listener: ListenerReact): this;
+  /**
+   * Emitted upon a user reacting on the instance.
+   * @event
+   */
+  public on (event: 'react', listener: ListenerReact): this;
 
-   /**
-    * Emitted when the awaiting timeout is reached.
-    * @event
-    */
-   // tslint:disable-next-line: unified-signatures
-   public on (event: 'expire', listener: () => void): this;
+  /**
+   * Emitted when the awaiting timeout is reached.
+   * @event
+   */
+  // tslint:disable-next-line: unified-signatures
+  public on (event: 'expire', listener: () => void): this;
 
-   /**
-    * Emitted upon an occurance of error.
-    * @event
-    */
-   // @ts-ignore
-   public on (event: 'error', listener: ListenerError): this;
+  /**
+   * Emitted upon an occurance of error.
+   * @event
+   */
+  // @ts-ignore
+  public on (event: 'error', listener: ListenerError): this;
 
-   /** @event */
-   public once (event: 'finish', listener: ListenerUser): this;
-   /** @event */
-   public once (event: 'start' | 'expire', listener: () => void): this;
-   /** @event */
-   public once (event: 'react', listener: ListenerReact): this;
-   /** @event */
-   // @ts-ignore
-   public once (event: 'error', listener: ListenerError): this;
+  /** @event */
+  public once (event: 'finish', listener: ListenerUser): this;
+  /** @event */
+  public once (event: 'start' | 'expire', listener: () => void): this;
+  /** @event */
+  public once (event: 'react', listener: ListenerReact): this;
+  /** @event */
+  // @ts-ignore
+  public once (event: 'error', listener: ListenerError): this;
 }
 
 /**  @param user The user who responded to the instance. */
-type ListenerUser = (user: User) => void;
+export type ListenerUser = (user: User) => void;
 
 /**
  * @param user The user who responded to the instance.
  * @param emoji The emoji that was reacted to the instance.
  */
-type ListenerReact = (user: User, emoji: Emoji) => void;
+export type ListenerReact = (user: User, emoji: Emoji) => void;
 
 /** @param err The error object. */
-type ListenerError = (err: Error) => void;
+export type ListenerError = (err: Error) => void;
 
 /** Options for [[PaginationEmbed.disabledNavigationEmojis]]. */
 export type DisabledNavigationEmojis = NavigationEmojiIdentifier[];
