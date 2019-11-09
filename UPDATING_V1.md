@@ -5,7 +5,7 @@
 - If you are from **stable branch (v11)**, then look [**here**](https://github.com/gazmull/discord-paginationembed/blob/stable/UPDATING_V1.md).
 
 ## Installation
-New way to install the utility is from NPM: `npm install discord-paginationembed`
+New way to install the utility is from NPM: `npm install discord-paginationembed@beta`
 
 ## TypeScript
 For importing types to your TypeScript project:
