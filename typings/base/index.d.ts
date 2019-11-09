@@ -278,6 +278,23 @@ export interface IClientAssets {
     prompt?: string;
 }
 export declare type NavigationEmojiIdentifier = 'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL';
+/**
+ * Function for a custom emoji
+ *
+ * Example for stopping the instance from awaiting from further reacts:
+ * ```js
+ *  (user, instance) => {
+ *      // Either
+ *      throw 'stopped';
+ *
+ *      // or
+ *      return Promise.reject('stopped');
+ *
+ *      // will stop the instance from awaiting reacts.
+ *      // Passing an error object will emit the `error` event.
+ *  };
+ *  ```
+ */
 export interface IFunctionEmoji<Element> {
     [emojiNameOrID: string]: (user: User, instance: Embeds | FieldsEmbed<Element>) => any;
 }
