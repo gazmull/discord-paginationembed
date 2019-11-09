@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.0.3] - 2019-11-09
+Ports changes from [2.0.0-beta.1](https://github.com/gazmull/discord-paginationembed/releases/tag/2.0.0-beta.1)
+
 ## [1.0.2] - 2019-08-21
 ### Fixed
 Message content containing `null` when there's only one page / indicator set to disabled ([issues/4#issuecomment-523163586](https://github.com/gazmull/discord-paginationembed/issues/4#issuecomment-523163586))
@@ -220,7 +223,8 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.2...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/1.0.3...HEAD
+[1.0.3]: https://github.com/gazmull/discord-paginationembed/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0...1.0.2
 [1.0.0]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.4...1.0.0
 [1.0.0-beta.4]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.3...1.0.0-beta.4
