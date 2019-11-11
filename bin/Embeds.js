@@ -89,7 +89,7 @@ exports.Embeds = class extends t.PaginationEmbed {
     return this;
   }
   async _loadList(r = !0) {
-    const t = this.pageIndicator ? 1 === this.pages ? null : `Page ${this.page} of ${this.pages}` : null;
+    const t = this.pageIndicator ? 1 === this.pages ? void 0 : `Page ${this.page} of ${this.pages}` : void 0;
     return this.clientAssets.message ? await this.clientAssets.message.edit(t, {
       embed: this.currentEmbed
     }) : this.clientAssets.message = await this.channel.send(t, {
