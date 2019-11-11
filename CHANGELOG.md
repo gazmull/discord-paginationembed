@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.0.0-beta.2] - 2019-11-12
+
+## Fixed
+- Embeds mode's `_loadList` overwriting existing message content
+
 ## [2.0.0-beta.1] - 2019-11-09
 
 ## Added
@@ -228,7 +233,8 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.1...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.2...HEAD
+[2.0.0-beta.2]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.1...2.0.0-beta.2
 [2.0.0-beta.1]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.0...2.0.0-beta.1
 [2.0.0-beta.0]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.4...2.0.0-beta.0
 [1.0.0]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.4...1.0.0
