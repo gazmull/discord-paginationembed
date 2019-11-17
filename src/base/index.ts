@@ -198,7 +198,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
     let { prompt } = assets;
 
     if (!prompt)
-      prompt = '{{user}}, To what page would you like to jump? Say `cancel` or `0` to cancel the prompt.';
+      prompt = '{{user}}, what page would you like to jump to? Say `cancel` or `0` to cancel the prompt.';
 
     Object.assign(this.clientAssets, { message, prompt });
 
