@@ -1,4 +1,12 @@
-import { ColorResolvable, EmbedField, Message, MessageEmbed, StringResolvable } from 'discord.js';
+import {
+  ColorResolvable,
+  EmbedField,
+  FileOptions,
+  Message,
+  MessageAttachment,
+  MessageEmbed,
+  StringResolvable
+} from 'discord.js';
 import { PaginationEmbed } from './base';
 
 /**
@@ -75,6 +83,20 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
 
     for (const el of this.array)
       el.addField(name, value, inline);
+
+    return this;
+  }
+
+  /**
+   * Files to attach to all embeds.
+   * @param files - Files to attach.
+   */
+  public attachFiles (files: Array<FileOptions|string|MessageAttachment>) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
+    if (!files) return this;
+
+    for (const el of this.array)
+      el.attachFiles(files);
 
     return this;
   }

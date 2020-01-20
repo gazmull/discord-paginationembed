@@ -39,11 +39,12 @@ bot
     if (test === 'embeds') {
       const embeds = [];
 
-      for (let i = 0; i < 5; ++i)
-        embeds.push(new MessageEmbed().addField('Page', i + 1));
+      for (let i = 1; i <= 3; ++i)
+        embeds.push(new MessageEmbed().addField('Page', i).setImage(`attachment://1.jpg`));
 
       const Embeds = new PaginationEmbed.Embeds()
         .setArray(embeds)
+        .attachFiles([ `${__dirname}/images/1.jpg` ])
         .setAuthorizedUsers(users)
         .setChannel(channel)
         .setPageIndicator(true)
@@ -72,6 +73,13 @@ bot
         .on('react', (user, emoji) => console.log(`Reacted! User: ${user.username} | Emoji: ${emoji.name} (${emoji.id})`))
         .on('expire', () => console.warn('Expired!'))
         .on('error', console.error);
+
+      Embeds.on('pageUpdate', () => {
+        if (Embeds.page === 2 && !Object.keys(Embeds.functionEmojis).find(e => e === '🔕')) {
+          Embeds.addFunctionEmoji('🔕', () => Promise.reject(new Error('Worst Error Ever')));
+          Embeds.clientAssets.message.react('🔕');
+        }
+      });
 
       await Embeds.build();
 

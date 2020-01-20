@@ -67,10 +67,17 @@ export class PaginationEmbed<Element> extends EventEmitter {
   /** The time for awaiting a user action before timeout in ms. Default: `30000` */
   public timeout: number;
 
-  /** The emojis used for navigation emojis. */
+  /**
+   * The emojis used for navigation emojis.
+   * Navigation emojis are the default message reactions for navigating through the pagination.
+   */
   public navigationEmojis: INavigationEmojis;
 
-  /** The emojis used for function emojis. */
+  /**
+   * The emojis used for function emojis.
+   * Function emojis are user-customised message reactions
+   * for modifying the current instance of the pagination such as modifying embed texts, stopping the pagination, etc.
+   */
   public functionEmojis: IFunctionEmoji<Element>;
 
   /**
@@ -108,7 +115,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * ### Example
    * ```js
    *  <PaginationEmbed>.addFunctionEmoji('🅱', (_, instance) => {
-   *    const field = instance.fields[0];
+   *    const field = instance.embed.fields[0];
    *
    *    if (field.name.includes('🅱'))
    *      field.name = 'Name';
@@ -282,7 +289,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * ```js
    *  <PaginationEmbed>.setFunctionEmojis({
    *    '🔄': (user, instance) => {
-   *      const field = instance.fields[0];
+   *      const field = instance.embed.fields[0];
    *
    *      if (field.name === 'Name')
    *        field.name = user.tag;
@@ -460,6 +467,9 @@ export class PaginationEmbed<Element> extends EventEmitter {
    */
   protected async _loadPage (param: number | 'back' | 'forward' = 1) {
     this.setPage(param);
+
+    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate');
+
     await this._loadList(false);
 
     return this._awaitResponse();
@@ -533,15 +543,19 @@ export class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /**
-   * Only used for _awaitResponse:
-   * Deletes the client's message, and emites either error or finish depending on the passed parameters.
+   * Only used for `_awaitResponse`:
+   * Deletes the client's message, and emits either `error` or `finish` event depending on the passed parameters.
    * @param err The error object.
    * @param clientMessage The client's message.
    * @param expired Whether the clean up is for `expired` event.
    * @param user The user object (only for `finish` event).
    */
   protected async _cleanUp (err: any, clientMessage: Message, expired = true, user?: User) {
-    if (this.deleteOnTimeout && clientMessage.deletable) await clientMessage.delete();
+    if (this.deleteOnTimeout && clientMessage.deletable) {
+      await clientMessage.delete();
+
+      clientMessage.deleted = true;
+    }
     if (clientMessage.guild && !clientMessage.deleted) await clientMessage.reactions.removeAll();
     if (err instanceof Error) {
       if (this.listenerCount('error')) this.emit('error', err);
@@ -615,6 +629,13 @@ export class PaginationEmbed<Element> extends EventEmitter {
   public on (event: 'finish', listener: ListenerUser): this;
 
   /**
+   * Emitted when the page number is updated.
+   * @event
+   */
+  // tslint:disable-next-line: unified-signatures
+  public on (event: 'pageUpdate', listener: () => void): this;
+
+  /**
    * Emitted upon a user reacting on the instance.
    * @event
    */
@@ -637,7 +658,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   /** @event */
   public once (event: 'finish', listener: ListenerUser): this;
   /** @event */
-  public once (event: 'start' | 'expire', listener: () => void): this;
+  public once (event: 'start' | 'expire' | 'pageUpdate', listener: () => void): this;
   /** @event */
   public once (event: 'react', listener: ListenerReact): this;
   /** @event */
