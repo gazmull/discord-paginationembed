@@ -5,6 +5,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.0.0-beta.3] - 2020-01-21
+
+## Added
+- `attachFiles` method for Embeds mode
+- `pageUpdate` event (emitted when the page number is updated via reaction)
+- Verbose documentation to `navigationEmojis` and `functionEmojis`
+
+## Changed
+- Test script `bot.js` updated for new features
+
+## Fixed
+- Incorrect documentation examples for FieldsEmbed mode
+- Fix `Unknown Message` error when `deleteOnTimeout` is enabled
+
 ## [2.0.0-beta.2] - 2019-11-12
 
 ## Fixed
@@ -233,7 +247,8 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.2...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.3...HEAD
+[2.0.0-beta.3]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.2...2.0.0-beta.3
 [2.0.0-beta.2]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.1...2.0.0-beta.2
 [2.0.0-beta.1]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.0...2.0.0-beta.1
 [2.0.0-beta.0]: https://github.com/gazmull/discord-paginationembed/compare/1.0.0-beta.4...2.0.0-beta.0
