@@ -51,5 +51,10 @@ gulp.task('terser', () => {
 
 const commonTasks = [ 'lint', 'clean', 'ts' ];
 
+function watch () {
+  gulp.watch(paths.src, gulp.series('ts'));
+}
+
 gulp.task('default', gulp.series(...commonTasks, 'terser'));
+gulp.task('watch', gulp.series(watch));
 gulp.task('build', gulp.series(...commonTasks));

@@ -14,6 +14,7 @@
     "lint-fix": "npm run lint --fix",
     "dev:start": "nodemon ./test/bot.js --config .nodemon.json",
     "dev:watch": "tsc -p . --watch",
+    "dev:gulp-watch": "gulp watch",
     "docs:parse": "npm run gh:build -- --json ./bin/docs.json",
     "gh:build": "typedoc src",
     "prepublishOnly": "npm test",
