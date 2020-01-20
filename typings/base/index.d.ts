@@ -26,9 +26,16 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     page: number;
     /** The time for awaiting a user action before timeout in ms. Default: `30000` */
     timeout: number;
-    /** The emojis used for navigation emojis. */
+    /**
+     * The emojis used for navigation emojis.
+     * Navigation emojis are the default message reactions for navigating through the pagination.
+     */
     navigationEmojis: INavigationEmojis;
-    /** The emojis used for function emojis. */
+    /**
+     * The emojis used for function emojis.
+     * Function emojis are user-customised message reactions
+     * for modifying the current instance of the pagination such as modifying embed texts, stopping the pagination, etc.
+     */
     functionEmojis: IFunctionEmoji<Element>;
     /**
      * The disabled navigation emojis.
@@ -60,7 +67,7 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      * ### Example
      * ```js
      *  <PaginationEmbed>.addFunctionEmoji('🅱', (_, instance) => {
-     *    const field = instance.fields[0];
+     *    const field = instance.embed.fields[0];
      *
      *    if (field.name.includes('🅱'))
      *      field.name = 'Name';
@@ -126,7 +133,7 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      * ```js
      *  <PaginationEmbed>.setFunctionEmojis({
      *    '🔄': (user, instance) => {
-     *      const field = instance.fields[0];
+     *      const field = instance.embed.fields[0];
      *
      *      if (field.name === 'Name')
      *        field.name = user.tag;
@@ -199,8 +206,8 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     /** Awaits the reaction from the user(s). */
     protected _awaitResponse(): Promise<void>;
     /**
-     * Only used for _awaitResponse:
-     * Deletes the client's message, and emites either error or finish depending on the passed parameters.
+     * Only used for `_awaitResponse`:
+     * Deletes the client's message, and emits either `error` or `finish` event depending on the passed parameters.
      * @param err The error object.
      * @param clientMessage The client's message.
      * @param expired Whether the clean up is for `expired` event.
@@ -223,6 +230,11 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      */
     on(event: 'finish', listener: ListenerUser): this;
     /**
+     * Emitted when the page number is updated.
+     * @event
+     */
+    on(event: 'pageUpdate', listener: () => void): this;
+    /**
      * Emitted upon a user reacting on the instance.
      * @event
      */
@@ -240,7 +252,7 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     /** @event */
     once(event: 'finish', listener: ListenerUser): this;
     /** @event */
-    once(event: 'start' | 'expire', listener: () => void): this;
+    once(event: 'start' | 'expire' | 'pageUpdate', listener: () => void): this;
     /** @event */
     once(event: 'react', listener: ListenerReact): this;
     /** @event */

@@ -21,6 +21,12 @@ exports.Embeds = class extends t.PaginationEmbed {
     for (const e of this.array) e.addField(r, t, s);
     return this;
   }
+  attachFiles(r) {
+    if (!this.array) throw new TypeError("this.array must be set first.");
+    if (!r) return this;
+    for (const t of this.array) t.attachFiles(r);
+    return this;
+  }
   async build() {
     return this.pages = this.array.length, await this._verify(), this.listenerCount("start") && this.emit("start"), 
     this._loadList();

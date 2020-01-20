@@ -147,7 +147,8 @@ exports.PaginationEmbed = class extends t.EventEmitter {
     if (t) return this._drawEmojis();
   }
   async _loadPage(t = 1) {
-    return this.setPage(t), await this._loadList(!1), this._awaitResponse();
+    return this.setPage(t), this.listenerCount("pageUpdate") && this.emit("pageUpdate"), 
+    await this._loadList(!1), this._awaitResponse();
   }
   async _awaitResponse() {
     const t = Object.values(this.navigationEmojis), e = (e, i) => {
@@ -188,7 +189,7 @@ exports.PaginationEmbed = class extends t.EventEmitter {
     }
   }
   async _cleanUp(t, e, i = !0, s) {
-    if (this.deleteOnTimeout && e.deletable && await e.delete(), e.guild && !e.deleted && await e.reactions.removeAll(), 
+    if (this.deleteOnTimeout && e.deletable && (await e.delete(), e.deleted = !0), e.guild && !e.deleted && await e.reactions.removeAll(), 
     t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
     const a = i ? "expire" : "finish";
     this.listenerCount(a) && this.emit(a, s);

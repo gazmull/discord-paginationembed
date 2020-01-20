@@ -47,7 +47,7 @@ export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
      *    })
      *    .setFunctionEmojis({
      *      '🔄': (user, instance) => {
-     *        const field = instance.fields[0];
+     *        const field = instance.embed.fields[0];
      *
      *        if (field.name === 'Name')
      *          field.name = user.tag;
