@@ -19,7 +19,7 @@ const done = () => {
 
 bot
   .on('ready', async () => {
-    const channel = bot.channels.get(credentials.channel);
+    const channel = bot.channels.cache.get(credentials.channel);
 
     if (!channel)
       error('Provided channel is not resolvable by the client.');

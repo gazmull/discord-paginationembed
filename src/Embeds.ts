@@ -91,7 +91,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    * Files to attach to all embeds.
    * @param files - Files to attach.
    */
-  public attachFiles (files: Array<FileOptions|string|MessageAttachment>) {
+  public attachFiles (files: (FileOptions|string|MessageAttachment)[]) {
     if (!this.array) throw new TypeError('this.array must be set first.');
     if (!files) return this;
 

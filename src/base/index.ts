@@ -89,7 +89,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * - 'DELETE'
    * - 'ALL'
    */
-  public disabledNavigationEmojis: Array< 'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL' >;
+  public disabledNavigationEmojis: ('BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL')[];
 
   /** Whether to set function emojis after navigation emojis. Default: `false` */
   public emojisFunctionAfterNavigation: boolean;
@@ -497,7 +497,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
     try {
       const responses = await clientMessage.awaitReactions(filter, { max: 1, time: this.timeout, errors: [ 'time' ] });
       const response = responses.first();
-      const user = response.users.last();
+      const user = response.users.cache.last();
       const emoji = [ response.emoji.name, response.emoji.id ];
 
       if (this.listenerCount('react')) this.emit('react', user, response.emoji);
