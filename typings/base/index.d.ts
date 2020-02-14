@@ -46,7 +46,7 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      * - 'DELETE'
      * - 'ALL'
      */
-    disabledNavigationEmojis: Array<'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL'>;
+    disabledNavigationEmojis: ('BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL')[];
     /** Whether to set function emojis after navigation emojis. Default: `false` */
     emojisFunctionAfterNavigation: boolean;
     /** Number of pages for this instance. */

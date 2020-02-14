@@ -20,7 +20,7 @@ export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
      */
     embed: MessageEmbed;
     /** Elements in the current page. */
-    readonly elementList: Element[];
+    get elementList(): Element[];
     /**
      * Build the Pagination Fields Embed.
      *

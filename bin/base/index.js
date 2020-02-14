@@ -1,215 +1,466 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: !0
-});
-
-const t = require("events"), e = "Client's message was deleted before being processed.";
-
-exports.PaginationEmbed = class extends t.EventEmitter {
-  constructor() {
-    super(), this.authorizedUsers = [], this.channel = null, this.clientAssets = {}, 
-    this.pageIndicator = !0, this.deleteOnTimeout = !1, this.page = 1, this.timeout = 3e4, 
-    this.navigationEmojis = {
-      back: "◀",
-      jump: "↗",
-      forward: "▶",
-      delete: "🗑"
-    }, this.functionEmojis = {}, this.disabledNavigationEmojis = [], this.emojisFunctionAfterNavigation = !1, 
-    this.pages = null, this._disabledNavigationEmojiValues = [], this._defaultNavigationEmojis = {
-      back: "◀",
-      jump: "↗",
-      forward: "▶",
-      delete: "🗑"
-    };
-  }
-  build() {
-    throw new Error("Cannot invoke this class. Invoke with [PaginationEmbed.Embeds] or [PaginationEmbed.FieldsEmbed] instead.");
-  }
-  addFunctionEmoji(t, e) {
-    if (!(e instanceof Function)) throw new TypeError(`Callback for ${t} must be a function type.`);
-    return Object.assign(this.functionEmojis, {
-      [t]: e
-    }), this;
-  }
-  deleteFunctionEmoji(t) {
-    if (!(t in this.functionEmojis)) throw new Error(`${t} function emoji does not exist.`);
-    return delete this.functionEmojis[t], this;
-  }
-  resetEmojis() {
-    for (const t of Object.keys(this.functionEmojis)) delete this.functionEmojis[t];
-    return this.navigationEmojis = this._defaultNavigationEmojis, this;
-  }
-  setArray(t) {
-    if (!Array.isArray(t) || !Boolean(t.length)) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array to paginate.");
-    return this.array = t, this;
-  }
-  setAuthorizedUsers(t) {
-    if (!Array.isArray(t)) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array.");
-    return this.authorizedUsers = t, this;
-  }
-  setChannel(t) {
-    return this.channel = t, this;
-  }
-  setClientAssets(t) {
-    if (!t) throw new TypeError("Cannot accept assets options as a non-object type.");
-    const {message: e} = t;
-    let {prompt: i} = t;
-    return i || (i = "{{user}}, To what page would you like to jump? Say `cancel` or `0` to cancel the prompt."), 
-    Object.assign(this.clientAssets, {
-      message: e,
-      prompt: i
-    }), this;
-  }
-  setDisabledNavigationEmojis(t) {
-    if (!Array.isArray(t)) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array.");
-    const e = [], i = [];
-    for (let s of t) {
-      if (s = "string" == typeof s ? s.toUpperCase() : s, [ "BACK", "JUMP", "FORWARD", "DELETE", "ALL" ].includes(s) || e.push(s), 
-      "ALL" === s) {
+Object.defineProperty(exports, "__esModule", { value: true });
+const events_1 = require("events");
+/** @ignore */
+const MESSAGE_DELETED = 'Client\'s message was deleted before being processed.';
+/**
+ * The base class for Pagination Modes. **Do not invoke**.
+ * @extends [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
+ * @noInheritDoc
+ */
+class PaginationEmbed extends events_1.EventEmitter {
+    constructor() {
+        super();
+        this.authorizedUsers = [];
+        this.channel = null;
+        this.clientAssets = {};
+        this.pageIndicator = true;
+        this.deleteOnTimeout = false;
+        this.page = 1;
+        this.timeout = 30000;
         this.navigationEmojis = {
-          back: null,
-          jump: null,
-          forward: null,
-          delete: null
-        }, i.push("ALL");
-        break;
-      }
-      i.push(s), s = s.toLowerCase(), this._disabledNavigationEmojiValues.push(this.navigationEmojis[s]), 
-      this.navigationEmojis[s] = null;
+            back: '◀',
+            jump: '↗',
+            forward: '▶',
+            delete: '🗑'
+        };
+        this.functionEmojis = {};
+        this.disabledNavigationEmojis = [];
+        this.emojisFunctionAfterNavigation = false;
+        this.pages = null;
+        this._disabledNavigationEmojiValues = [];
+        this._defaultNavigationEmojis = {
+            back: '◀',
+            jump: '↗',
+            forward: '▶',
+            delete: '🗑'
+        };
     }
-    if (e.length) throw new TypeError(`Cannot invoke PaginationEmbed class with invalid navigation emoji(s): ${e.join(", ")}.`);
-    return this.disabledNavigationEmojis = i, this;
-  }
-  setEmojisFunctionAfterNavigation(t) {
-    if ("boolean" != typeof t) throw new TypeError("setEmojisFunctionAfterNavigation() only accepts boolean type.");
-    return this.emojisFunctionAfterNavigation = t, this;
-  }
-  setFunctionEmojis(t) {
-    for (const e of Object.keys(t)) {
-      const i = t[e];
-      this.addFunctionEmoji(e, i);
+    build() {
+        throw new Error('Cannot invoke this class. Invoke with [PaginationEmbed.Embeds] or [PaginationEmbed.FieldsEmbed] instead.');
     }
-    return this;
-  }
-  setNavigationEmojis(t) {
-    return Object.assign(this.navigationEmojis, t), this;
-  }
-  setPage(t) {
-    const e = "string" == typeof t;
-    if (isNaN(t) && !e) throw new TypeError("setPage() only accepts number/string type.");
-    const i = "back" === t ? 1 === this.page ? this.page : this.page - 1 : this.page === this.pages ? this.pages : this.page + 1;
-    return this.page = e ? i : t, this;
-  }
-  setTimeout(t) {
-    if ("number" != typeof t) throw new TypeError("setTimeout() only accepts number type.");
-    return this.timeout = t, this;
-  }
-  setPageIndicator(t) {
-    if ("boolean" != typeof t) throw new TypeError("setPageIndicator() only accepts boolean type.");
-    return this.pageIndicator = t, this;
-  }
-  setDeleteOnTimeout(t) {
-    if ("boolean" != typeof t) throw new TypeError("deleteOnTimeout() only accepts boolean type.");
-    return this.deleteOnTimeout = t, this;
-  }
-  async _verify() {
-    if (this.setClientAssets(this.clientAssets), !this.channel) throw new Error("Cannot invoke PaginationEmbed class without a channel object set.");
-    if (!(this.page >= 1 && this.page <= this.pages)) throw new RangeError(`Page number is out of bounds. Max pages: ${this.pages}`);
-    return this._checkPermissions();
-  }
-  async _checkPermissions() {
-    const t = this.channel;
-    if (t.guild) {
-      const e = t.permissionsFor(t.client.user).missing([ "ADD_REACTIONS", "MANAGE_MESSAGES", "EMBED_LINKS", "VIEW_CHANNEL", "SEND_MESSAGES" ]);
-      if (e.length) throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${e.join(", ")}`);
+    /**
+     * Adds a function emoji to the embed.
+     *
+     * ### Example
+     * ```js
+     *  <PaginationEmbed>.addFunctionEmoji('🅱', (_, instance) => {
+     *    const field = instance.embed.fields[0];
+     *
+     *    if (field.name.includes('🅱'))
+     *      field.name = 'Name';
+     *    else
+     *      field.name = 'Na🅱e';
+     *  });
+     * ```
+     * @param emoji - The emoji to use as the function's emoji.
+     * @param callback - The function to call upon pressing the function emoji.
+     */
+    addFunctionEmoji(emoji, callback) {
+        if (!(callback instanceof Function))
+            throw new TypeError(`Callback for ${emoji} must be a function type.`);
+        Object.assign(this.functionEmojis, { [emoji]: callback });
+        return this;
     }
-    return !0;
-  }
-  _enabled(t) {
-    return !this.disabledNavigationEmojis.includes("ALL") && !this.disabledNavigationEmojis.includes(t);
-  }
-  async _drawEmojis() {
-    return this.emojisFunctionAfterNavigation ? (await this._drawNavigationEmojis(), 
-    await this._drawFunctionEmojis()) : (await this._drawFunctionEmojis(), await this._drawNavigationEmojis()), 
-    this._awaitResponse();
-  }
-  async _drawFunctionEmojis() {
-    if (Object.keys(this.functionEmojis).length) for (const t of Object.keys(this.functionEmojis)) await this.clientAssets.message.react(t);
-  }
-  async _drawNavigationEmojis() {
-    this._enabled("BACK") && this.pages > 1 && await this.clientAssets.message.react(this.navigationEmojis.back), 
-    this._enabled("JUMP") && this.pages > 2 && await this.clientAssets.message.react(this.navigationEmojis.jump), 
-    this._enabled("FORWARD") && this.pages > 1 && await this.clientAssets.message.react(this.navigationEmojis.forward), 
-    this._enabled("DELETE") && await this.clientAssets.message.react(this.navigationEmojis.delete);
-  }
-  _loadList(t = !0) {
-    if (t) return this._drawEmojis();
-  }
-  async _loadPage(t = 1) {
-    return this.setPage(t), this.listenerCount("pageUpdate") && this.emit("pageUpdate"), 
-    await this._loadList(!1), this._awaitResponse();
-  }
-  async _awaitResponse() {
-    const t = Object.values(this.navigationEmojis), e = (e, i) => {
-      const s = !!this._enabled("ALL") && (!this._disabledNavigationEmojiValues.length || this._disabledNavigationEmojiValues.some(t => ![ e.emoji.name, e.emoji.id ].includes(t))) && (t.includes(e.emoji.name) || t.includes(e.emoji.id)) || e.emoji.name in this.functionEmojis || e.emoji.id in this.functionEmojis;
-      return this.authorizedUsers.length ? this.authorizedUsers.includes(i.id) && s : !i.bot && s;
-    }, i = this.clientAssets.message;
-    try {
-      const t = (await i.awaitReactions(e, {
-        max: 1,
-        time: this.timeout,
-        errors: [ "time" ]
-      })).first(), s = t.users.last(), a = [ t.emoji.name, t.emoji.id ];
-      switch (this.listenerCount("react") && this.emit("react", s, t.emoji), i.guild && await t.users.remove(s), 
-      a[0] || a[1]) {
-       case this.navigationEmojis.back:
-        return 1 === this.page ? this._awaitResponse() : this._loadPage("back");
-
-       case this.navigationEmojis.jump:
-        return this.pages <= 2 ? this._awaitResponse() : this._awaitResponseEx(s);
-
-       case this.navigationEmojis.forward:
-        return this.page === this.pages ? this._awaitResponse() : this._loadPage("forward");
-
-       case this.navigationEmojis.delete:
-        return await i.delete(), void (this.listenerCount("finish") && this.emit("finish", s));
-
-       default:
-        const e = this.functionEmojis[a[0]] || this.functionEmojis[a[1]];
-        try {
-          await e(s, this);
-        } catch (t) {
-          return this._cleanUp(t, i, !1, s);
+    /**
+     * Deletes a function emoji.
+     * @param emoji - The emoji key to delete.
+     */
+    deleteFunctionEmoji(emoji) {
+        if (!(emoji in this.functionEmojis))
+            throw new Error(`${emoji} function emoji does not exist.`);
+        delete this.functionEmojis[emoji];
+        return this;
+    }
+    /** Deletes all function emojis, and then re-enables all navigation emojis. */
+    resetEmojis() {
+        for (const emoji of Object.keys(this.functionEmojis))
+            delete this.functionEmojis[emoji];
+        this.navigationEmojis = this._defaultNavigationEmojis;
+        return this;
+    }
+    /**
+     * Sets the array of elements to paginate. This must be called first before any other methods.
+     * @param array - An array of elements to paginate.
+     */
+    setArray(array) {
+        const isValidArray = Array.isArray(array) && Boolean(array.length);
+        if (!isValidArray)
+            throw new TypeError('Cannot invoke PaginationEmbed class without a valid array to paginate.');
+        this.array = array;
+        return this;
+    }
+    /**
+     * Set the authorized users to navigate the pages.
+     * @param users - An array of user IDs.
+     */
+    setAuthorizedUsers(users) {
+        if (!Array.isArray(users))
+            throw new TypeError('Cannot invoke PaginationEmbed class without a valid array.');
+        this.authorizedUsers = users;
+        return this;
+    }
+    /**
+     * The channel where to send the embed.
+     * @param channel - The channel object.
+     */
+    setChannel(channel) {
+        this.channel = channel;
+        return this;
+    }
+    /**
+     * Sets the settings for assets for the client.
+     * @param assets - The assets for the client.
+     */
+    setClientAssets(assets) {
+        if (!assets)
+            throw new TypeError('Cannot accept assets options as a non-object type.');
+        const { message } = assets;
+        let { prompt } = assets;
+        if (!prompt)
+            prompt = '{{user}}, To what page would you like to jump? Say `cancel` or `0` to cancel the prompt.';
+        Object.assign(this.clientAssets, { message, prompt });
+        return this;
+    }
+    /**
+     * Sets the disabled navigation emojis.
+     *
+     * ### Example
+     * ```js
+     *  // Disable specific navigation emojis
+     *  <PaginationEmbed>.setDisabledNavigationEmojis(['delete', 'jump']);
+     *
+     *  // Disable all navigation emojis
+     *  <PaginationEmbed>.setDisabledNavigationEmojis(['all']);
+     * ```
+     *
+     * @param emojis  - An array of navigation emojis to disable.
+     */
+    setDisabledNavigationEmojis(emojis) {
+        if (!Array.isArray(emojis))
+            throw new TypeError('Cannot invoke PaginationEmbed class without a valid array.');
+        const invalid = [];
+        const sanitised = [];
+        for (let emoji of emojis) {
+            emoji = typeof emoji === 'string' ? emoji.toUpperCase() : emoji;
+            const validEmojis = ['BACK', 'JUMP', 'FORWARD', 'DELETE', 'ALL'];
+            if (!validEmojis.includes(emoji))
+                invalid.push(emoji);
+            if (emoji === 'ALL') {
+                this.navigationEmojis = {
+                    back: null,
+                    jump: null,
+                    forward: null,
+                    delete: null
+                };
+                sanitised.push('ALL');
+                break;
+            }
+            sanitised.push(emoji);
+            emoji = emoji.toLowerCase();
+            this._disabledNavigationEmojiValues.push(this.navigationEmojis[emoji]);
+            this.navigationEmojis[emoji] = null;
         }
-        return this._loadPage(this.page);
-      }
-    } catch (t) {
-      return this._cleanUp(t, i);
+        if (invalid.length)
+            throw new TypeError(`Cannot invoke PaginationEmbed class with invalid navigation emoji(s): ${invalid.join(', ')}.`);
+        this.disabledNavigationEmojis = sanitised;
+        return this;
     }
-  }
-  async _cleanUp(t, e, i = !0, s) {
-    if (this.deleteOnTimeout && e.deletable && (await e.delete(), e.deleted = !0), e.guild && !e.deleted && await e.reactions.removeAll(), 
-    t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
-    const a = i ? "expire" : "finish";
-    this.listenerCount(a) && this.emit(a, s);
-  }
-  async _awaitResponseEx(t) {
-    const i = [ "0", "cancel" ], s = e => {
-      const s = parseInt(e.content);
-      return e.author.id === t.id && (!isNaN(Number(e.content)) && s !== this.page && s >= 1 && s <= this.pages || i.includes(e.content.toLowerCase()));
-    }, a = this.clientAssets.message.channel, n = await a.send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, t.toString()));
-    try {
-      const t = (await a.awaitMessages(s, {
-        max: 1,
-        time: this.timeout,
-        errors: [ "time" ]
-      })).first(), o = t.content;
-      return this.clientAssets.message.deleted ? void (this.listenerCount("error") && this.emit("error", new Error(e))) : (await n.delete(), 
-      t.deletable && await t.delete(), i.includes(o) ? this._awaitResponse() : this._loadPage(parseInt(o)));
-    } catch (t) {
-      if (n.deletable && await n.delete(), t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
-      this.listenerCount("expire") && this.emit("expire");
+    /**
+     * Sets whether to set function emojis after navigation emojis.
+     * @param boolean - Set function emojis after navigation emojis?
+     */
+    setEmojisFunctionAfterNavigation(boolean) {
+        if (typeof boolean !== 'boolean')
+            throw new TypeError('setEmojisFunctionAfterNavigation() only accepts boolean type.');
+        this.emojisFunctionAfterNavigation = boolean;
+        return this;
     }
-  }
-};
+    /**
+     * Sets the emojis used for function emojis.
+     *
+     * ### Example
+     * ```js
+     *  <PaginationEmbed>.setFunctionEmojis({
+     *    '🔄': (user, instance) => {
+     *      const field = instance.embed.fields[0];
+     *
+     *      if (field.name === 'Name')
+     *        field.name = user.tag;
+     *      else
+     *        field.name = 'Name';
+     *    }
+     *  });
+     * ```
+     * @param emojis - An object containing customised emojis to use as function emojis.
+     */
+    setFunctionEmojis(emojis) {
+        for (const emoji of Object.keys(emojis)) {
+            const fn = emojis[emoji];
+            this.addFunctionEmoji(emoji, fn);
+        }
+        return this;
+    }
+    /**
+     * Sets the emojis used for navigation emojis.
+     * @param emojis - An object containing customised emojis to use as navigation emojis.
+     */
+    setNavigationEmojis(emojis) {
+        Object.assign(this.navigationEmojis, emojis);
+        return this;
+    }
+    /**
+     * Sets to jump to a certain page upon calling PaginationEmbed.build().
+     * @param page - The page number to jump to.
+     */
+    setPage(page) {
+        const isString = typeof page === 'string';
+        if (!(!isNaN(page) || isString))
+            throw new TypeError('setPage() only accepts number/string type.');
+        const navigator = page === 'back'
+            ? this.page === 1 ? this.page : this.page - 1
+            : this.page === this.pages ? this.pages : this.page + 1;
+        this.page = isString ? navigator : page;
+        return this;
+    }
+    /**
+     * Sets the time for awaiting a user action before timeout in ms.
+     * @param timeout Timeout value in ms.
+     */
+    setTimeout(timeout) {
+        if (typeof timeout !== 'number')
+            throw new TypeError('setTimeout() only accepts number type.');
+        this.timeout = timeout;
+        return this;
+    }
+    /**
+     * Sets whether page number indicator on client's message is shown.
+     * @param indicator - Show page indicator?
+     */
+    setPageIndicator(boolean) {
+        if (typeof boolean !== 'boolean')
+            throw new TypeError('setPageIndicator() only accepts boolean type.');
+        this.pageIndicator = boolean;
+        return this;
+    }
+    /**
+     * Sets whether the client's message will be deleted upon timeout.
+     * @param deleteOnTimeout - Delete client's message upon timeout?
+     */
+    setDeleteOnTimeout(boolean) {
+        if (typeof boolean !== 'boolean')
+            throw new TypeError('deleteOnTimeout() only accepts boolean type.');
+        this.deleteOnTimeout = boolean;
+        return this;
+    }
+    /**
+     * Evaluates the constructor and the client.
+     * @ignore
+     */
+    async _verify() {
+        this.setClientAssets(this.clientAssets);
+        if (!this.channel)
+            throw new Error('Cannot invoke PaginationEmbed class without a channel object set.');
+        if (!(this.page >= 1 && this.page <= this.pages))
+            throw new RangeError(`Page number is out of bounds. Max pages: ${this.pages}`);
+        return this._checkPermissions();
+    }
+    /**
+     * Checks the permissions of the client before sending the embed.
+     * @ignore
+     */
+    async _checkPermissions() {
+        const channel = this.channel;
+        if (channel.guild) {
+            const missing = channel
+                .permissionsFor(channel.client.user)
+                .missing(['ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS', 'VIEW_CHANNEL', 'SEND_MESSAGES']);
+            if (missing.length)
+                throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${missing.join(', ')}`);
+        }
+        return true;
+    }
+    /**
+     * Returns whether the given navigation emoji is enabled.
+     * @param emoji The navigation emoji to search.
+     */
+    _enabled(emoji) {
+        return this.disabledNavigationEmojis.includes('ALL')
+            ? false
+            : !this.disabledNavigationEmojis.includes(emoji);
+    }
+    /** Deploys emoji reacts for the message sent by the client. */
+    async _drawEmojis() {
+        if (this.emojisFunctionAfterNavigation) {
+            await this._drawNavigationEmojis();
+            await this._drawFunctionEmojis();
+        }
+        else {
+            await this._drawFunctionEmojis();
+            await this._drawNavigationEmojis();
+        }
+        return this._awaitResponse();
+    }
+    /** Deploys function emojis. */
+    async _drawFunctionEmojis() {
+        if (Object.keys(this.functionEmojis).length)
+            for (const emoji of Object.keys(this.functionEmojis))
+                await this.clientAssets.message.react(emoji);
+    }
+    /** Deploys navigation emojis. */
+    async _drawNavigationEmojis() {
+        if (this._enabled('BACK') && this.pages > 1)
+            await this.clientAssets.message.react(this.navigationEmojis.back);
+        if (this._enabled('JUMP') && this.pages > 2)
+            await this.clientAssets.message.react(this.navigationEmojis.jump);
+        if (this._enabled('FORWARD') && this.pages > 1)
+            await this.clientAssets.message.react(this.navigationEmojis.forward);
+        if (this._enabled('DELETE'))
+            await this.clientAssets.message.react(this.navigationEmojis.delete);
+    }
+    /**
+     * Helper for intialising the MessageEmbed.
+     * [For sub-class] Initialises the MessageEmbed.
+     * @param callNavigation - Whether to call _drawEmojis().
+     * @ignore
+     */
+    _loadList(callNavigation = true) {
+        if (callNavigation)
+            return this._drawEmojis();
+    }
+    /**
+     * Calls PaginationEmbed.setPage() and then executes `_loadList()` and `_awaitResponse()`.
+     * @param param - The page number to jump to.
+     */
+    async _loadPage(param = 1) {
+        this.setPage(param);
+        if (this.listenerCount('pageUpdate'))
+            this.emit('pageUpdate');
+        await this._loadList(false);
+        return this._awaitResponse();
+    }
+    /** Awaits the reaction from the user(s). */
+    async _awaitResponse() {
+        const emojis = Object.values(this.navigationEmojis);
+        const filter = (r, u) => {
+            const enabledEmoji = this._enabled('ALL')
+                ? !this._disabledNavigationEmojiValues.length
+                    || this._disabledNavigationEmojiValues.some(e => ![r.emoji.name, r.emoji.id].includes(e))
+                : false;
+            const passedEmoji = (enabledEmoji && (emojis.includes(r.emoji.name) || emojis.includes(r.emoji.id))) ||
+                r.emoji.name in this.functionEmojis || r.emoji.id in this.functionEmojis;
+            if (this.authorizedUsers.length)
+                return this.authorizedUsers.includes(u.id) && passedEmoji;
+            return !u.bot && passedEmoji;
+        };
+        const clientMessage = this.clientAssets.message;
+        try {
+            const responses = await clientMessage.awaitReactions(filter, { max: 1, time: this.timeout, errors: ['time'] });
+            const response = responses.first();
+            const user = response.users.cache.last();
+            const emoji = [response.emoji.name, response.emoji.id];
+            if (this.listenerCount('react'))
+                this.emit('react', user, response.emoji);
+            if (clientMessage.guild)
+                await response.users.remove(user);
+            switch (emoji[0] || emoji[1]) {
+                case this.navigationEmojis.back:
+                    if (this.page === 1)
+                        return this._awaitResponse();
+                    return this._loadPage('back');
+                case this.navigationEmojis.jump:
+                    if (this.pages <= 2)
+                        return this._awaitResponse();
+                    return this._awaitResponseEx(user);
+                case this.navigationEmojis.forward:
+                    if (this.page === this.pages)
+                        return this._awaitResponse();
+                    return this._loadPage('forward');
+                case this.navigationEmojis.delete:
+                    await clientMessage.delete();
+                    if (this.listenerCount('finish'))
+                        this.emit('finish', user);
+                    return;
+                default:
+                    const cb = this.functionEmojis[emoji[0]] || this.functionEmojis[emoji[1]];
+                    try {
+                        await cb(user, this);
+                    }
+                    catch (err) {
+                        return this._cleanUp(err, clientMessage, false, user);
+                    }
+                    return this._loadPage(this.page);
+            }
+        }
+        catch (err) {
+            return this._cleanUp(err, clientMessage);
+        }
+    }
+    /**
+     * Only used for `_awaitResponse`:
+     * Deletes the client's message, and emits either `error` or `finish` event depending on the passed parameters.
+     * @param err The error object.
+     * @param clientMessage The client's message.
+     * @param expired Whether the clean up is for `expired` event.
+     * @param user The user object (only for `finish` event).
+     */
+    async _cleanUp(err, clientMessage, expired = true, user) {
+        if (this.deleteOnTimeout && clientMessage.deletable) {
+            await clientMessage.delete();
+            clientMessage.deleted = true;
+        }
+        if (clientMessage.guild && !clientMessage.deleted)
+            await clientMessage.reactions.removeAll();
+        if (err instanceof Error) {
+            if (this.listenerCount('error'))
+                this.emit('error', err);
+            return;
+        }
+        const eventType = expired ? 'expire' : 'finish';
+        if (this.listenerCount(eventType))
+            this.emit(eventType, user);
+    }
+    /**
+     * Awaits the custom page input from the user.
+     * @param user - The user who reacted to jump on a certain page.
+     */
+    async _awaitResponseEx(user) {
+        const cancel = ['0', 'cancel'];
+        const filter = (m) => {
+            const supposedPage = parseInt(m.content);
+            return (m.author.id === user.id && ((!isNaN(Number(m.content)) && supposedPage !== this.page && supposedPage >= 1 && supposedPage <= this.pages)
+                || cancel.includes(m.content.toLowerCase())));
+        };
+        const channel = this.clientAssets.message.channel;
+        const prompt = await channel
+            .send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, user.toString()));
+        try {
+            const responses = await channel.awaitMessages(filter, { max: 1, time: this.timeout, errors: ['time'] });
+            const response = responses.first();
+            const content = response.content;
+            if (this.clientAssets.message.deleted) {
+                if (this.listenerCount('error'))
+                    this.emit('error', new Error(MESSAGE_DELETED));
+                return;
+            }
+            await prompt.delete();
+            if (response.deletable)
+                await response.delete();
+            if (cancel.includes(content))
+                return this._awaitResponse();
+            return this._loadPage(parseInt(content));
+        }
+        catch (c) {
+            if (prompt.deletable)
+                await prompt.delete();
+            if (c instanceof Error) {
+                if (this.listenerCount('error'))
+                    this.emit('error', c);
+                return;
+            }
+            if (this.listenerCount('expire'))
+                this.emit('expire');
+        }
+    }
+}
+exports.PaginationEmbed = PaginationEmbed;

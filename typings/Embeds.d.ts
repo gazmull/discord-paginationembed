@@ -34,7 +34,7 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
         iconURL?: string;
     };
     /** Embed in the current page. */
-    readonly currentEmbed: MessageEmbed;
+    get currentEmbed(): MessageEmbed;
     /**
      * Adds a blank field to the fields of all embeds.
      * @param inline - Whether the field is inline to the other fields.
@@ -51,7 +51,7 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      * Files to attach to all embeds.
      * @param files - Files to attach.
      */
-    attachFiles(files: Array<FileOptions | string | MessageAttachment>): this;
+    attachFiles(files: (FileOptions | string | MessageAttachment)[]): this;
     /**
      * Build the Pagination Embeds.
      *

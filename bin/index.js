@@ -1,9 +1,10 @@
 "use strict";
-
-function e(e) {
-  for (var r in e) exports.hasOwnProperty(r) || (exports[r] = e[r]);
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
-
-Object.defineProperty(exports, "__esModule", {
-  value: !0
-}), e(require("./Embeds")), e(require("./FieldsEmbed")), e(require("./base")), exports.version = require("../package.json").version;
+Object.defineProperty(exports, "__esModule", { value: true });
+__export(require("./Embeds"));
+__export(require("./FieldsEmbed"));
+__export(require("./base"));
+// tslint:disable-next-line:no-var-requires
+exports.version = require('../package.json').version;
