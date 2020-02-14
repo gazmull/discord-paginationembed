@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.0.0-beta.4] - 2020-02-14
+Utility has been updated to support the breaking change feature `Managers`. Starting from this version it will no longer support the [Discord.JS](https://github.com/discordjs/discord.js) master commits earlier than [`bbdbc4c`](https://github.com/discordjs/discord.js/commit/bbdbc4cfa789383b7b3dbecf5e6b8401ea2dd998).
+
 ## [2.0.0-beta.3] - 2020-01-21
 
 ## Added
@@ -247,7 +250,8 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.3...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.4...HEAD
+[2.0.0-beta.4]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.3...2.0.0-beta.4
 [2.0.0-beta.3]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.2...2.0.0-beta.3
 [2.0.0-beta.2]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.1...2.0.0-beta.2
 [2.0.0-beta.1]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.0...2.0.0-beta.1
