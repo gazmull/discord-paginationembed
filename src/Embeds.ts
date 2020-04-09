@@ -66,7 +66,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
     if (!this.array) throw new TypeError('this.array must be set first.');
 
     for (const el of this.array)
-      el.addBlankField(inline);
+      el.addField('\u200B', '\u200B', inline);
 
     return this;
   }
