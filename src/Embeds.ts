@@ -309,7 +309,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param value - The value of the field.
    * @param inline - Set the field to display inline.
    */
-  public spliceField (
+  public spliceFields (
     index: number,
     deleteCount: number,
     name?: StringResolvable,
@@ -319,7 +319,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
     if (!this.array) throw new TypeError('this.array must be set first.');
 
     for (const el of this.array)
-      el.spliceField(index, deleteCount, name, value, inline);
+      el.spliceFields(index, deleteCount, name, value, inline);
 
     return this;
   }
