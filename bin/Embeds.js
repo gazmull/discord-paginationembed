@@ -6,13 +6,13 @@ Object.defineProperty(exports, "__esModule", {
 
 const r = require("discord.js"), t = require("./base");
 
-exports.Embeds = class extends t.PaginationEmbed {
+class s extends t.PaginationEmbed {
   get currentEmbed() {
     return this.array[this.page - 1];
   }
   addBlankField(r = !1) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const t of this.array) t.addBlankField(r);
+    for (const t of this.array) t.addField("​", "​", r);
     return this;
   }
   addField(r, t, s = !1) {
@@ -32,8 +32,11 @@ exports.Embeds = class extends t.PaginationEmbed {
     this._loadList();
   }
   setArray(t) {
-    if (!Array.isArray(t) || !Boolean(t.length)) throw new TypeError("Cannot invoke Embeds class without a valid array to paginate.");
-    for (let s = 0; s < t.length; s++) if (!(t[s] instanceof r.MessageEmbed)) throw new TypeError(`(MessageEmbeds[${s}]) Cannot invoke Embeds class with an invalid MessageEmbed instance.`);
+    if (!(Array.isArray(t) && Boolean(t.length))) throw new TypeError("Cannot invoke Embeds class without a valid array to paginate.");
+    for (let s = 0; s < t.length; s++) {
+      if (t[s] instanceof r.MessageEmbed) continue;
+      throw new TypeError(`(MessageEmbeds[${s}]) Cannot invoke Embeds class with an invalid MessageEmbed instance.`);
+    }
     return this.array = t, this;
   }
   setAuthor(r, t, s) {
@@ -89,9 +92,9 @@ exports.Embeds = class extends t.PaginationEmbed {
     for (const t of this.array) t.setURL(r);
     return this;
   }
-  spliceField(r, t, s, e, i) {
+  spliceFields(r, t, s, e, i) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const a of this.array) a.spliceField(r, t, s, e, i);
+    for (const a of this.array) a.spliceFields(r, t, s, e, i);
     return this;
   }
   async _loadList(r = !0) {
@@ -102,4 +105,6 @@ exports.Embeds = class extends t.PaginationEmbed {
       embed: this.currentEmbed
     }), super._loadList(r);
   }
-};
+}
+
+exports.Embeds = s;

@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 
 const e = require("discord.js"), t = require("./base");
 
-exports.FieldsEmbed = class extends t.PaginationEmbed {
+class s extends t.PaginationEmbed {
   constructor() {
-    super(), this.elementsPerPage = 10, this.embed = new e.MessageEmbed();
+    super(), this.elementsPerPage = 10, this.embed = new e.MessageEmbed;
   }
   get elementList() {
     const e = (this.page - 1) * this.elementsPerPage, t = e + this.elementsPerPage;
@@ -48,4 +48,6 @@ exports.FieldsEmbed = class extends t.PaginationEmbed {
       embed: t
     }), super._loadList(e);
   }
-};
+}
+
+exports.FieldsEmbed = s;

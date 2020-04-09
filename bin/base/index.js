@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: !0
 });
 
-const t = require("events"), e = "Client's message was deleted before being processed.";
+const t = require("events");
 
-exports.PaginationEmbed = class extends t.EventEmitter {
+class e extends t.EventEmitter {
   constructor() {
     super(), this.authorizedUsers = [], this.channel = null, this.clientAssets = {}, 
     this.pageIndicator = !0, this.deleteOnTimeout = !1, this.page = 1, this.timeout = 3e4, 
@@ -33,7 +33,7 @@ exports.PaginationEmbed = class extends t.EventEmitter {
     }), this;
   }
   deleteFunctionEmoji(t) {
-    if (!(t in this.functionEmojis)) throw new Error(`${t} function emoji does not exist.`);
+    if (!(t in this.functionEmojis)) throw new Error(t + " function emoji does not exist.");
     return delete this.functionEmojis[t], this;
   }
   resetEmojis() {
@@ -41,7 +41,7 @@ exports.PaginationEmbed = class extends t.EventEmitter {
     return this.navigationEmojis = this._defaultNavigationEmojis, this;
   }
   setArray(t) {
-    if (!Array.isArray(t) || !Boolean(t.length)) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array to paginate.");
+    if (!(Array.isArray(t) && Boolean(t.length))) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array to paginate.");
     return this.array = t, this;
   }
   setAuthorizedUsers(t) {
@@ -115,14 +115,14 @@ exports.PaginationEmbed = class extends t.EventEmitter {
   }
   async _verify() {
     if (this.setClientAssets(this.clientAssets), !this.channel) throw new Error("Cannot invoke PaginationEmbed class without a channel object set.");
-    if (!(this.page >= 1 && this.page <= this.pages)) throw new RangeError(`Page number is out of bounds. Max pages: ${this.pages}`);
+    if (!(this.page >= 1 && this.page <= this.pages)) throw new RangeError("Page number is out of bounds. Max pages: " + this.pages);
     return this._checkPermissions();
   }
   async _checkPermissions() {
     const t = this.channel;
     if (t.guild) {
       const e = t.permissionsFor(t.client.user).missing([ "ADD_REACTIONS", "MANAGE_MESSAGES", "EMBED_LINKS", "VIEW_CHANNEL", "SEND_MESSAGES" ]);
-      if (e.length) throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${e.join(", ")}`);
+      if (e.length) throw new Error("Cannot invoke PaginationEmbed class without required permissions: " + e.join(", "));
     }
     return !0;
   }
@@ -176,9 +176,9 @@ exports.PaginationEmbed = class extends t.EventEmitter {
         return await i.delete(), void (this.listenerCount("finish") && this.emit("finish", s));
 
        default:
-        const e = this.functionEmojis[a[0]] || this.functionEmojis[a[1]];
+        const t = this.functionEmojis[a[0]] || this.functionEmojis[a[1]];
         try {
-          await e(s, this);
+          await t(s, this);
         } catch (t) {
           return this._cleanUp(t, i, !1, s);
         }
@@ -195,21 +195,23 @@ exports.PaginationEmbed = class extends t.EventEmitter {
     this.listenerCount(a) && this.emit(a, s);
   }
   async _awaitResponseEx(t) {
-    const i = [ "0", "cancel" ], s = e => {
-      const s = parseInt(e.content);
-      return e.author.id === t.id && (!isNaN(Number(e.content)) && s !== this.page && s >= 1 && s <= this.pages || i.includes(e.content.toLowerCase()));
-    }, a = this.clientAssets.message.channel, n = await a.send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, t.toString()));
+    const e = [ "0", "cancel" ], i = i => {
+      const s = parseInt(i.content);
+      return i.author.id === t.id && (!isNaN(Number(i.content)) && s !== this.page && s >= 1 && s <= this.pages || e.includes(i.content.toLowerCase()));
+    }, s = this.clientAssets.message.channel, a = await s.send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, t.toString()));
     try {
-      const t = (await a.awaitMessages(s, {
+      const t = (await s.awaitMessages(i, {
         max: 1,
         time: this.timeout,
         errors: [ "time" ]
-      })).first(), o = t.content;
-      return this.clientAssets.message.deleted ? void (this.listenerCount("error") && this.emit("error", new Error(e))) : (await n.delete(), 
-      t.deletable && await t.delete(), i.includes(o) ? this._awaitResponse() : this._loadPage(parseInt(o)));
+      })).first(), n = t.content;
+      return this.clientAssets.message.deleted ? void (this.listenerCount("error") && this.emit("error", new Error("Client's message was deleted before being processed."))) : (await a.delete(), 
+      t.deletable && await t.delete(), e.includes(n) ? this._awaitResponse() : this._loadPage(parseInt(n)));
     } catch (t) {
-      if (n.deletable && await n.delete(), t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
+      if (a.deletable && await a.delete(), t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
       this.listenerCount("expire") && this.emit("expire");
     }
   }
-};
+}
+
+exports.PaginationEmbed = e;
