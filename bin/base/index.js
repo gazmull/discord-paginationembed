@@ -9,8 +9,8 @@ const t = require("events");
 class e extends t.EventEmitter {
   constructor() {
     super(), this.authorizedUsers = [], this.channel = null, this.clientAssets = {}, 
-    this.pageIndicator = !0, this.deleteOnTimeout = !1, this.page = 1, this.timeout = 3e4, 
-    this.navigationEmojis = {
+    this.pageIndicator = !0, this.circleIndicator = !1, this.deleteOnTimeout = !1, this.page = 1, 
+    this.timeout = 3e4, this.navigationEmojis = {
       back: "◀",
       jump: "↗",
       forward: "▶",
@@ -108,6 +108,10 @@ class e extends t.EventEmitter {
   setPageIndicator(t) {
     if ("boolean" != typeof t) throw new TypeError("setPageIndicator() only accepts boolean type.");
     return this.pageIndicator = t, this;
+  }
+  useCircleIndicator(t) {
+    if ("boolean" != typeof t) throw new TypeError("useCircleIndicator() only accepts boolean type.");
+    return this.circleIndicator = t, this;
   }
   setDeleteOnTimeout(t) {
     if ("boolean" != typeof t) throw new TypeError("deleteOnTimeout() only accepts boolean type.");

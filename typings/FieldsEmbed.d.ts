@@ -74,4 +74,6 @@ export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     protected _drawList(): Promise<MessageEmbed>;
     /** @ignore */
     _loadList(callNavigation?: boolean): Promise<void>;
+    /** @ignore */
+    private _buildIndicator;
 }

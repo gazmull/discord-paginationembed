@@ -48,6 +48,7 @@ bot
         .setAuthorizedUsers(users)
         .setChannel(channel)
         .setPageIndicator(true)
+        .useCircleIndicator(true)
         .setTitle('Test Title')
         .setDescription('Test Description')
         .setFooter(`version: ${PaginationEmbed.version}`)

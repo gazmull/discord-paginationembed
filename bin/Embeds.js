@@ -98,12 +98,18 @@ class s extends t.PaginationEmbed {
     return this;
   }
   async _loadList(r = !0) {
-    const t = this.pageIndicator ? 1 === this.pages ? void 0 : `Page ${this.page} of ${this.pages}` : void 0;
+    const t = this.pageIndicator ? 1 === this.pages ? void 0 : this._buildIndicator() : void 0;
     return this.clientAssets.message ? await this.clientAssets.message.edit(t, {
       embed: this.currentEmbed
     }) : this.clientAssets.message = await this.channel.send(t, {
       embed: this.currentEmbed
     }), super._loadList(r);
+  }
+  _buildIndicator() {
+    if (!this.circleIndicator) return `Page ${this.page} of ${this.pages}`;
+    let r = `[${this.page}/${this.pages}] `;
+    for (let t = 0; t < this.pages; t++) r += t === this.page - 1 ? "● " : "○ ";
+    return r.trim();
   }
 }
 

@@ -160,4 +160,6 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
     spliceFields(index: number, deleteCount: number, name?: StringResolvable, value?: StringResolvable, inline?: boolean): this;
     /** @ignore */
     _loadList(callNavigation?: boolean): Promise<void>;
+    /** @ignore */
+    private _buildIndicator;
 }
