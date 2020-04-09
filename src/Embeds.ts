@@ -329,7 +329,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
     const shouldIndicate = this.pageIndicator
       ? this.pages === 1
         ? undefined
-        : `Page ${this.page} of ${this.pages}`
+        : this._buildIndicator()
       : undefined;
 
     if (this.clientAssets.message)
@@ -338,5 +338,17 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
       this.clientAssets.message = await this.channel.send(shouldIndicate, { embed: this.currentEmbed }) as Message;
 
     return super._loadList(callNavigation);
+  }
+  
+  /** @ignore */
+  private _buildIndicator () {
+    if (!this.circleIndicator) return `Page ${this.page} of ${this.pages}`;
+    
+    let textualIndicator = `[${this.page}/${this.pages}] `;
+    
+    for (let i = 0; i < this.pages; i++)
+      textualIndicator += i === this.page - 1 ? '● ' : '○ ';
+    
+    return textualIndicator.trim();
   }
 }
