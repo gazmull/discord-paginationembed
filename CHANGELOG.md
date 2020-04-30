@@ -4,38 +4,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- `useCircleIndicator` method replaces the default `Page X of Y` page indicator with an Android-style circle page indicator, e.g. `[2/4] ○ ● ○ ○`. This only works when `setPageIndicator` is `true`.
+
+### Changed
+- Updated the Discord.JS peer dependency from the GitHub master branch to the new stable v12.1.1.
+- Test script `bot.js` updated, the Embeds mode test now shows the new circle indicator.
+
+### Fixed
+- Fix `addBlankField` to support the new Discord.JS v12.1.1 format.
+- Fix `spliceField`, now renamed to `spliceFields` to follow the Discord.JS method. This is a breaking change for those that used that option.
 
 ## [2.0.0-beta.4] - 2020-02-14
 Utility has been updated to support the breaking change feature `Managers`. Starting from this version it will no longer support the [Discord.JS](https://github.com/discordjs/discord.js) master commits earlier than [`bbdbc4c`](https://github.com/discordjs/discord.js/commit/bbdbc4cfa789383b7b3dbecf5e6b8401ea2dd998).
 
 ## [2.0.0-beta.3] - 2020-01-21
 
-## Added
+### Added
 - `attachFiles` method for Embeds mode
 - `pageUpdate` event (emitted when the page number is updated via reaction)
 - Verbose documentation to `navigationEmojis` and `functionEmojis`
 
-## Changed
+### Changed
 - Test script `bot.js` updated for new features
 
-## Fixed
+### Fixed
 - Incorrect documentation examples for FieldsEmbed mode
 - Fix `Unknown Message` error when `deleteOnTimeout` is enabled
 
 ## [2.0.0-beta.2] - 2019-11-12
 
-## Fixed
+### Fixed
 - Embeds mode's `_loadList` overwriting existing message content
 
 ## [2.0.0-beta.1] - 2019-11-09
 
-## Added
+### Added
 - Documentation example for IFunctionEmoji: stopping the instance from awaiting reacts with function emojis
 
-## Changed
+### Changed
 - Documentation changes involving `page` and `pages` properties
 
-## Fixed
+### Fixed
 - Incorrect installation note on `UPDATING_V1.md`
 - FieldsEmbed mode's `_loadList` overwriting existing message content
 
@@ -50,7 +60,7 @@ Latest release for [v11 branch](https://github.com/gazmull/discord-paginationemb
 ## [1.0.0-beta.4] - 2019-04-26
 [**Updating from `v0.8.0`**](UPDATING_V1.md#api-changes) (Updated, please read again)
 
-## Added
+### Added
 - Added ability to stop the instance from awaiting emoji reacts with function emojis:
     ```js
     <PaginationEmbed>.addFunctionEmoji('🛑', () => {
@@ -67,14 +77,14 @@ Latest release for [v11 branch](https://github.com/gazmull/discord-paginationemb
 - Added `PaginationEmbed#setEmojisFunctionAfterNavigation` method. This allows function emojis to either be the first/last set to be deployed before/after navigation emojis.
   -  Default: `false`.
 
-## Changed
+### Changed
 - PaginationEmbed no longer emits an event when there is no listener (invoking `.on`/`.once`)
 
-## Removed
+### Removed
 - Option `prepare` for `clientAssets` has been removed. This affects:
     - Setting the `channel` property is a must now. (Used to be either `clientAssets.message` or `channel` must be set)
 
-## Fixed
+### Fixed
 - Fixed possibly unnecessary API call on awaiting emoji reacts timeout.
   - `clientMessage#delete` now precedes `clientMessage.reactions#removeAll`
 
