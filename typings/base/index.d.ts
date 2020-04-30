@@ -20,6 +20,8 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     array: Element[];
     /** Whether page number indicator on client's message is shown. Default: `true` */
     pageIndicator: boolean;
+    /** Whether page number indicator, if enabled, is shown as circle indicator instead of plain numbers. Default: `false` */
+    circleIndicator: boolean;
     /**  Whether the client's message will be deleted upon timeout. Default: `false` */
     deleteOnTimeout: boolean;
     /** The current page. Default: `1` */
@@ -165,6 +167,11 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      * @param indicator - Show page indicator?
      */
     setPageIndicator(boolean: boolean): this;
+    /**
+     * Sets whether page number indicator, if enabled, is shown as circle indicator instead of plain numbers.
+     * @param indicator - Show page indicator?
+     */
+    useCircleIndicator(boolean: boolean): this;
     /**
      * Sets whether the client's message will be deleted upon timeout.
      * @param deleteOnTimeout - Delete client's message upon timeout?

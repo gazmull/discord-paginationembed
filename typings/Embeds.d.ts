@@ -157,7 +157,9 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      * @param value - The value of the field.
      * @param inline - Set the field to display inline.
      */
-    spliceField(index: number, deleteCount: number, name?: StringResolvable, value?: StringResolvable, inline?: boolean): this;
+    spliceFields(index: number, deleteCount: number, name?: StringResolvable, value?: StringResolvable, inline?: boolean): this;
     /** @ignore */
     _loadList(callNavigation?: boolean): Promise<void>;
+    /** @ignore */
+    private _buildIndicator;
 }

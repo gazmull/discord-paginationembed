@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 
 const e = require("discord.js"), t = require("./base");
 
-exports.FieldsEmbed = class extends t.PaginationEmbed {
+class s extends t.PaginationEmbed {
   constructor() {
-    super(), this.elementsPerPage = 10, this.embed = new e.MessageEmbed();
+    super(), this.elementsPerPage = 10, this.embed = new e.MessageEmbed;
   }
   get elementList() {
     const e = (this.page - 1) * this.elementsPerPage, t = e + this.elementsPerPage;
@@ -41,11 +41,19 @@ exports.FieldsEmbed = class extends t.PaginationEmbed {
     return t;
   }
   async _loadList(e = !0) {
-    const t = await this._drawList(), s = this.pageIndicator ? 1 === this.pages ? void 0 : `Page ${this.page} of ${this.pages}` : void 0;
+    const t = await this._drawList(), s = this.pageIndicator ? 1 === this.pages ? void 0 : this._buildIndicator() : void 0;
     return this.clientAssets.message ? await this.clientAssets.message.edit(s, {
       embed: t
     }) : this.clientAssets.message = await this.channel.send(s, {
       embed: t
     }), super._loadList(e);
   }
-};
+  _buildIndicator() {
+    if (!this.circleIndicator) return `Page ${this.page} of ${this.pages}`;
+    let e = `[${this.page}/${this.pages}] `;
+    for (let t = 0; t < this.pages; t++) e += t === this.page - 1 ? "● " : "○ ";
+    return e.trim();
+  }
+}
+
+exports.FieldsEmbed = s;

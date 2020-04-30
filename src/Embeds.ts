@@ -66,7 +66,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
     if (!this.array) throw new TypeError('this.array must be set first.');
 
     for (const el of this.array)
-      el.addBlankField(inline);
+      el.addField('\u200B', '\u200B', inline);
 
     return this;
   }
@@ -309,7 +309,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param value - The value of the field.
    * @param inline - Set the field to display inline.
    */
-  public spliceField (
+  public spliceFields (
     index: number,
     deleteCount: number,
     name?: StringResolvable,
@@ -319,7 +319,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
     if (!this.array) throw new TypeError('this.array must be set first.');
 
     for (const el of this.array)
-      el.spliceField(index, deleteCount, name, value, inline);
+      el.spliceFields(index, deleteCount, name, value, inline);
 
     return this;
   }
@@ -329,7 +329,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
     const shouldIndicate = this.pageIndicator
       ? this.pages === 1
         ? undefined
-        : `Page ${this.page} of ${this.pages}`
+        : this._buildIndicator()
       : undefined;
 
     if (this.clientAssets.message)
@@ -338,5 +338,17 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
       this.clientAssets.message = await this.channel.send(shouldIndicate, { embed: this.currentEmbed }) as Message;
 
     return super._loadList(callNavigation);
+  }
+  
+  /** @ignore */
+  private _buildIndicator () {
+    if (!this.circleIndicator) return `Page ${this.page} of ${this.pages}`;
+    
+    let textualIndicator = `[${this.page}/${this.pages}] `;
+    
+    for (let i = 0; i < this.pages; i++)
+      textualIndicator += i === this.page - 1 ? '● ' : '○ ';
+    
+    return textualIndicator.trim();
   }
 }

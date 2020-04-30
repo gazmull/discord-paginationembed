@@ -20,6 +20,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
     this.channel = null;
     this.clientAssets = {};
     this.pageIndicator = true;
+    this.circleIndicator = false;
     this.deleteOnTimeout = false;
     this.page = 1;
     this.timeout = 30000;
@@ -57,6 +58,9 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
   /** Whether page number indicator on client's message is shown. Default: `true` */
   public pageIndicator: boolean;
+  
+  /** Whether page number indicator, if enabled, is shown as circle indicator instead of plain numbers. Default: `false` */
+  public circleIndicator: boolean;
 
   /**  Whether the client's message will be deleted upon timeout. Default: `false` */
   public deleteOnTimeout: boolean;
@@ -358,6 +362,18 @@ export class PaginationEmbed<Element> extends EventEmitter {
     if (typeof boolean !== 'boolean') throw new TypeError('setPageIndicator() only accepts boolean type.');
 
     this.pageIndicator = boolean;
+
+    return this;
+  }
+  
+  /**
+   * Sets whether page number indicator, if enabled, is shown as circle indicator instead of plain numbers.
+   * @param indicator - Show page indicator?
+   */
+  public useCircleIndicator (boolean: boolean) {
+    if (typeof boolean !== 'boolean') throw new TypeError('useCircleIndicator() only accepts boolean type.');
+
+    this.circleIndicator = boolean;
 
     return this;
   }
