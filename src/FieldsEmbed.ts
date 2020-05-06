@@ -152,9 +152,6 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
       await this.clientAssets.message.edit(shouldIndicate, { embed });
     else
       this.clientAssets.message = await this.channel.send(shouldIndicate, { embed }) as Message;
-    if (this.listenerCount("start")) {
-      this.emit("start");
-    }
     return super._loadList(callNavigation);
   }
   

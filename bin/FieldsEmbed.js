@@ -46,7 +46,7 @@ class s extends t.PaginationEmbed {
       embed: t
     }) : this.clientAssets.message = await this.channel.send(s, {
       embed: t
-    }), this.listenerCount("start") && this.emit("start"), super._loadList(e);
+    }), super._loadList(e);
   }
   _buildIndicator() {
     if (!this.circleIndicator) return `Page ${this.page} of ${this.pages}`;
