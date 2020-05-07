@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/gazmull/discord-paginationembed#readme",
   "peerDependencies": {
-    "discord.js": "12"
+    "discord.js": "^12.0.0"
   },
   "devDependencies": {
     "@types/node": "^13.7.1",
