@@ -28,8 +28,7 @@ class s extends t.PaginationEmbed {
     return this;
   }
   async build() {
-    return this.pages = this.array.length, await this._verify(), this.listenerCount("start") && this.emit("start"), 
-    this._loadList();
+    return this.pages = this.array.length, await this._verify(), this._loadList();
   }
   setArray(t) {
     if (!(Array.isArray(t) && Boolean(t.length))) throw new TypeError("Cannot invoke Embeds class without a valid array to paginate.");

@@ -136,7 +136,7 @@ class e extends t.EventEmitter {
   async _drawEmojis() {
     return this.emojisFunctionAfterNavigation ? (await this._drawNavigationEmojis(), 
     await this._drawFunctionEmojis()) : (await this._drawFunctionEmojis(), await this._drawNavigationEmojis()), 
-    this._awaitResponse();
+    this.listenerCount("start") && this.emit("start"), this._awaitResponse();
   }
   async _drawFunctionEmojis() {
     if (Object.keys(this.functionEmojis).length) for (const t of Object.keys(this.functionEmojis)) await this.clientAssets.message.react(t);

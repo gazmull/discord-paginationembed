@@ -445,6 +445,10 @@ export class PaginationEmbed<Element> extends EventEmitter {
       await this._drawNavigationEmojis();
     }
 
+    if (this.listenerCount("start")) {
+      this.emit("start");
+    }
+
     return this._awaitResponse();
   }
 

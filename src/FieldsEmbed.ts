@@ -92,8 +92,6 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     if (!hasPaginateField)
       throw new Error('Cannot invoke FieldsEmbed class without at least one formatted field to paginate.');
 
-    if (this.listenerCount('start')) this.emit('start');
-
     return this._loadList();
   }
 
@@ -154,7 +152,6 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
       await this.clientAssets.message.edit(shouldIndicate, { embed });
     else
       this.clientAssets.message = await this.channel.send(shouldIndicate, { embed }) as Message;
-
     return super._loadList(callNavigation);
   }
   

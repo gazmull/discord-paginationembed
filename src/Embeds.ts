@@ -149,8 +149,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
 
     await this._verify();
 
-    if (this.listenerCount('start')) this.emit('start');
-
     return this._loadList();
   }
 
@@ -336,7 +334,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
       await this.clientAssets.message.edit(shouldIndicate, { embed: this.currentEmbed });
     else
       this.clientAssets.message = await this.channel.send(shouldIndicate, { embed: this.currentEmbed }) as Message;
-
     return super._loadList(callNavigation);
   }
   
