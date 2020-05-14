@@ -1,0 +1,29 @@
+{
+  "root": false,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [ "@typescript-eslint" ],
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/member-ordering": [
+      "error",
+      {
+        "default": {
+          "memberTypes": [
+            "constructor",
+            "instance-field",
+            "instance-method",
+            "static-field",
+            "static-method"
+          ],
+          "order": "as-written"
+        }
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "off"
+  }
+}

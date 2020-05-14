@@ -11,7 +11,6 @@
     "test": "gulp",
     "test:build": "gulp build",
     "test:bot": "node ./test/bot.js",
-    "lint-fix": "npm run lint --fix",
     "dev:start": "nodemon ./test/bot.js --config .nodemon.json",
     "dev:watch": "tsc -p . --watch",
     "dev:gulp-watch": "gulp watch",

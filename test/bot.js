@@ -15,7 +15,7 @@ const done = () => {
   console.log('Test done!');
 
   process.exit(0);
-}
+};
 
 bot
   .on('ready', async () => {
@@ -90,7 +90,7 @@ bot
       return done();
     } else if (test === 'fieldsembed') {
       const FieldsEmbed = new PaginationEmbed.FieldsEmbed()
-        .setArray([{ name: 'John Doe' }, { name: 'Jane Doe' }])
+        .setArray([ { name: 'John Doe' }, { name: 'Jane Doe' } ])
         .setAuthorizedUsers(users)
         .setChannel(channel)
         .setElementsPerPage(1)
