@@ -58,7 +58,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
   /** Whether page number indicator on client's message is shown. Default: `true` */
   public pageIndicator: boolean;
-  
+
   /** Whether page number indicator, if enabled, is shown as circle indicator instead of plain numbers. Default: `false` */
   public circleIndicator: boolean;
 
@@ -105,7 +105,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   protected _disabledNavigationEmojiValues: any[];
 
   /** The default navigation emojis. Used for resetting the navigation emojis. */
-  protected _defaultNavigationEmojis: { back: string; jump: string; forward: string; delete: string; };
+  protected _defaultNavigationEmojis: { back: string; jump: string; forward: string; delete: string };
 
   public build () {
     throw new Error(
@@ -365,7 +365,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
     return this;
   }
-  
+
   /**
    * Sets whether page number indicator, if enabled, is shown as circle indicator instead of plain numbers.
    * @param indicator - Show page indicator?
@@ -445,9 +445,8 @@ export class PaginationEmbed<Element> extends EventEmitter {
       await this._drawNavigationEmojis();
     }
 
-    if (this.listenerCount("start")) {
-      this.emit("start");
-    }
+    if (this.listenerCount('start'))
+      this.emit('start');
 
     return this._awaitResponse();
   }
@@ -546,7 +545,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
           return;
 
-        default:
+        default: {
           const cb = this.functionEmojis[emoji[0]] || this.functionEmojis[emoji[1]];
 
           try {
@@ -556,6 +555,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
           }
 
           return this._loadPage(this.page);
+        }
       }
     } catch (err) {
       return this._cleanUp(err, clientMessage);
@@ -677,10 +677,13 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
   /** @event */
   public once (event: 'finish', listener: ListenerUser): this;
+
   /** @event */
   public once (event: 'start' | 'expire' | 'pageUpdate', listener: () => void): this;
+
   /** @event */
   public once (event: 'react', listener: ListenerReact): this;
+
   /** @event */
   // @ts-ignore
   public once (event: 'error', listener: ListenerError): this;

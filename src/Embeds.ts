@@ -42,15 +42,15 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
 
   /** The author of all embeds. */
   public author: {
-    name: string,
-    url?: string,
-    iconURL?: string
+    name: string;
+    url?: string;
+    iconURL?: string;
   };
 
   /** The footer of all embeds. */
   public footer: {
-    text: string,
-    iconURL?: string
+    text: string;
+    iconURL?: string;
   };
 
   /** Embed in the current page. */
@@ -334,18 +334,19 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
       await this.clientAssets.message.edit(shouldIndicate, { embed: this.currentEmbed });
     else
       this.clientAssets.message = await this.channel.send(shouldIndicate, { embed: this.currentEmbed }) as Message;
+
     return super._loadList(callNavigation);
   }
-  
+
   /** @ignore */
   private _buildIndicator () {
     if (!this.circleIndicator) return `Page ${this.page} of ${this.pages}`;
-    
+
     let textualIndicator = `[${this.page}/${this.pages}] `;
-    
+
     for (let i = 0; i < this.pages; i++)
       textualIndicator += i === this.page - 1 ? '● ' : '○ ';
-    
+
     return textualIndicator.trim();
   }
 }
