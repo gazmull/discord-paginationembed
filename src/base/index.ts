@@ -51,7 +51,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   public channel: TextChannel | DMChannel;
 
   /** Settings for assets for the client. */
-  public clientAssets: IClientAssets;
+  public clientAssets: ClientAssets;
 
   /** An array of elements to paginate. */
   public array: Element[];
@@ -75,14 +75,14 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * The emojis used for navigation emojis.
    * Navigation emojis are the default message reactions for navigating through the pagination.
    */
-  public navigationEmojis: INavigationEmojis;
+  public navigationEmojis: NavigationEmojis;
 
   /**
    * The emojis used for function emojis.
    * Function emojis are user-customised message reactions
    * for modifying the current instance of the pagination such as modifying embed texts, stopping the pagination, etc.
    */
-  public functionEmojis: IFunctionEmoji<Element>;
+  public functionEmojis: FunctionEmoji<Element>;
 
   /**
    * The disabled navigation emojis.
@@ -202,7 +202,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * Sets the settings for assets for the client.
    * @param assets - The assets for the client.
    */
-  public setClientAssets (assets: IClientAssets) {
+  public setClientAssets (assets: ClientAssets) {
     if (!assets) throw new TypeError('Cannot accept assets options as a non-object type.');
 
     const { message } = assets;
@@ -304,7 +304,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * ```
    * @param emojis - An object containing customised emojis to use as function emojis.
    */
-  public setFunctionEmojis (emojis: IFunctionEmoji<Element>) {
+  public setFunctionEmojis (emojis: FunctionEmoji<Element>) {
     for (const emoji of Object.keys(emojis)) {
       const fn = emojis[emoji];
 
@@ -318,7 +318,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * Sets the emojis used for navigation emojis.
    * @param emojis - An object containing customised emojis to use as navigation emojis.
    */
-  public setNavigationEmojis (emojis: INavigationEmojis) {
+  public setNavigationEmojis (emojis: NavigationEmojis) {
     Object.assign(this.navigationEmojis, emojis);
 
     return this;
@@ -705,7 +705,7 @@ export type ListenerError = (err: Error) => void;
 export type DisabledNavigationEmojis = NavigationEmojiIdentifier[];
 
 /** An object containing emojis to use as navigation emojis. */
-export interface INavigationEmojis {
+export interface NavigationEmojis {
   back: string | '◀';
   jump: string | '↗';
   forward: string | '▶';
@@ -713,7 +713,7 @@ export interface INavigationEmojis {
 }
 
 /** Assets for the client (message). */
-export interface IClientAssets {
+export interface ClientAssets {
   /** The message object. */
   message?: Message;
   /**
@@ -745,6 +745,6 @@ export type NavigationEmojiIdentifier = 'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' |
  *  };
  *  ```
  */
-export interface IFunctionEmoji<Element> {
+export interface FunctionEmoji<Element> {
   [emojiNameOrID: string]: (user: User, instance: Embeds | FieldsEmbed<Element>) => any;
 }
