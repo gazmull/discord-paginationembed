@@ -19,8 +19,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
     this.authorizedUsers = [];
     this.channel = null;
     this.clientAssets = {};
-    this.pageIndicator = true;
-    this.circleIndicator = false;
+    this.usePageIndicator = false;
     this.deleteOnTimeout = false;
     this.page = 1;
     this.timeout = 30000;
@@ -42,6 +41,13 @@ export class PaginationEmbed<Element> extends EventEmitter {
       forward: '▶',
       delete: '🗑'
     };
+    this._defaultPageIndicators = {
+      text: (page, pages) => `Page ${page} of ${pages}`,
+      textcompact: (page, pages) => `${page}/${pages}`,
+      circle: (page, pages) => `${'○ '.repeat(page - 1)}● ${'○ '.repeat(pages - page)}`.trim(),
+      hybrid: (page, pages) => `[${page}/${pages}] ${`${'○ '.repeat(page - 1)}● ${'○ '.repeat(pages - page)}`.trim()}`
+    };
+    this._pageIndicator = this._defaultPageIndicators.text;
   }
 
   /** The authorized users to navigate the pages. Default: `everyone` */
@@ -56,11 +62,11 @@ export class PaginationEmbed<Element> extends EventEmitter {
   /** An array of elements to paginate. */
   public array: Element[];
 
-  /** Whether page number indicator on client's message is shown. Default: `true` */
-  public pageIndicator: boolean;
-
-  /** Whether page number indicator, if enabled, is shown as circle indicator instead of plain numbers. Default: `false` */
-  public circleIndicator: boolean;
+  /**
+   * Whether to show page indicator, or put it in embed's footer text (replaces the existing text) instead.
+   * Default: `false`
+   */
+  public usePageIndicator: boolean | 'footer';
 
   /**  Whether the client's message will be deleted upon timeout. Default: `false` */
   public deleteOnTimeout: boolean;
@@ -106,6 +112,17 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
   /** The default navigation emojis. Used for resetting the navigation emojis. */
   protected _defaultNavigationEmojis: { back: string; jump: string; forward: string; delete: string };
+
+  /** The function for formatting page indicator. */
+  protected _pageIndicator: PageIndicatorCaster;
+
+  /** Pre-made functions for formatting page indicator. */
+  protected _defaultPageIndicators: { [x: string]: PageIndicatorCaster };
+
+  /** The formatted page indicator. Default format: `text` */
+  public get pageIndicator () {
+    return this._pageIndicator(this.page, this.pages);
+  }
 
   public build () {
     throw new Error(
@@ -178,12 +195,13 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
   /**
    * Set the authorized users to navigate the pages.
-   * @param users - An array of user IDs.
+   * @param users - A user ID or an array of user IDs.
    */
-  public setAuthorizedUsers (users: Snowflake[]) {
-    if (!Array.isArray(users)) throw new TypeError('Cannot invoke PaginationEmbed class without a valid array.');
+  public setAuthorizedUsers (users: Snowflake | Snowflake[]) {
+    if (!(Array.isArray(users) || typeof users === 'string'))
+      throw new TypeError('Cannot invoke PaginationEmbed class without a valid array.');
 
-    this.authorizedUsers = users;
+    this.authorizedUsers = Array.isArray(users) ? users : [ users ];
 
     return this;
   }
@@ -355,25 +373,23 @@ export class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /**
-   * Sets whether page number indicator on client's message is shown.
-   * @param indicator - Show page indicator?
+   * Sets the page indicator formatting function and placement.
+   * @param enabled - Whether to show page indicator.
+   *   Pass `footer` to display the indicator in embed's footer text (replaces existing text) instead.
+   * @param fn - Function for indicator formatting.
    */
-  public setPageIndicator (boolean: boolean) {
-    if (typeof boolean !== 'boolean') throw new TypeError('setPageIndicator() only accepts boolean type.');
+  public setPageIndicator (enabled: boolean | 'footer', fn?: PageIndicatorPreMadeTypes | PageIndicatorCaster) {
+    if (typeof enabled === 'boolean' || (typeof enabled === 'string' && enabled === 'footer'))
+      this.usePageIndicator = enabled;
+    else throw new TypeError('setPageIndicator()\'s `enabled` parameter only accepts boolean/string type.');
 
-    this.pageIndicator = boolean;
+    if (fn) {
+      const allowedTypes = [ 'text', 'textcompact', 'circle', 'hybrid' ];
 
-    return this;
-  }
-
-  /**
-   * Sets whether page number indicator, if enabled, is shown as circle indicator instead of plain numbers.
-   * @param indicator - Show page indicator?
-   */
-  public useCircleIndicator (boolean: boolean) {
-    if (typeof boolean !== 'boolean') throw new TypeError('useCircleIndicator() only accepts boolean type.');
-
-    this.circleIndicator = boolean;
+      if (typeof fn === 'string' && allowedTypes.includes(fn)) this._pageIndicator = this._defaultPageIndicators[fn];
+      else if (typeof fn === 'function') this._pageIndicator = fn;
+      else throw new TypeError('setPageIndicator()\'s `fn` parameter only accepts function/string type.');
+    }
 
     return this;
   }
@@ -486,8 +502,6 @@ export class PaginationEmbed<Element> extends EventEmitter {
    */
   protected async _loadPage (param: number | 'back' | 'forward' = 1) {
     this.setPage(param);
-
-    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate');
 
     await this._loadList(false);
 
@@ -637,22 +651,23 @@ export class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /**
-   * Emitted upon successful `build()`.
+   * Emitted after the initial embed has been sent
+   * (technically, after the client finished reacting with enabled navigation and function emojis).
    * @event
    */
   public on (event: 'start', listener: () => void): this;
 
   /**
-   * Emitted when the instance is finished by a user reacting with `DELETE` navigation emoji.
+   * Emitted when the instance is finished by a user reacting with `DELETE` navigation emoji
+   * or a function emoji that throws non-Error type.
    * @event
    */
   public on (event: 'finish', listener: ListenerUser): this;
 
   /**
-   * Emitted when the page number is updated.
+   * Emitted after the page number is updated and before the client sends the embed.
    * @event
    */
-  // tslint:disable-next-line: unified-signatures
   public on (event: 'pageUpdate', listener: () => void): this;
 
   /**
@@ -665,7 +680,6 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * Emitted when the awaiting timeout is reached.
    * @event
    */
-  // tslint:disable-next-line: unified-signatures
   public on (event: 'expire', listener: () => void): this;
 
   /**
@@ -729,7 +743,7 @@ export interface ClientAssets {
 export type NavigationEmojiIdentifier = 'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL';
 
 /**
- * Function for a custom emoji
+ * Function for a custom emoji.
  *
  * Example for stopping the instance from awaiting from further reacts:
  * ```js
@@ -748,3 +762,15 @@ export type NavigationEmojiIdentifier = 'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' |
 export interface FunctionEmoji<Element> {
   [emojiNameOrID: string]: (user: User, instance: Embeds | FieldsEmbed<Element>) => any;
 }
+
+/**
+ * Function to pass to the instance for page indicator formatting.
+ *
+ * Default:
+ * ```js
+ *  (page, pages) => `Page ${page} of ${pages}`
+ * ```
+ */
+export type PageIndicatorCaster = (page: number, pages: number) => string;
+
+export type PageIndicatorPreMadeTypes = 'text' | 'textcompact' | 'circle' | 'hybrid';

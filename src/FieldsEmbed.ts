@@ -141,30 +141,23 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
 
   /** @ignore */
   public async _loadList (callNavigation = true) {
+    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate');
+
     const embed = await this._drawList();
-    const shouldIndicate = this.pageIndicator
+    const isFooter = this.usePageIndicator === 'footer';
+    const shouldIndicate = this.usePageIndicator && !isFooter
       ? this.pages === 1
         ? undefined
-        : this._buildIndicator()
+        : this.pageIndicator
       : undefined;
 
+    if (isFooter)
+      embed.setFooter(this.pageIndicator, embed.footer.iconURL);
     if (this.clientAssets.message)
       await this.clientAssets.message.edit(shouldIndicate, { embed });
     else
       this.clientAssets.message = await this.channel.send(shouldIndicate, { embed }) as Message;
 
     return super._loadList(callNavigation);
-  }
-
-  /** @ignore */
-  private _buildIndicator () {
-    if (!this.circleIndicator) return `Page ${this.page} of ${this.pages}`;
-
-    let textualIndicator = `[${this.page}/${this.pages}] `;
-
-    for (let i = 0; i < this.pages; i++)
-      textualIndicator += i === this.page - 1 ? '● ' : '○ ';
-
-    return textualIndicator.trim();
   }
 }
