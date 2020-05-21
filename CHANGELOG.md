@@ -4,16 +4,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+This version involves reflection of official release of Discord.JS 12, and changes that will give the user more control to the instance
+such as customisable page indicator, and favourable event emissions.
+
 ### Added
-- `useCircleIndicator` method replaces the default `Page X of Y` page indicator with an Android-style circle page indicator, e.g. `[2/4] ○ ● ○ ○`. This only works when `setPageIndicator` is `true`.
+- (ft. [@cycloptux]) - `setPageIndicator` is now powerful for customisation.
+  - First parameter has additional option `footer` (makes the indicator replace the embed's footer text instead).
+    - `footer` option will not modify embeds from `array` when using `Embeds` mode.
+  - Second parameter has been added for indicator's formatting function: either use the following pre-made formats `'text' | 'textcompact' | 'circle' | 'hybrid'` — or make your own format.
+  - In case you don't like the placing of the indicator (i.e. you want it in embed title instead), you can set the first parameter as false but set the second parameter to your preferred format and later on use the format by accessing getter `pageIndicator` then modify the embed via `pageUpdate` event.
+  - **Example**
+    - ```js
+      <PaginationEmbed>.setPageIndicator('footer', (page, pages) => `peij ${page} 0f ${pages} - xoxo`)
+        ```
+    - Pre-made formats preview:
+      - **(default)** text: `Page 1 of 2`
+      - textcompact: `1/2`
+      - circle: `● ○`
+      - hybrid: `[1/2] ● ○`
+- `setAuthorizedUsers` now accepts a user ID as well.
 
 ### Changed
-- Updated the Discord.JS peer dependency from the GitHub master branch to the new stable v12.1.1.
-- Test script `bot.js` updated, the Embeds mode test now shows the new circle indicator.
+- **⚠ BREAKING** - `Embeds` mode's changes to reflect Discord.JS' MessageEmbed methods:
+  - Removed `addBlankField`
+  - `spliceField` renamed to `spliceFields`
+  - Added `addFields`
+- **⚠ BREAKING** - Removed `I` prefix on the following TypeScript interfaces: `INavigationEmojis`, `IClientAssets`, `IFunctionEmoji`
+- **⚠ BREAKING** - Renamed property `pageIndicator` to `usePageIndicator`
+- `usePageIndicator`'s default is now set to false.
+- Event `pageUpdate` has been relocated to emit at initial page as well.
+- Events' JSDoc description has been improved.
+- ([@cycloptux]) - Peer dependency Discord.JS version updated to `^12.0.0`
+- README's example has been updated to reduce complexity.
 
 ### Fixed
-- Fix `addBlankField` to support the new Discord.JS v12.1.1 format.
-- Fix `spliceField`, now renamed to `spliceFields` to follow the Discord.JS method. This is a breaking change for those that used that option.
+- ([@d-shaun]) - Undesirable placement of `start` event's emission
+
+### Internal
+- (ft. [@cycloptux]) - Test script `bot.js` updated for new changes
+- Migrated linter from TSLint to ESLint
+
+[@cycloptux]: https://github.com/cycloptux
+[@d-shaun]: https://github.com/d-shaun
 
 ## [2.0.0-beta.4] - 2020-02-14
 Utility has been updated to support the breaking change feature `Managers`. Starting from this version it will no longer support the [Discord.JS](https://github.com/discordjs/discord.js) master commits earlier than [`bbdbc4c`](https://github.com/discordjs/discord.js/commit/bbdbc4cfa789383b7b3dbecf5e6b8401ea2dd998).
