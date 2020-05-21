@@ -21,7 +21,7 @@ gulp.task('clean', () => del([ paths.bin, paths.typings ]));
 
 gulp.task('lint', () => {
   return gulp.src(paths.src + '/**/*.ts')
-    .pipe(eslint({ extensions: [ '.ts' ] }))
+    .pipe(eslint())
     .pipe(eslint.formatEach())
 		.pipe(eslint.failOnError())
 });
