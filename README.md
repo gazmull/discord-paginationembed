@@ -10,14 +10,14 @@ A pagination utility for MessageEmbed in Discord.JS
 
 ## 📣 Notice Board
 - [**Changelog**](https://github.com/gazmull/discord-paginationembed/blob/master/CHANGELOG.md)
-- [**Updating from `v0.8.0`**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md) — Updated **2019-07-29**
-- This utility now supports Discord.JS version [**^11.5.1 (stable)**]((https://github.com/gazmull/discord-paginationembed/tree/stable))!
+- [**Updating from `v1`**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V2.md)
+- This utility no longer provide updates for v1 (Discord.JS **11**)
 
 ## 🎉 Welcome
 - ✔ **Typings** included
-- ✔ [**Documentation**](https://gazmull.github.io/discord-paginationembed "Go to My Documentation") for online references
+- ✔ **[Documentation]** for online references
 - ✔ **Asynchronous** workflow
-- ✔ Supports [Discord.JS versions **12 (master)** and **^11.5.1 (stable)**](https://discord.js.org "Go to Discord.JS Documentation")
+- ✔ Supports [Discord.JS **12**](https://discord.js.org "Go to Discord.JS Documentation")
 - ❔ Nothing found within docs or need a nudge? You may visit the [**Discord server**](https://discord.gg/eDUzT87)
 
 ## 🛠 Installation
@@ -39,18 +39,21 @@ A pagination utility for MessageEmbed in Discord.JS
 - [**EXP Leaderboard**](https://github.com/gazmull/eros-bot/blob/master/src/commands/level/leaderboard.ts#L23)
 - [**Music Queue**](https://github.com/gazmull/ramiel-bot/blob/master/src/commands/music/queue.ts#L38)
 
-<br><br>
-> ### Import Node Module
+<br>
+
+### ⚠ Warning
+- Examples are written under `message` event!
+- There are some methods not shown in the examples. If you want to know more methods to fiddle, please visit the **[Documentation]**
+
+### There are two modes of pagination
+
+#### `FieldsEmbed` Mode
+- A pagination mode that uses a MessageEmbed with a field(s) containing the elements to paginate.
+- Usually used for simple listing such as leaderboards and queues.
 
 ```js
 const Pagination = require('discord-paginationembed');
-```
 
-> ### Under `message` event
-
-### `FieldsEmbed` Mode
-
-```js
 const FieldsEmbed = new Pagination.FieldsEmbed()
   // A must: an array to paginate, can be an array of any type
   .setArray([{ word: 'they are' }, { word: 'being treated' }])
@@ -60,7 +63,7 @@ const FieldsEmbed = new Pagination.FieldsEmbed()
   .setChannel(message.channel)
   // Elements to show per page. Default: 10 elements per page
   .setElementsPerPage(2)
-   // Have a page indicator (shown on message content)
+   // Have a page indicator (shown on message content). Default: false
   .setPageIndicator(false)
    // Format based on the array, in this case we're formatting the page based on each object's `word` property
   .formatField('Continue...', el => el.word);
@@ -81,6 +84,8 @@ FieldsEmbed.build();
 > This assumes this is under an `async` function
 
 ```js
+const Pagination = require('discord-paginationembed');
+
 const FieldsEmbed = new Pagination.FieldsEmbed()
   .setArray([{ name: 'John Doe' }, { name: 'Jane Doe' }])
   .setAuthorizedUsers([message.author.id])
@@ -88,7 +93,7 @@ const FieldsEmbed = new Pagination.FieldsEmbed()
   .setElementsPerPage(1)
   // Initial page on deploy
   .setPage(2)
-  .showPageIndicator(true)
+  .setPageIndicator(true)
   .formatField('Name', i => i.name)
   // Deletes the embed upon awaiting timeout
   .setDeleteOnTimeout(true)
@@ -123,24 +128,26 @@ FieldsEmbed.embed
 
 await FieldsEmbed.build();
 
-// Will not log until FieldsEmbed.build() is finished
+// Will not log until the instance emitted either `expire` or `finish` event
 console.log('done');
 ```
 ![FieldsEmbed2](https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed2.gif?raw=true)
 
-> ### Declare Embeds
-
-```js
-const { MessageEmbed } = require('discord.js');
-const embeds = [];
-
-for (let i = 0; i < 5; ++i)
-  embeds.push(new MessageEmbed().addField('Page', i + 1));
-```
+---
 
 ### `Embeds` Mode
+- A pagination mode that uses an array of MessageEmbed to paginate.
+- Usually used for complex builds such as characters' information.
 
 ```js
+const Discord = require('discord.js');
+const Pagination = require('discord-paginationembed');
+
+const embeds = [];
+
+for (let i = 1; i <= 5; ++i)
+  embeds.push(new Discord.MessageEmbed().addField('Page', i));
+
 const myImage = message.author.displayAvatarURL();
 
 new Pagination.Embeds()
@@ -157,7 +164,7 @@ new Pagination.Embeds()
   .setFooter('Test Footer Text')
   .setURL(myImage)
   .setColor(0xFF00AE)
-  .addBlankField()
+  .addField('\u200b', '\u200b')
   .addField('Test Field 1', 'Test Field 1', true)
   .addField('Test Field 2', 'Test Field 2', true)
   .build();
@@ -167,6 +174,14 @@ new Pagination.Embeds()
 > This assumes this is under an `async` function
 
 ```js
+const Discord = require('discord.js');
+const Pagination = require('discord-paginationembed');
+
+const embeds = [];
+
+for (let i = 1; i <= 5; ++i)
+  embeds.push(new Discord.MessageEmbed().addField('Page', i));
+
 const Embeds = new PaginationEmbed.Embeds()
   .setArray(embeds)
   .setAuthorizedUsers([message.author.id])
@@ -195,15 +210,17 @@ const Embeds = new PaginationEmbed.Embeds()
     }
   })
   // Listeners for PaginationEmbed's events
-  // Upon successfull `build()`
+  // After the initial embed has been sent
+  // (technically, after the client finished reacting with enabled navigation and function emojis).
   .on('start', () => console.log('Started!'))
-  // Upon a user deleting the embed
+  // When the instance is finished by a user reacting with `DELETE` navigation emoji
+  // or a function emoji that throws non-Error type.
   .on('finish', (user) => console.log(`Finished! User: ${user.username}`))
-  // Upon a user reacting to the embed
+  // Upon a user reacting on the instance.
   .on('react', (user, emoji) => console.log(`Reacted! User: ${user.username} | Emoji: ${emoji.name} (${emoji.id})`))
-  // Upon the awaiting time expired
+  // When the awaiting timeout is reached.
   .on('expire', () => console.warn('Expired!'))
-  // Upon non-PaginationEmbed error (e.g: Discord API Error)
+  // Upon an occurance of error (e.g: Discord API Error).
   .on('error', console.error);
 
 await Embeds.build();
@@ -237,3 +254,4 @@ Please be explicit about the feature's description and provide a valid reason (e
 
 © 2018-present [**Euni (gazmull)**](https://github.com/gazmull)
 
+[Documentation]: https://gazmull.github.io/discord-paginationembed
