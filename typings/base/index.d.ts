@@ -15,13 +15,14 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     /** The channel where to send the embed. */
     channel: TextChannel | DMChannel;
     /** Settings for assets for the client. */
-    clientAssets: IClientAssets;
+    clientAssets: ClientAssets;
     /** An array of elements to paginate. */
     array: Element[];
-    /** Whether page number indicator on client's message is shown. Default: `true` */
-    pageIndicator: boolean;
-    /** Whether page number indicator, if enabled, is shown as circle indicator instead of plain numbers. Default: `false` */
-    circleIndicator: boolean;
+    /**
+     * Whether to show page indicator, or put it in embed's footer text (replaces the existing text) instead.
+     * Default: `false`
+     */
+    usePageIndicator: boolean | 'footer';
     /**  Whether the client's message will be deleted upon timeout. Default: `false` */
     deleteOnTimeout: boolean;
     /** The current page. Default: `1` */
@@ -32,13 +33,13 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      * The emojis used for navigation emojis.
      * Navigation emojis are the default message reactions for navigating through the pagination.
      */
-    navigationEmojis: INavigationEmojis;
+    navigationEmojis: NavigationEmojis;
     /**
      * The emojis used for function emojis.
      * Function emojis are user-customised message reactions
      * for modifying the current instance of the pagination such as modifying embed texts, stopping the pagination, etc.
      */
-    functionEmojis: IFunctionEmoji<Element>;
+    functionEmojis: FunctionEmoji<Element>;
     /**
      * The disabled navigation emojis.
      * Available navigation emojis to disable:
@@ -62,6 +63,14 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
         forward: string;
         delete: string;
     };
+    /** The function for formatting page indicator. */
+    protected _pageIndicator: PageIndicatorCaster;
+    /** Pre-made functions for formatting page indicator. */
+    protected _defaultPageIndicators: {
+        [x: string]: PageIndicatorCaster;
+    };
+    /** The formatted page indicator. Default format: `text` */
+    get pageIndicator(): string;
     build(): void;
     /**
      * Adds a function emoji to the embed.
@@ -95,9 +104,9 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     setArray(array: Element[]): this;
     /**
      * Set the authorized users to navigate the pages.
-     * @param users - An array of user IDs.
+     * @param users - A user ID or an array of user IDs.
      */
-    setAuthorizedUsers(users: Snowflake[]): this;
+    setAuthorizedUsers(users: Snowflake | Snowflake[]): this;
     /**
      * The channel where to send the embed.
      * @param channel - The channel object.
@@ -107,7 +116,7 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      * Sets the settings for assets for the client.
      * @param assets - The assets for the client.
      */
-    setClientAssets(assets: IClientAssets): this;
+    setClientAssets(assets: ClientAssets): this;
     /**
      * Sets the disabled navigation emojis.
      *
@@ -146,12 +155,12 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      * ```
      * @param emojis - An object containing customised emojis to use as function emojis.
      */
-    setFunctionEmojis(emojis: IFunctionEmoji<Element>): this;
+    setFunctionEmojis(emojis: FunctionEmoji<Element>): this;
     /**
      * Sets the emojis used for navigation emojis.
      * @param emojis - An object containing customised emojis to use as navigation emojis.
      */
-    setNavigationEmojis(emojis: INavigationEmojis): this;
+    setNavigationEmojis(emojis: NavigationEmojis): this;
     /**
      * Sets to jump to a certain page upon calling PaginationEmbed.build().
      * @param page - The page number to jump to.
@@ -163,15 +172,12 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      */
     setTimeout(timeout: number): this;
     /**
-     * Sets whether page number indicator on client's message is shown.
-     * @param indicator - Show page indicator?
+     * Sets the page indicator formatting function and placement.
+     * @param enabled - Whether to show page indicator.
+     *   Pass `footer` to display the indicator in embed's footer text (replaces existing text) instead.
+     * @param fn - Function for indicator formatting.
      */
-    setPageIndicator(boolean: boolean): this;
-    /**
-     * Sets whether page number indicator, if enabled, is shown as circle indicator instead of plain numbers.
-     * @param indicator - Show page indicator?
-     */
-    useCircleIndicator(boolean: boolean): this;
+    setPageIndicator(enabled: boolean | 'footer', fn?: PageIndicatorPreMadeTypes | PageIndicatorCaster): this;
     /**
      * Sets whether the client's message will be deleted upon timeout.
      * @param deleteOnTimeout - Delete client's message upon timeout?
@@ -227,17 +233,19 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      */
     protected _awaitResponseEx(user: User): Promise<void>;
     /**
-     * Emitted upon successful `build()`.
+     * Emitted after the initial embed has been sent
+     * (technically, after the client finished reacting with enabled navigation and function emojis).
      * @event
      */
     on(event: 'start', listener: () => void): this;
     /**
-     * Emitted when the instance is finished by a user reacting with `DELETE` navigation emoji.
+     * Emitted when the instance is finished by a user reacting with `DELETE` navigation emoji
+     * or a function emoji that throws non-Error type.
      * @event
      */
     on(event: 'finish', listener: ListenerUser): this;
     /**
-     * Emitted when the page number is updated.
+     * Emitted after the page number is updated and before the client sends the embed.
      * @event
      */
     on(event: 'pageUpdate', listener: () => void): this;
@@ -277,14 +285,14 @@ export declare type ListenerError = (err: Error) => void;
 /** Options for [[PaginationEmbed.disabledNavigationEmojis]]. */
 export declare type DisabledNavigationEmojis = NavigationEmojiIdentifier[];
 /** An object containing emojis to use as navigation emojis. */
-export interface INavigationEmojis {
+export interface NavigationEmojis {
     back: string | '◀';
     jump: string | '↗';
     forward: string | '▶';
     delete: string | '🗑';
 }
 /** Assets for the client (message). */
-export interface IClientAssets {
+export interface ClientAssets {
     /** The message object. */
     message?: Message;
     /**
@@ -298,7 +306,7 @@ export interface IClientAssets {
 }
 export declare type NavigationEmojiIdentifier = 'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL';
 /**
- * Function for a custom emoji
+ * Function for a custom emoji.
  *
  * Example for stopping the instance from awaiting from further reacts:
  * ```js
@@ -314,6 +322,16 @@ export declare type NavigationEmojiIdentifier = 'BACK' | 'JUMP' | 'FORWARD' | 'D
  *  };
  *  ```
  */
-export interface IFunctionEmoji<Element> {
+export interface FunctionEmoji<Element> {
     [emojiNameOrID: string]: (user: User, instance: Embeds | FieldsEmbed<Element>) => any;
 }
+/**
+ * Function to pass to the instance for page indicator formatting.
+ *
+ * Default:
+ * ```js
+ *  (page, pages) => `Page ${page} of ${pages}`
+ * ```
+ */
+export declare type PageIndicatorCaster = (page: number, pages: number) => string;
+export declare type PageIndicatorPreMadeTypes = 'text' | 'textcompact' | 'circle' | 'hybrid';
