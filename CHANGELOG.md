@@ -5,13 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-This version involves reflection of official release of Discord.JS 12, and changes that will give the user more control to the instance
+This version involves reflection of official release of Discord.JS 12, code optimisations, and changes that will give the user more control to the instance
 such as customisable page indicator, and favourable event emissions.
 
 ### Added
 - (ft. [@cycloptux]) - `setPageIndicator` is now powerful for customisation.
   - First parameter has additional option `footer` (makes the indicator replace the embed's footer text instead).
-    - `footer` option will not modify embeds from `array` when using `Embeds` mode.
+    - `footer` option will not *directly* modify embeds from `array` when using `Embeds` mode.
   - Second parameter has been added for indicator's formatting function: either use the following pre-made formats `'text' | 'textcompact' | 'circle' | 'hybrid'` — or make your own format.
   - In case you don't like the placing of the indicator (i.e. you want it in embed title instead), you can set the first parameter as false but set the second parameter to your preferred format and later on use the format by accessing getter `pageIndicator` then modify the embed via `pageUpdate` event.
   - **Example**
@@ -23,7 +23,7 @@ such as customisable page indicator, and favourable event emissions.
       - textcompact: `1/2`
       - circle: `● ○`
       - hybrid: `[1/2] ● ○`
-- `setAuthorizedUsers` now accepts a user ID as well.
+- `setAuthorizedUsers` now accepts a user ID as well instead of just an array of user IDs.
 
 ### Changed
 - **⚠ BREAKING** - `Embeds` mode's changes to reflect Discord.JS' MessageEmbed methods:
@@ -32,6 +32,7 @@ such as customisable page indicator, and favourable event emissions.
   - Added `addFields`
 - **⚠ BREAKING** - Removed `I` prefix on the following TypeScript interfaces: `INavigationEmojis`, `IClientAssets`, `IFunctionEmoji`
 - **⚠ BREAKING** - Renamed property `pageIndicator` to `usePageIndicator`
+- **⚠ BREAKING** - Navigation emoji identifiers (`BACK`, `JUMP`, `FORWARD`, `DELETE`, `ALL`) has been lowercased due to unnecessary internal transformations.
 - `usePageIndicator`'s default is now set to false.
 - Event `pageUpdate` has been relocated to emit at initial page as well.
 - Events' JSDoc description has been improved.
