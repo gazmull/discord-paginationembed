@@ -7,7 +7,7 @@ module.exports = {
   users: [],
   // 'embeds' or 'fieldsembed' to test
   test: 'embeds',
-  // 'ALL' / 'BACK' / 'JUMP' / 'FOWARD' / 'DELETE',
+  // 'all' / 'back' / 'jump' / 'foward' / 'delete',
   disabledNavigationEmojis: [ 'delete' ],
   // Whether function emojis should be deployed after navigation emojis
   emojisFunctionAfterNavigation: false,

@@ -93,13 +93,13 @@ export class PaginationEmbed<Element> extends EventEmitter {
   /**
    * The disabled navigation emojis.
    * Available navigation emojis to disable:
-   * - 'BACK'
-   * - 'JUMP'
-   * - 'FORWARD'
-   * - 'DELETE'
-   * - 'ALL'
+   * - 'back'
+   * - 'jump'
+   * - 'forward'
+   * - 'delete'
+   * - 'all'
    */
-  public disabledNavigationEmojis: ('BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL')[];
+  public disabledNavigationEmojis: ('back' | 'jump' | 'forward' | 'delete' | 'all')[];
 
   /** Whether to set function emojis after navigation emojis. Default: `false` */
   public emojisFunctionAfterNavigation: boolean;
@@ -252,33 +252,13 @@ export class PaginationEmbed<Element> extends EventEmitter {
     if (!Array.isArray(emojis)) throw new TypeError('Cannot invoke PaginationEmbed class without a valid array.');
 
     const invalid = [];
-    const sanitised = [];
+    const verified = [];
 
-    for (let emoji of emojis) {
-      emoji = typeof emoji === 'string' ? emoji.toUpperCase() as NavigationEmojiIdentifier : emoji;
-      const validEmojis = [ 'BACK', 'JUMP', 'FORWARD', 'DELETE', 'ALL' ];
+    for (const emoji of emojis) {
+      const validEmojis = [ 'back', 'jump', 'forward', 'delete', 'all' ];
 
-      if (!validEmojis.includes(emoji)) invalid.push(emoji);
-
-      if (emoji === 'ALL') {
-        this.navigationEmojis = {
-          back: null,
-          jump: null,
-          forward: null,
-          delete: null
-        };
-
-        sanitised.push('ALL');
-        break;
-      }
-
-      sanitised.push(emoji);
-
-      emoji = emoji.toLowerCase() as NavigationEmojiIdentifier;
-
-      this._disabledNavigationEmojiValues.push(this.navigationEmojis[emoji]);
-
-      this.navigationEmojis[emoji] = null;
+      if (validEmojis.includes(emoji)) verified.push(emoji);
+      else invalid.push(emoji);
     }
 
     if (invalid.length)
@@ -286,7 +266,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
         `Cannot invoke PaginationEmbed class with invalid navigation emoji(s): ${invalid.join(', ')}.`
       );
 
-    this.disabledNavigationEmojis = sanitised;
+    this.disabledNavigationEmojis = verified;
 
     return this;
   }
@@ -446,7 +426,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * @param emoji The navigation emoji to search.
    */
   protected _enabled (emoji: NavigationEmojiIdentifier) {
-    return this.disabledNavigationEmojis.includes('ALL')
+    return this.disabledNavigationEmojis.includes('all')
       ? false
       : !this.disabledNavigationEmojis.includes(emoji);
   }
@@ -476,13 +456,13 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
   /** Deploys navigation emojis. */
   protected async _drawNavigationEmojis () {
-    if (this._enabled('BACK') && this.pages > 1)
+    if (this._enabled('back') && this.pages > 1)
       await this.clientAssets.message.react(this.navigationEmojis.back);
-    if (this._enabled('JUMP') && this.pages > 2)
+    if (this._enabled('jump') && this.pages > 2)
       await this.clientAssets.message.react(this.navigationEmojis.jump);
-    if (this._enabled('FORWARD') && this.pages > 1)
+    if (this._enabled('forward') && this.pages > 1)
       await this.clientAssets.message.react(this.navigationEmojis.forward);
-    if (this._enabled('DELETE'))
+    if (this._enabled('delete'))
       await this.clientAssets.message.react(this.navigationEmojis.delete);
   }
 
@@ -512,7 +492,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   protected async _awaitResponse (): Promise<void> {
     const emojis = Object.values(this.navigationEmojis);
     const filter = (r: MessageReaction, u: User) => {
-      const enabledEmoji = this._enabled('ALL')
+      const enabledEmoji = this._enabled('all')
         ? !this._disabledNavigationEmojiValues.length
           || this._disabledNavigationEmojiValues.some(e => ![ r.emoji.name, r.emoji.id ].includes(e))
         : false;
@@ -658,7 +638,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   public on (event: 'start', listener: () => void): this;
 
   /**
-   * Emitted when the instance is finished by a user reacting with `DELETE` navigation emoji
+   * Emitted when the instance is finished by a user reacting with `delete` navigation emoji
    * or a function emoji that throws non-Error type.
    * @event
    */
@@ -740,7 +720,7 @@ export interface ClientAssets {
   prompt?: string;
 }
 
-export type NavigationEmojiIdentifier = 'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL';
+export type NavigationEmojiIdentifier = 'back' | 'jump' | 'forward' | 'delete' | 'all';
 
 /**
  * Function for a custom emoji.

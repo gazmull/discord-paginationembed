@@ -98,7 +98,7 @@ const FieldsEmbed = new Pagination.FieldsEmbed()
   // Deletes the embed upon awaiting timeout
   .setDeleteOnTimeout(true)
   // Disable built-in navigation emojis, in this case: 🗑 (Delete Embed)
-  .setDisabledNavigationEmojis(['DELETE'])
+  .setDisabledNavigationEmojis(['delete'])
   // Set your own customised emojis
   .setFunctionEmojis({
     '🔄': (user, instance) => {
@@ -128,7 +128,8 @@ FieldsEmbed.embed
 
 await FieldsEmbed.build();
 
-// Will not log until the instance emitted either `expire` or `finish` event
+// Will not log until the instance finished awaiting user responses
+// (or techinically emitted either `expire` or `finish` event)
 console.log('done');
 ```
 ![FieldsEmbed2](https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed2.gif?raw=true)
@@ -198,7 +199,7 @@ const Embeds = new PaginationEmbed.Embeds()
   //      {{user}} is the placeholder for the user mention
   .setClientAssets({ message, prompt: 'Page plz {{user}}' })
   .setDeleteOnTimeout(true)
-  .setDisabledNavigationEmojis(['DELETE'])
+  .setDisabledNavigationEmojis(['delete'])
   .setFunctionEmojis({
     '⬆': (_, instance) => {
       for (const embed of instance.array)
@@ -213,7 +214,7 @@ const Embeds = new PaginationEmbed.Embeds()
   // After the initial embed has been sent
   // (technically, after the client finished reacting with enabled navigation and function emojis).
   .on('start', () => console.log('Started!'))
-  // When the instance is finished by a user reacting with `DELETE` navigation emoji
+  // When the instance is finished by a user reacting with `delete` navigation emoji
   // or a function emoji that throws non-Error type.
   .on('finish', (user) => console.log(`Finished! User: ${user.username}`))
   // Upon a user reacting on the instance.

@@ -43,13 +43,13 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     /**
      * The disabled navigation emojis.
      * Available navigation emojis to disable:
-     * - 'BACK'
-     * - 'JUMP'
-     * - 'FORWARD'
-     * - 'DELETE'
-     * - 'ALL'
+     * - 'back'
+     * - 'jump'
+     * - 'forward'
+     * - 'delete'
+     * - 'all'
      */
-    disabledNavigationEmojis: ('BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL')[];
+    disabledNavigationEmojis: ('back' | 'jump' | 'forward' | 'delete' | 'all')[];
     /** Whether to set function emojis after navigation emojis. Default: `false` */
     emojisFunctionAfterNavigation: boolean;
     /** Number of pages for this instance. */
@@ -239,7 +239,7 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      */
     on(event: 'start', listener: () => void): this;
     /**
-     * Emitted when the instance is finished by a user reacting with `DELETE` navigation emoji
+     * Emitted when the instance is finished by a user reacting with `delete` navigation emoji
      * or a function emoji that throws non-Error type.
      * @event
      */
@@ -304,7 +304,7 @@ export interface ClientAssets {
      */
     prompt?: string;
 }
-export declare type NavigationEmojiIdentifier = 'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL';
+export declare type NavigationEmojiIdentifier = 'back' | 'jump' | 'forward' | 'delete' | 'all';
 /**
  * Function for a custom emoji.
  *

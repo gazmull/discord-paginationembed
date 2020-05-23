@@ -72,20 +72,7 @@ exports.PaginationEmbed = class extends t.EventEmitter {
   setDisabledNavigationEmojis(t) {
     if (!Array.isArray(t)) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array.");
     const e = [], i = [];
-    for (let s of t) {
-      if (s = "string" == typeof s ? s.toUpperCase() : s, [ "BACK", "JUMP", "FORWARD", "DELETE", "ALL" ].includes(s) || e.push(s), 
-      "ALL" === s) {
-        this.navigationEmojis = {
-          back: null,
-          jump: null,
-          forward: null,
-          delete: null
-        }, i.push("ALL");
-        break;
-      }
-      i.push(s), s = s.toLowerCase(), this._disabledNavigationEmojiValues.push(this.navigationEmojis[s]), 
-      this.navigationEmojis[s] = null;
-    }
+    for (const s of t) [ "back", "jump", "forward", "delete", "all" ].includes(s) ? i.push(s) : e.push(s);
     if (e.length) throw new TypeError(`Cannot invoke PaginationEmbed class with invalid navigation emoji(s): ${e.join(", ")}.`);
     return this.disabledNavigationEmojis = i, this;
   }
@@ -142,7 +129,7 @@ exports.PaginationEmbed = class extends t.EventEmitter {
     return !0;
   }
   _enabled(t) {
-    return !this.disabledNavigationEmojis.includes("ALL") && !this.disabledNavigationEmojis.includes(t);
+    return !this.disabledNavigationEmojis.includes("all") && !this.disabledNavigationEmojis.includes(t);
   }
   async _drawEmojis() {
     return this.emojisFunctionAfterNavigation ? (await this._drawNavigationEmojis(), 
@@ -153,10 +140,10 @@ exports.PaginationEmbed = class extends t.EventEmitter {
     if (Object.keys(this.functionEmojis).length) for (const t of Object.keys(this.functionEmojis)) await this.clientAssets.message.react(t);
   }
   async _drawNavigationEmojis() {
-    this._enabled("BACK") && this.pages > 1 && await this.clientAssets.message.react(this.navigationEmojis.back), 
-    this._enabled("JUMP") && this.pages > 2 && await this.clientAssets.message.react(this.navigationEmojis.jump), 
-    this._enabled("FORWARD") && this.pages > 1 && await this.clientAssets.message.react(this.navigationEmojis.forward), 
-    this._enabled("DELETE") && await this.clientAssets.message.react(this.navigationEmojis.delete);
+    this._enabled("back") && this.pages > 1 && await this.clientAssets.message.react(this.navigationEmojis.back), 
+    this._enabled("jump") && this.pages > 2 && await this.clientAssets.message.react(this.navigationEmojis.jump), 
+    this._enabled("forward") && this.pages > 1 && await this.clientAssets.message.react(this.navigationEmojis.forward), 
+    this._enabled("delete") && await this.clientAssets.message.react(this.navigationEmojis.delete);
   }
   _loadList(t = !0) {
     if (t) return this._drawEmojis();
@@ -166,7 +153,7 @@ exports.PaginationEmbed = class extends t.EventEmitter {
   }
   async _awaitResponse() {
     const t = Object.values(this.navigationEmojis), e = (e, i) => {
-      const s = !!this._enabled("ALL") && (!this._disabledNavigationEmojiValues.length || this._disabledNavigationEmojiValues.some(t => ![ e.emoji.name, e.emoji.id ].includes(t))) && (t.includes(e.emoji.name) || t.includes(e.emoji.id)) || e.emoji.name in this.functionEmojis || e.emoji.id in this.functionEmojis;
+      const s = !!this._enabled("all") && (!this._disabledNavigationEmojiValues.length || this._disabledNavigationEmojiValues.some(t => ![ e.emoji.name, e.emoji.id ].includes(t))) && (t.includes(e.emoji.name) || t.includes(e.emoji.id)) || e.emoji.name in this.functionEmojis || e.emoji.id in this.functionEmojis;
       return this.authorizedUsers.length ? this.authorizedUsers.includes(i.id) && s : !i.bot && s;
     }, i = this.clientAssets.message;
     try {
