@@ -21,11 +21,13 @@ exports.PaginationEmbed = class extends t.EventEmitter {
       jump: "↗",
       forward: "▶",
       delete: "🗑"
-    }, this._defaultPageIndicators = {
+    };
+    const t = (t, e) => `${"○ ".repeat(t - 1)}● ${"○ ".repeat(e - t)}`.trim();
+    this._defaultPageIndicators = {
       text: (t, e) => `Page ${t} of ${e}`,
       textcompact: (t, e) => `${t}/${e}`,
-      circle: (t, e) => `${"○ ".repeat(t - 1)}● ${"○ ".repeat(e - t)}`.trim(),
-      hybrid: (t, e) => `[${t}/${e}] ${`${"○ ".repeat(t - 1)}● ${"○ ".repeat(e - t)}`.trim()}`
+      circle: (e, i) => t(e, i),
+      hybrid: (e, i) => `[${e}/${i}] ${t(e, i)}`
     }, this._pageIndicator = this._defaultPageIndicators.text;
   }
   get pageIndicator() {
