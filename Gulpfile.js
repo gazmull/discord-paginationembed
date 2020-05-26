@@ -1,7 +1,7 @@
 const del = require('del');
 const gulp = require('gulp');
 const ts = require('gulp-typescript');
-const tslint = require('gulp-tslint');
+const eslint = require('gulp-eslint');
 const terser = require('gulp-terser');
 
 const tsProject = ts.createProject('tsconfig.json');
@@ -20,9 +20,10 @@ const terserFiles = {
 gulp.task('clean', () => del([ paths.bin, paths.typings ]));
 
 gulp.task('lint', () => {
-  return gulp.src(paths.src)
-    .pipe(tslint({ configuration: './.tslint.js' }))
-    .pipe(tslint.report());
+  return gulp.src(paths.src + '/**/*.ts')
+    .pipe(eslint())
+    .pipe(eslint.formatEach())
+		.pipe(eslint.failOnError())
 });
 
 gulp.task('ts', () => {

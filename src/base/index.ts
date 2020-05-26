@@ -19,8 +19,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
     this.authorizedUsers = [];
     this.channel = null;
     this.clientAssets = {};
-    this.pageIndicator = true;
-    this.circleIndicator = false;
+    this.usePageIndicator = false;
     this.deleteOnTimeout = false;
     this.page = 1;
     this.timeout = 30000;
@@ -42,6 +41,17 @@ export class PaginationEmbed<Element> extends EventEmitter {
       forward: '▶',
       delete: '🗑'
     };
+
+    const makeCircles = (page: number, pages: number) =>
+      `${'○ '.repeat(page - 1)}● ${'○ '.repeat(pages - page)}`.trim();
+
+    this._defaultPageIndicators = {
+      text: (page, pages) => `Page ${page} of ${pages}`,
+      textcompact: (page, pages) => `${page}/${pages}`,
+      circle: (page, pages) => makeCircles(page, pages),
+      hybrid: (page, pages) => `[${page}/${pages}] ${makeCircles(page, pages)}`
+    };
+    this._pageIndicator = this._defaultPageIndicators.text;
   }
 
   /** The authorized users to navigate the pages. Default: `everyone` */
@@ -51,16 +61,16 @@ export class PaginationEmbed<Element> extends EventEmitter {
   public channel: TextChannel | DMChannel;
 
   /** Settings for assets for the client. */
-  public clientAssets: IClientAssets;
+  public clientAssets: ClientAssets;
 
   /** An array of elements to paginate. */
   public array: Element[];
 
-  /** Whether page number indicator on client's message is shown. Default: `true` */
-  public pageIndicator: boolean;
-  
-  /** Whether page number indicator, if enabled, is shown as circle indicator instead of plain numbers. Default: `false` */
-  public circleIndicator: boolean;
+  /**
+   * Whether to show page indicator, or put it in embed's footer text (replaces the existing text) instead.
+   * Default: `false`
+   */
+  public usePageIndicator: boolean | 'footer';
 
   /**  Whether the client's message will be deleted upon timeout. Default: `false` */
   public deleteOnTimeout: boolean;
@@ -75,25 +85,25 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * The emojis used for navigation emojis.
    * Navigation emojis are the default message reactions for navigating through the pagination.
    */
-  public navigationEmojis: INavigationEmojis;
+  public navigationEmojis: NavigationEmojis;
 
   /**
    * The emojis used for function emojis.
    * Function emojis are user-customised message reactions
    * for modifying the current instance of the pagination such as modifying embed texts, stopping the pagination, etc.
    */
-  public functionEmojis: IFunctionEmoji<Element>;
+  public functionEmojis: FunctionEmoji<Element>;
 
   /**
    * The disabled navigation emojis.
    * Available navigation emojis to disable:
-   * - 'BACK'
-   * - 'JUMP'
-   * - 'FORWARD'
-   * - 'DELETE'
-   * - 'ALL'
+   * - 'back'
+   * - 'jump'
+   * - 'forward'
+   * - 'delete'
+   * - 'all'
    */
-  public disabledNavigationEmojis: ('BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL')[];
+  public disabledNavigationEmojis: ('back' | 'jump' | 'forward' | 'delete' | 'all')[];
 
   /** Whether to set function emojis after navigation emojis. Default: `false` */
   public emojisFunctionAfterNavigation: boolean;
@@ -105,7 +115,18 @@ export class PaginationEmbed<Element> extends EventEmitter {
   protected _disabledNavigationEmojiValues: any[];
 
   /** The default navigation emojis. Used for resetting the navigation emojis. */
-  protected _defaultNavigationEmojis: { back: string; jump: string; forward: string; delete: string; };
+  protected _defaultNavigationEmojis: { back: string; jump: string; forward: string; delete: string };
+
+  /** The function for formatting page indicator. */
+  protected _pageIndicator: PageIndicatorCaster;
+
+  /** Pre-made functions for formatting page indicator. */
+  protected _defaultPageIndicators: { [x: string]: PageIndicatorCaster };
+
+  /** The formatted page indicator. Default format: `text` */
+  public get pageIndicator () {
+    return this._pageIndicator(this.page, this.pages);
+  }
 
   public build () {
     throw new Error(
@@ -178,12 +199,13 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
   /**
    * Set the authorized users to navigate the pages.
-   * @param users - An array of user IDs.
+   * @param users - A user ID or an array of user IDs.
    */
-  public setAuthorizedUsers (users: Snowflake[]) {
-    if (!Array.isArray(users)) throw new TypeError('Cannot invoke PaginationEmbed class without a valid array.');
+  public setAuthorizedUsers (users: Snowflake | Snowflake[]) {
+    if (!(Array.isArray(users) || typeof users === 'string'))
+      throw new TypeError('Cannot invoke PaginationEmbed class without a valid array.');
 
-    this.authorizedUsers = users;
+    this.authorizedUsers = Array.isArray(users) ? users : [ users ];
 
     return this;
   }
@@ -202,7 +224,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * Sets the settings for assets for the client.
    * @param assets - The assets for the client.
    */
-  public setClientAssets (assets: IClientAssets) {
+  public setClientAssets (assets: ClientAssets) {
     if (!assets) throw new TypeError('Cannot accept assets options as a non-object type.');
 
     const { message } = assets;
@@ -234,33 +256,13 @@ export class PaginationEmbed<Element> extends EventEmitter {
     if (!Array.isArray(emojis)) throw new TypeError('Cannot invoke PaginationEmbed class without a valid array.');
 
     const invalid = [];
-    const sanitised = [];
+    const verified = [];
 
-    for (let emoji of emojis) {
-      emoji = typeof emoji === 'string' ? emoji.toUpperCase() as NavigationEmojiIdentifier : emoji;
-      const validEmojis = [ 'BACK', 'JUMP', 'FORWARD', 'DELETE', 'ALL' ];
+    for (const emoji of emojis) {
+      const validEmojis = [ 'back', 'jump', 'forward', 'delete', 'all' ];
 
-      if (!validEmojis.includes(emoji)) invalid.push(emoji);
-
-      if (emoji === 'ALL') {
-        this.navigationEmojis = {
-          back: null,
-          jump: null,
-          forward: null,
-          delete: null
-        };
-
-        sanitised.push('ALL');
-        break;
-      }
-
-      sanitised.push(emoji);
-
-      emoji = emoji.toLowerCase() as NavigationEmojiIdentifier;
-
-      this._disabledNavigationEmojiValues.push(this.navigationEmojis[emoji]);
-
-      this.navigationEmojis[emoji] = null;
+      if (validEmojis.includes(emoji)) verified.push(emoji);
+      else invalid.push(emoji);
     }
 
     if (invalid.length)
@@ -268,7 +270,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
         `Cannot invoke PaginationEmbed class with invalid navigation emoji(s): ${invalid.join(', ')}.`
       );
 
-    this.disabledNavigationEmojis = sanitised;
+    this.disabledNavigationEmojis = verified;
 
     return this;
   }
@@ -304,7 +306,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * ```
    * @param emojis - An object containing customised emojis to use as function emojis.
    */
-  public setFunctionEmojis (emojis: IFunctionEmoji<Element>) {
+  public setFunctionEmojis (emojis: FunctionEmoji<Element>) {
     for (const emoji of Object.keys(emojis)) {
       const fn = emojis[emoji];
 
@@ -318,7 +320,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * Sets the emojis used for navigation emojis.
    * @param emojis - An object containing customised emojis to use as navigation emojis.
    */
-  public setNavigationEmojis (emojis: INavigationEmojis) {
+  public setNavigationEmojis (emojis: NavigationEmojis) {
     Object.assign(this.navigationEmojis, emojis);
 
     return this;
@@ -355,25 +357,23 @@ export class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /**
-   * Sets whether page number indicator on client's message is shown.
-   * @param indicator - Show page indicator?
+   * Sets the page indicator formatting function and placement.
+   * @param enabled - Whether to show page indicator.
+   *   Pass `footer` to display the indicator in embed's footer text (replaces existing text) instead.
+   * @param fn - Function for indicator formatting.
    */
-  public setPageIndicator (boolean: boolean) {
-    if (typeof boolean !== 'boolean') throw new TypeError('setPageIndicator() only accepts boolean type.');
+  public setPageIndicator (enabled: boolean | 'footer', fn?: PageIndicatorPreMadeTypes | PageIndicatorCaster) {
+    if (typeof enabled === 'boolean' || (typeof enabled === 'string' && enabled === 'footer'))
+      this.usePageIndicator = enabled;
+    else throw new TypeError('setPageIndicator()\'s `enabled` parameter only accepts boolean/string type.');
 
-    this.pageIndicator = boolean;
+    if (fn) {
+      const allowedTypes = [ 'text', 'textcompact', 'circle', 'hybrid' ];
 
-    return this;
-  }
-  
-  /**
-   * Sets whether page number indicator, if enabled, is shown as circle indicator instead of plain numbers.
-   * @param indicator - Show page indicator?
-   */
-  public useCircleIndicator (boolean: boolean) {
-    if (typeof boolean !== 'boolean') throw new TypeError('useCircleIndicator() only accepts boolean type.');
-
-    this.circleIndicator = boolean;
+      if (typeof fn === 'string' && allowedTypes.includes(fn)) this._pageIndicator = this._defaultPageIndicators[fn];
+      else if (typeof fn === 'function') this._pageIndicator = fn;
+      else throw new TypeError('setPageIndicator()\'s `fn` parameter only accepts function/string type.');
+    }
 
     return this;
   }
@@ -430,7 +430,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * @param emoji The navigation emoji to search.
    */
   protected _enabled (emoji: NavigationEmojiIdentifier) {
-    return this.disabledNavigationEmojis.includes('ALL')
+    return this.disabledNavigationEmojis.includes('all')
       ? false
       : !this.disabledNavigationEmojis.includes(emoji);
   }
@@ -445,9 +445,8 @@ export class PaginationEmbed<Element> extends EventEmitter {
       await this._drawNavigationEmojis();
     }
 
-    if (this.listenerCount("start")) {
-      this.emit("start");
-    }
+    if (this.listenerCount('start'))
+      this.emit('start');
 
     return this._awaitResponse();
   }
@@ -461,13 +460,13 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
   /** Deploys navigation emojis. */
   protected async _drawNavigationEmojis () {
-    if (this._enabled('BACK') && this.pages > 1)
+    if (this._enabled('back') && this.pages > 1)
       await this.clientAssets.message.react(this.navigationEmojis.back);
-    if (this._enabled('JUMP') && this.pages > 2)
+    if (this._enabled('jump') && this.pages > 2)
       await this.clientAssets.message.react(this.navigationEmojis.jump);
-    if (this._enabled('FORWARD') && this.pages > 1)
+    if (this._enabled('forward') && this.pages > 1)
       await this.clientAssets.message.react(this.navigationEmojis.forward);
-    if (this._enabled('DELETE'))
+    if (this._enabled('delete'))
       await this.clientAssets.message.react(this.navigationEmojis.delete);
   }
 
@@ -488,8 +487,6 @@ export class PaginationEmbed<Element> extends EventEmitter {
   protected async _loadPage (param: number | 'back' | 'forward' = 1) {
     this.setPage(param);
 
-    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate');
-
     await this._loadList(false);
 
     return this._awaitResponse();
@@ -499,7 +496,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   protected async _awaitResponse (): Promise<void> {
     const emojis = Object.values(this.navigationEmojis);
     const filter = (r: MessageReaction, u: User) => {
-      const enabledEmoji = this._enabled('ALL')
+      const enabledEmoji = this._enabled('all')
         ? !this._disabledNavigationEmojiValues.length
           || this._disabledNavigationEmojiValues.some(e => ![ r.emoji.name, r.emoji.id ].includes(e))
         : false;
@@ -546,7 +543,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
           return;
 
-        default:
+        default: {
           const cb = this.functionEmojis[emoji[0]] || this.functionEmojis[emoji[1]];
 
           try {
@@ -556,6 +553,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
           }
 
           return this._loadPage(this.page);
+        }
       }
     } catch (err) {
       return this._cleanUp(err, clientMessage);
@@ -637,22 +635,23 @@ export class PaginationEmbed<Element> extends EventEmitter {
   }
 
   /**
-   * Emitted upon successful `build()`.
+   * Emitted after the initial embed has been sent
+   * (technically, after the client finished reacting with enabled navigation and function emojis).
    * @event
    */
   public on (event: 'start', listener: () => void): this;
 
   /**
-   * Emitted when the instance is finished by a user reacting with `DELETE` navigation emoji.
+   * Emitted when the instance is finished by a user reacting with `delete` navigation emoji
+   * or a function emoji that throws non-Error type.
    * @event
    */
   public on (event: 'finish', listener: ListenerUser): this;
 
   /**
-   * Emitted when the page number is updated.
+   * Emitted after the page number is updated and before the client sends the embed.
    * @event
    */
-  // tslint:disable-next-line: unified-signatures
   public on (event: 'pageUpdate', listener: () => void): this;
 
   /**
@@ -665,7 +664,6 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * Emitted when the awaiting timeout is reached.
    * @event
    */
-  // tslint:disable-next-line: unified-signatures
   public on (event: 'expire', listener: () => void): this;
 
   /**
@@ -677,10 +675,13 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
   /** @event */
   public once (event: 'finish', listener: ListenerUser): this;
+
   /** @event */
   public once (event: 'start' | 'expire' | 'pageUpdate', listener: () => void): this;
+
   /** @event */
   public once (event: 'react', listener: ListenerReact): this;
+
   /** @event */
   // @ts-ignore
   public once (event: 'error', listener: ListenerError): this;
@@ -702,7 +703,7 @@ export type ListenerError = (err: Error) => void;
 export type DisabledNavigationEmojis = NavigationEmojiIdentifier[];
 
 /** An object containing emojis to use as navigation emojis. */
-export interface INavigationEmojis {
+export interface NavigationEmojis {
   back: string | '◀';
   jump: string | '↗';
   forward: string | '▶';
@@ -710,7 +711,7 @@ export interface INavigationEmojis {
 }
 
 /** Assets for the client (message). */
-export interface IClientAssets {
+export interface ClientAssets {
   /** The message object. */
   message?: Message;
   /**
@@ -723,10 +724,10 @@ export interface IClientAssets {
   prompt?: string;
 }
 
-export type NavigationEmojiIdentifier = 'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' | 'ALL';
+export type NavigationEmojiIdentifier = 'back' | 'jump' | 'forward' | 'delete' | 'all';
 
 /**
- * Function for a custom emoji
+ * Function for a custom emoji.
  *
  * Example for stopping the instance from awaiting from further reacts:
  * ```js
@@ -742,6 +743,18 @@ export type NavigationEmojiIdentifier = 'BACK' | 'JUMP' | 'FORWARD' | 'DELETE' |
  *  };
  *  ```
  */
-export interface IFunctionEmoji<Element> {
+export interface FunctionEmoji<Element> {
   [emojiNameOrID: string]: (user: User, instance: Embeds | FieldsEmbed<Element>) => any;
 }
+
+/**
+ * Function to pass to the instance for page indicator formatting.
+ *
+ * Default:
+ * ```js
+ *  (page, pages) => `Page ${page} of ${pages}`
+ * ```
+ */
+export type PageIndicatorCaster = (page: number, pages: number) => string;
+
+export type PageIndicatorPreMadeTypes = 'text' | 'textcompact' | 'circle' | 'hybrid';

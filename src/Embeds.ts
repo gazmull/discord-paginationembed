@@ -1,6 +1,7 @@
 import {
   ColorResolvable,
   EmbedField,
+  EmbedFieldData,
   FileOptions,
   Message,
   MessageAttachment,
@@ -42,33 +43,20 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
 
   /** The author of all embeds. */
   public author: {
-    name: string,
-    url?: string,
-    iconURL?: string
+    name: string;
+    url?: string;
+    iconURL?: string;
   };
 
   /** The footer of all embeds. */
   public footer: {
-    text: string,
-    iconURL?: string
+    text: string;
+    iconURL?: string;
   };
 
   /** Embed in the current page. */
   get currentEmbed (): MessageEmbed {
     return this.array[this.page - 1];
-  }
-
-  /**
-   * Adds a blank field to the fields of all embeds.
-   * @param inline - Whether the field is inline to the other fields.
-   */
-  public addBlankField (inline = false) {
-    if (!this.array) throw new TypeError('this.array must be set first.');
-
-    for (const el of this.array)
-      el.addField('\u200B', '\u200B', inline);
-
-    return this;
   }
 
   /**
@@ -79,12 +67,18 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    */
   public addField (name: string, value: StringResolvable, inline = false) {
     if (!this.array) throw new TypeError('this.array must be set first.');
-    if (!name && !value) return this;
 
     for (const el of this.array)
       el.addField(name, value, inline);
 
     return this;
+  }
+
+  public addFields (...fields: EmbedFieldData[] | EmbedFieldData[][]) {
+    if (!this.array) throw new TypeError('this.array must be set first.');
+
+    for (const el of this.array)
+      el.addFields(...fields);
   }
 
   /**
@@ -93,7 +87,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    */
   public attachFiles (files: (FileOptions|string|MessageAttachment)[]) {
     if (!this.array) throw new TypeError('this.array must be set first.');
-    if (!files) return this;
 
     for (const el of this.array)
       el.attachFiles(files);
@@ -179,7 +172,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    */
   public setAuthor (name: string, iconURL?: string, url?: string) {
     if (!this.array) throw new TypeError('this.array must be set first.');
-    if (!name) return this;
 
     for (const el of this.array)
       el.setAuthor(name, iconURL, url);
@@ -193,7 +185,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    */
   public setColor (color: ColorResolvable) {
     if (!this.array) throw new TypeError('this.array must be set first.');
-    if (!color) return this;
 
     for (const el of this.array)
       el.setColor(color);
@@ -207,7 +198,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    */
   public setDescription (description: StringResolvable) {
     if (!this.array) throw new TypeError('this.array must be set first.');
-    if (!description) return this;
 
     for (const el of this.array)
       el.setDescription(description);
@@ -222,7 +212,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    */
   public setFooter (text: StringResolvable, iconURL?: string) {
     if (!this.array) throw new TypeError('this.array must be set first.');
-    if (!text) return this;
 
     for (const el of this.array)
       el.setFooter(text, iconURL);
@@ -236,7 +225,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    */
   public setImage (url: string ) {
     if (!this.array) throw new TypeError('this.array must be set first.');
-    if (!url) return this;
 
     for (const el of this.array)
       el.setImage(url);
@@ -250,7 +238,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    */
   public setThumbnail (url: string) {
     if (!this.array) throw new TypeError('this.array must be set first.');
-    if (!url) return this;
 
     for (const el of this.array)
       el.setThumbnail(url);
@@ -277,7 +264,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    */
   public setTitle (title: StringResolvable) {
     if (!this.array) throw new TypeError('this.array must be set first.');
-    if (!title) return this;
 
     for (const el of this.array)
       el.setTitle(title);
@@ -291,7 +277,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    */
   public setURL (url: string) {
     if (!this.array) throw new TypeError('this.array must be set first.');
-    if (!url) return this;
 
     for (const el of this.array)
       el.setURL(url);
@@ -324,28 +309,23 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
 
   /** @ignore */
   public async _loadList (callNavigation = true) {
-    const shouldIndicate = this.pageIndicator
+    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate');
+
+    const embed = new MessageEmbed(this.currentEmbed);
+    const isFooter = this.usePageIndicator === 'footer';
+    const shouldIndicate = this.usePageIndicator && !isFooter
       ? this.pages === 1
         ? undefined
-        : this._buildIndicator()
+        : this.pageIndicator
       : undefined;
 
+    if (isFooter)
+      embed.setFooter(this.pageIndicator, embed.footer.iconURL);
     if (this.clientAssets.message)
-      await this.clientAssets.message.edit(shouldIndicate, { embed: this.currentEmbed });
+      await this.clientAssets.message.edit(shouldIndicate, { embed });
     else
-      this.clientAssets.message = await this.channel.send(shouldIndicate, { embed: this.currentEmbed }) as Message;
+      this.clientAssets.message = await this.channel.send(shouldIndicate, { embed }) as Message;
+
     return super._loadList(callNavigation);
-  }
-  
-  /** @ignore */
-  private _buildIndicator () {
-    if (!this.circleIndicator) return `Page ${this.page} of ${this.pages}`;
-    
-    let textualIndicator = `[${this.page}/${this.pages}] `;
-    
-    for (let i = 0; i < this.pages; i++)
-      textualIndicator += i === this.page - 1 ? '● ' : '○ ';
-    
-    return textualIndicator.trim();
   }
 }

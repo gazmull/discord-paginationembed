@@ -4,13 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: !0
 });
 
-const t = require("events");
+const t = require("events"), e = "Client's message was deleted before being processed.";
 
-class e extends t.EventEmitter {
+exports.PaginationEmbed = class extends t.EventEmitter {
   constructor() {
     super(), this.authorizedUsers = [], this.channel = null, this.clientAssets = {}, 
-    this.pageIndicator = !0, this.circleIndicator = !1, this.deleteOnTimeout = !1, this.page = 1, 
-    this.timeout = 3e4, this.navigationEmojis = {
+    this.usePageIndicator = !1, this.deleteOnTimeout = !1, this.page = 1, this.timeout = 3e4, 
+    this.navigationEmojis = {
       back: "◀",
       jump: "↗",
       forward: "▶",
@@ -22,6 +22,16 @@ class e extends t.EventEmitter {
       forward: "▶",
       delete: "🗑"
     };
+    const t = (t, e) => `${"○ ".repeat(t - 1)}● ${"○ ".repeat(e - t)}`.trim();
+    this._defaultPageIndicators = {
+      text: (t, e) => `Page ${t} of ${e}`,
+      textcompact: (t, e) => `${t}/${e}`,
+      circle: (e, i) => t(e, i),
+      hybrid: (e, i) => `[${e}/${i}] ${t(e, i)}`
+    }, this._pageIndicator = this._defaultPageIndicators.text;
+  }
+  get pageIndicator() {
+    return this._pageIndicator(this.page, this.pages);
   }
   build() {
     throw new Error("Cannot invoke this class. Invoke with [PaginationEmbed.Embeds] or [PaginationEmbed.FieldsEmbed] instead.");
@@ -33,7 +43,7 @@ class e extends t.EventEmitter {
     }), this;
   }
   deleteFunctionEmoji(t) {
-    if (!(t in this.functionEmojis)) throw new Error(t + " function emoji does not exist.");
+    if (!(t in this.functionEmojis)) throw new Error(`${t} function emoji does not exist.`);
     return delete this.functionEmojis[t], this;
   }
   resetEmojis() {
@@ -41,12 +51,12 @@ class e extends t.EventEmitter {
     return this.navigationEmojis = this._defaultNavigationEmojis, this;
   }
   setArray(t) {
-    if (!(Array.isArray(t) && Boolean(t.length))) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array to paginate.");
+    if (!Array.isArray(t) || !Boolean(t.length)) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array to paginate.");
     return this.array = t, this;
   }
   setAuthorizedUsers(t) {
-    if (!Array.isArray(t)) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array.");
-    return this.authorizedUsers = t, this;
+    if (!Array.isArray(t) && "string" != typeof t) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array.");
+    return this.authorizedUsers = Array.isArray(t) ? t : [ t ], this;
   }
   setChannel(t) {
     return this.channel = t, this;
@@ -64,20 +74,7 @@ class e extends t.EventEmitter {
   setDisabledNavigationEmojis(t) {
     if (!Array.isArray(t)) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array.");
     const e = [], i = [];
-    for (let s of t) {
-      if (s = "string" == typeof s ? s.toUpperCase() : s, [ "BACK", "JUMP", "FORWARD", "DELETE", "ALL" ].includes(s) || e.push(s), 
-      "ALL" === s) {
-        this.navigationEmojis = {
-          back: null,
-          jump: null,
-          forward: null,
-          delete: null
-        }, i.push("ALL");
-        break;
-      }
-      i.push(s), s = s.toLowerCase(), this._disabledNavigationEmojiValues.push(this.navigationEmojis[s]), 
-      this.navigationEmojis[s] = null;
-    }
+    for (const s of t) [ "back", "jump", "forward", "delete", "all" ].includes(s) ? i.push(s) : e.push(s);
     if (e.length) throw new TypeError(`Cannot invoke PaginationEmbed class with invalid navigation emoji(s): ${e.join(", ")}.`);
     return this.disabledNavigationEmojis = i, this;
   }
@@ -105,13 +102,16 @@ class e extends t.EventEmitter {
     if ("number" != typeof t) throw new TypeError("setTimeout() only accepts number type.");
     return this.timeout = t, this;
   }
-  setPageIndicator(t) {
-    if ("boolean" != typeof t) throw new TypeError("setPageIndicator() only accepts boolean type.");
-    return this.pageIndicator = t, this;
-  }
-  useCircleIndicator(t) {
-    if ("boolean" != typeof t) throw new TypeError("useCircleIndicator() only accepts boolean type.");
-    return this.circleIndicator = t, this;
+  setPageIndicator(t, e) {
+    if ("boolean" != typeof t && ("string" != typeof t || "footer" !== t)) throw new TypeError("setPageIndicator()'s `enabled` parameter only accepts boolean/string type.");
+    if (this.usePageIndicator = t, e) {
+      const t = [ "text", "textcompact", "circle", "hybrid" ];
+      if ("string" == typeof e && t.includes(e)) this._pageIndicator = this._defaultPageIndicators[e]; else {
+        if ("function" != typeof e) throw new TypeError("setPageIndicator()'s `fn` parameter only accepts function/string type.");
+        this._pageIndicator = e;
+      }
+    }
+    return this;
   }
   setDeleteOnTimeout(t) {
     if ("boolean" != typeof t) throw new TypeError("deleteOnTimeout() only accepts boolean type.");
@@ -119,19 +119,19 @@ class e extends t.EventEmitter {
   }
   async _verify() {
     if (this.setClientAssets(this.clientAssets), !this.channel) throw new Error("Cannot invoke PaginationEmbed class without a channel object set.");
-    if (!(this.page >= 1 && this.page <= this.pages)) throw new RangeError("Page number is out of bounds. Max pages: " + this.pages);
+    if (!(this.page >= 1 && this.page <= this.pages)) throw new RangeError(`Page number is out of bounds. Max pages: ${this.pages}`);
     return this._checkPermissions();
   }
   async _checkPermissions() {
     const t = this.channel;
     if (t.guild) {
       const e = t.permissionsFor(t.client.user).missing([ "ADD_REACTIONS", "MANAGE_MESSAGES", "EMBED_LINKS", "VIEW_CHANNEL", "SEND_MESSAGES" ]);
-      if (e.length) throw new Error("Cannot invoke PaginationEmbed class without required permissions: " + e.join(", "));
+      if (e.length) throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${e.join(", ")}`);
     }
     return !0;
   }
   _enabled(t) {
-    return !this.disabledNavigationEmojis.includes("ALL") && !this.disabledNavigationEmojis.includes(t);
+    return !this.disabledNavigationEmojis.includes("all") && !this.disabledNavigationEmojis.includes(t);
   }
   async _drawEmojis() {
     return this.emojisFunctionAfterNavigation ? (await this._drawNavigationEmojis(), 
@@ -142,21 +142,20 @@ class e extends t.EventEmitter {
     if (Object.keys(this.functionEmojis).length) for (const t of Object.keys(this.functionEmojis)) await this.clientAssets.message.react(t);
   }
   async _drawNavigationEmojis() {
-    this._enabled("BACK") && this.pages > 1 && await this.clientAssets.message.react(this.navigationEmojis.back), 
-    this._enabled("JUMP") && this.pages > 2 && await this.clientAssets.message.react(this.navigationEmojis.jump), 
-    this._enabled("FORWARD") && this.pages > 1 && await this.clientAssets.message.react(this.navigationEmojis.forward), 
-    this._enabled("DELETE") && await this.clientAssets.message.react(this.navigationEmojis.delete);
+    this._enabled("back") && this.pages > 1 && await this.clientAssets.message.react(this.navigationEmojis.back), 
+    this._enabled("jump") && this.pages > 2 && await this.clientAssets.message.react(this.navigationEmojis.jump), 
+    this._enabled("forward") && this.pages > 1 && await this.clientAssets.message.react(this.navigationEmojis.forward), 
+    this._enabled("delete") && await this.clientAssets.message.react(this.navigationEmojis.delete);
   }
   _loadList(t = !0) {
     if (t) return this._drawEmojis();
   }
   async _loadPage(t = 1) {
-    return this.setPage(t), this.listenerCount("pageUpdate") && this.emit("pageUpdate"), 
-    await this._loadList(!1), this._awaitResponse();
+    return this.setPage(t), await this._loadList(!1), this._awaitResponse();
   }
   async _awaitResponse() {
     const t = Object.values(this.navigationEmojis), e = (e, i) => {
-      const s = !!this._enabled("ALL") && (!this._disabledNavigationEmojiValues.length || this._disabledNavigationEmojiValues.some(t => ![ e.emoji.name, e.emoji.id ].includes(t))) && (t.includes(e.emoji.name) || t.includes(e.emoji.id)) || e.emoji.name in this.functionEmojis || e.emoji.id in this.functionEmojis;
+      const s = !!this._enabled("all") && (!this._disabledNavigationEmojiValues.length || this._disabledNavigationEmojiValues.some(t => ![ e.emoji.name, e.emoji.id ].includes(t))) && (t.includes(e.emoji.name) || t.includes(e.emoji.id)) || e.emoji.name in this.functionEmojis || e.emoji.id in this.functionEmojis;
       return this.authorizedUsers.length ? this.authorizedUsers.includes(i.id) && s : !i.bot && s;
     }, i = this.clientAssets.message;
     try {
@@ -180,13 +179,15 @@ class e extends t.EventEmitter {
         return await i.delete(), void (this.listenerCount("finish") && this.emit("finish", s));
 
        default:
-        const t = this.functionEmojis[a[0]] || this.functionEmojis[a[1]];
-        try {
-          await t(s, this);
-        } catch (t) {
-          return this._cleanUp(t, i, !1, s);
+        {
+          const t = this.functionEmojis[a[0]] || this.functionEmojis[a[1]];
+          try {
+            await t(s, this);
+          } catch (t) {
+            return this._cleanUp(t, i, !1, s);
+          }
+          return this._loadPage(this.page);
         }
-        return this._loadPage(this.page);
       }
     } catch (t) {
       return this._cleanUp(t, i);
@@ -199,23 +200,21 @@ class e extends t.EventEmitter {
     this.listenerCount(a) && this.emit(a, s);
   }
   async _awaitResponseEx(t) {
-    const e = [ "0", "cancel" ], i = i => {
-      const s = parseInt(i.content);
-      return i.author.id === t.id && (!isNaN(Number(i.content)) && s !== this.page && s >= 1 && s <= this.pages || e.includes(i.content.toLowerCase()));
-    }, s = this.clientAssets.message.channel, a = await s.send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, t.toString()));
+    const i = [ "0", "cancel" ], s = e => {
+      const s = parseInt(e.content);
+      return e.author.id === t.id && (!isNaN(Number(e.content)) && s !== this.page && s >= 1 && s <= this.pages || i.includes(e.content.toLowerCase()));
+    }, a = this.clientAssets.message.channel, n = await a.send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, t.toString()));
     try {
-      const t = (await s.awaitMessages(i, {
+      const t = (await a.awaitMessages(s, {
         max: 1,
         time: this.timeout,
         errors: [ "time" ]
-      })).first(), n = t.content;
-      return this.clientAssets.message.deleted ? void (this.listenerCount("error") && this.emit("error", new Error("Client's message was deleted before being processed."))) : (await a.delete(), 
-      t.deletable && await t.delete(), e.includes(n) ? this._awaitResponse() : this._loadPage(parseInt(n)));
+      })).first(), o = t.content;
+      return this.clientAssets.message.deleted ? void (this.listenerCount("error") && this.emit("error", new Error(e))) : (await n.delete(), 
+      t.deletable && await t.delete(), i.includes(o) ? this._awaitResponse() : this._loadPage(parseInt(o)));
     } catch (t) {
-      if (a.deletable && await a.delete(), t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
+      if (n.deletable && await n.delete(), t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
       this.listenerCount("expire") && this.emit("expire");
     }
   }
-}
-
-exports.PaginationEmbed = e;
+};
