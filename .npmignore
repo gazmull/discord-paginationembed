@@ -10,10 +10,11 @@ test
 .gitignore
 .nodemon.json
 .travis.yml
-.tslint.js
+.eslint*
+.editorconfig
 Gulpfile.js
 report.*
 tsconfig.json
 typedoc.json
-UPDATING_V1.md
+UPDATING_V*.md
 yarn.lock

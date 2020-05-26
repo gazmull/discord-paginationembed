@@ -1,0 +1,7 @@
+{
+  "npm.autoDetect": "on",
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  "eslint.validate": [ "typescript", "javascript" ]
+}
