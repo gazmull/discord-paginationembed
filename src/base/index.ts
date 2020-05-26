@@ -41,11 +41,15 @@ export class PaginationEmbed<Element> extends EventEmitter {
       forward: '▶',
       delete: '🗑'
     };
+
+    const makeCircles = (page: number, pages: number) =>
+      `${'○ '.repeat(page - 1)}● ${'○ '.repeat(pages - page)}`.trim();
+
     this._defaultPageIndicators = {
       text: (page, pages) => `Page ${page} of ${pages}`,
       textcompact: (page, pages) => `${page}/${pages}`,
-      circle: (page, pages) => `${'○ '.repeat(page - 1)}● ${'○ '.repeat(pages - page)}`.trim(),
-      hybrid: (page, pages) => `[${page}/${pages}] ${`${'○ '.repeat(page - 1)}● ${'○ '.repeat(pages - page)}`.trim()}`
+      circle: (page, pages) => makeCircles(page, pages),
+      hybrid: (page, pages) => `[${page}/${pages}] ${makeCircles(page, pages)}`
     };
     this._pageIndicator = this._defaultPageIndicators.text;
   }
