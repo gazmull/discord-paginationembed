@@ -112,7 +112,7 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="paginationembed.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="paginationembed.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -135,9 +135,15 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="paginationembed.html#functionemojis" class="tsd-kind-icon">function<wbr>Emojis</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="paginationembed.html#navigationemojis" class="tsd-kind-icon">navigation<wbr>Emojis</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="paginationembed.html#page" class="tsd-kind-icon">page</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="paginationembed.html#pageindicator" class="tsd-kind-icon">page<wbr>Indicator</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="paginationembed.html#pages" class="tsd-kind-icon">pages</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="paginationembed.html#timeout" class="tsd-kind-icon">timeout</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="paginationembed.html#usepageindicator" class="tsd-kind-icon">use<wbr>Page<wbr>Indicator</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="paginationembed.html#pageindicator" class="tsd-kind-icon">page<wbr>Indicator</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -166,17 +172,18 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">new <wbr>Pagination<wbr>Embed<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="paginationembed.html" class="tsd-signature-type">PaginationEmbed</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides EventEmitter.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L15">base/index.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L14">src/base/index.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="paginationembed.html" class="tsd-signature-type">PaginationEmbed</a></h4>
@@ -192,6 +199,7 @@
 					<ul class="tsd-signatures tsd-kind-event tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"start"</span>, listener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"finish"</span>, listener<span class="tsd-signature-symbol">: </span><a href="../globals.html#listeneruser" class="tsd-signature-type">ListenerUser</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"pageUpdate"</span>, listener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"react"</span>, listener<span class="tsd-signature-symbol">: </span><a href="../globals.html#listenerreact" class="tsd-signature-type">ListenerReact</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"expire"</span>, listener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"error"</span>, listener<span class="tsd-signature-symbol">: </span><a href="../globals.html#listenererror" class="tsd-signature-type">ListenerError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
@@ -201,12 +209,13 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L635">base/index.ts:635</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L642">src/base/index.ts:642</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Emitted upon successful <code>build()</code>.</p>
+									<p>Emitted after the initial embed has been sent
+									(technically, after the client finished reacting with enabled navigation and function emojis).</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -236,12 +245,13 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L641">base/index.ts:641</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L649">src/base/index.ts:649</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Emitted when the instance is finished by a user reacting with <code>DELETE</code> navigation emoji.</p>
+									<p>Emitted when the instance is finished by a user reacting with <code>delete</code> navigation emoji
+									or a function emoji that throws non-Error type.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -259,7 +269,42 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L647">base/index.ts:647</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L655">src/base/index.ts:655</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Emitted after the page number is updated and before the client sends the embed.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">"pageUpdate"</span></h5>
+								</li>
+								<li>
+									<h5>listener: <span class="tsd-signature-type">function</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides EventEmitter.on</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L661">src/base/index.ts:661</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -282,7 +327,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L654">base/index.ts:654</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L667">src/base/index.ts:667</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -317,7 +362,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L661">base/index.ts:661</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L674">src/base/index.ts:674</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -343,7 +388,7 @@
 					<h3>once</h3>
 					<ul class="tsd-signatures tsd-kind-event tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">once<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"finish"</span>, listener<span class="tsd-signature-symbol">: </span><a href="../globals.html#listeneruser" class="tsd-signature-type">ListenerUser</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-						<li class="tsd-signature tsd-kind-icon">once<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"start"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"expire"</span>, listener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">once<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"start"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"expire"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"pageUpdate"</span>, listener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">once<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"react"</span>, listener<span class="tsd-signature-symbol">: </span><a href="../globals.html#listenerreact" class="tsd-signature-type">ListenerReact</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">once<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"error"</span>, listener<span class="tsd-signature-symbol">: </span><a href="../globals.html#listenererror" class="tsd-signature-type">ListenerError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
@@ -352,7 +397,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.once</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L664">base/index.ts:664</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L677">src/base/index.ts:677</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -372,7 +417,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.once</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L666">base/index.ts:666</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L680">src/base/index.ts:680</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -380,7 +425,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>event: <span class="tsd-signature-type">"start"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"expire"</span></h5>
+									<h5>event: <span class="tsd-signature-type">"start"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"expire"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"pageUpdate"</span></h5>
 								</li>
 								<li>
 									<h5>listener: <span class="tsd-signature-type">function</span></h5>
@@ -404,7 +449,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.once</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L668">base/index.ts:668</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L683">src/base/index.ts:683</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -424,7 +469,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.once</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L671">base/index.ts:671</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L687">src/base/index.ts:687</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -451,7 +496,7 @@
 					<div class="tsd-signature tsd-kind-icon">array<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Element</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L57">base/index.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L67">src/base/index.ts:67</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -466,7 +511,7 @@
 					<div class="tsd-signature tsd-kind-icon">authorized<wbr>Users<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Snowflake</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L48">base/index.ts:48</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L58">src/base/index.ts:58</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -481,7 +526,7 @@
 					<div class="tsd-signature tsd-kind-icon">channel<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TextChannel</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">DMChannel</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L51">base/index.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L61">src/base/index.ts:61</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -493,10 +538,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="clientassets" class="tsd-anchor"></a>
 					<h3>client<wbr>Assets</h3>
-					<div class="tsd-signature tsd-kind-icon">client<wbr>Assets<span class="tsd-signature-symbol">:</span> <a href="../interfaces/iclientassets.html" class="tsd-signature-type">IClientAssets</a></div>
+					<div class="tsd-signature tsd-kind-icon">client<wbr>Assets<span class="tsd-signature-symbol">:</span> <a href="../interfaces/clientassets.html" class="tsd-signature-type">ClientAssets</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L54">base/index.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L64">src/base/index.ts:64</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -511,7 +556,7 @@
 					<div class="tsd-signature tsd-kind-icon">delete<wbr>OnTimeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L63">base/index.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L76">src/base/index.ts:76</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -523,10 +568,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="disablednavigationemojis" class="tsd-anchor"></a>
 					<h3>disabled<wbr>Navigation<wbr>Emojis</h3>
-					<div class="tsd-signature tsd-kind-icon">disabled<wbr>Navigation<wbr>Emojis<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"BACK"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"JUMP"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"FORWARD"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"DELETE"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"ALL"</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">disabled<wbr>Navigation<wbr>Emojis<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">"back"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"jump"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"forward"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"all"</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L86">base/index.ts:86</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L106">src/base/index.ts:106</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -534,11 +579,11 @@
 							<p>The disabled navigation emojis.
 							Available navigation emojis to disable:</p>
 							<ul>
-								<li>&#39;BACK&#39;</li>
-								<li>&#39;JUMP&#39;</li>
-								<li>&#39;FORWARD&#39;</li>
-								<li>&#39;DELETE&#39;</li>
-								<li>&#39;ALL&#39;</li>
+								<li>&#39;back&#39;</li>
+								<li>&#39;jump&#39;</li>
+								<li>&#39;forward&#39;</li>
+								<li>&#39;delete&#39;</li>
+								<li>&#39;all&#39;</li>
 							</ul>
 						</div>
 					</div>
@@ -549,7 +594,7 @@
 					<div class="tsd-signature tsd-kind-icon">emojis<wbr>Function<wbr>After<wbr>Navigation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L89">base/index.ts:89</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L109">src/base/index.ts:109</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -561,30 +606,33 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="functionemojis" class="tsd-anchor"></a>
 					<h3>function<wbr>Emojis</h3>
-					<div class="tsd-signature tsd-kind-icon">function<wbr>Emojis<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ifunctionemoji.html" class="tsd-signature-type">IFunctionEmoji</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Element</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">function<wbr>Emojis<span class="tsd-signature-symbol">:</span> <a href="../interfaces/functionemoji.html" class="tsd-signature-type">FunctionEmoji</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Element</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L75">base/index.ts:75</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L95">src/base/index.ts:95</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The emojis used for function emojis.</p>
+							<p>The emojis used for function emojis.
+								Function emojis are user-customised message reactions
+							for modifying the current instance of the pagination such as modifying embed texts, stopping the pagination, etc.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="navigationemojis" class="tsd-anchor"></a>
 					<h3>navigation<wbr>Emojis</h3>
-					<div class="tsd-signature tsd-kind-icon">navigation<wbr>Emojis<span class="tsd-signature-symbol">:</span> <a href="../interfaces/inavigationemojis.html" class="tsd-signature-type">INavigationEmojis</a></div>
+					<div class="tsd-signature tsd-kind-icon">navigation<wbr>Emojis<span class="tsd-signature-symbol">:</span> <a href="../interfaces/navigationemojis.html" class="tsd-signature-type">NavigationEmojis</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L72">base/index.ts:72</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L88">src/base/index.ts:88</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The emojis used for navigation emojis.</p>
+							<p>The emojis used for navigation emojis.
+							Navigation emojis are the default message reactions for navigating through the pagination.</p>
 						</div>
 					</div>
 				</section>
@@ -594,7 +642,7 @@
 					<div class="tsd-signature tsd-kind-icon">page<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L66">base/index.ts:66</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L79">src/base/index.ts:79</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -604,27 +652,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="pageindicator" class="tsd-anchor"></a>
-					<h3>page<wbr>Indicator</h3>
-					<div class="tsd-signature tsd-kind-icon">page<wbr>Indicator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L60">base/index.ts:60</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Whether page number indicator on client&#39;s message is shown. Default: <code>true</code></p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="pages" class="tsd-anchor"></a>
 					<h3>pages</h3>
 					<div class="tsd-signature tsd-kind-icon">pages<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L92">base/index.ts:92</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L112">src/base/index.ts:112</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -639,7 +672,7 @@
 					<div class="tsd-signature tsd-kind-icon">timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L69">base/index.ts:69</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L82">src/base/index.ts:82</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -647,6 +680,47 @@
 							<p>The time for awaiting a user action before timeout in ms. Default: <code>30000</code></p>
 						</div>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="usepageindicator" class="tsd-anchor"></a>
+					<h3>use<wbr>Page<wbr>Indicator</h3>
+					<div class="tsd-signature tsd-kind-icon">use<wbr>Page<wbr>Indicator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"footer"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L73">src/base/index.ts:73</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether to show page indicator, or put it in embed&#39;s footer text (replaces the existing text) instead.
+							Default: <code>false</code></p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="pageindicator" class="tsd-anchor"></a>
+					<h3>page<wbr>Indicator</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> pageIndicator<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L127">src/base/index.ts:127</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The formatted page indicator. Default format: <code>text</code></p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -661,7 +735,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L133">base/index.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L154">src/base/index.ts:154</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -672,22 +746,12 @@
 									<h3>Example</h3>
 								</a>
 								<pre><code class="language-js"> &lt;PaginationEmbed&gt;.addFunctionEmoji(<span class="hljs-string">'🅱'</span>, (_, instance) =&gt; {
-   <span class="hljs-keyword">const</span> field = instance.fields[<span class="hljs-number">0</span>];
+   <span class="hljs-keyword">const</span> field = instance.embed.fields[<span class="hljs-number">0</span>];
 
    <span class="hljs-keyword">if</span> (field.name.includes(<span class="hljs-string">'🅱'</span>))
      field.name = <span class="hljs-string">'Name'</span>;
    <span class="hljs-keyword">else</span>
      field.name = <span class="hljs-string">'Na🅱e'</span>;
-
-   <span class="hljs-comment">// [OPTIONAL]</span>
-   <span class="hljs-comment">// Either</span>
-   <span class="hljs-keyword">throw</span> <span class="hljs-string">'stopped'</span>;
-
-   <span class="hljs-comment">// or</span>
-   <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.reject(<span class="hljs-string">'stopped'</span>);
-
-   <span class="hljs-comment">// will stop the instance from awaiting reacts.</span>
-   <span class="hljs-comment">// Passing an error object will emit the `error` event.</span>
  });</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -740,7 +804,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L100">base/index.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L131">src/base/index.ts:131</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -757,7 +821,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L146">base/index.ts:146</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L167">src/base/index.ts:167</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -788,7 +852,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L156">base/index.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L177">src/base/index.ts:177</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -810,7 +874,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L169">base/index.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L190">src/base/index.ts:190</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -835,13 +899,13 @@
 					<a name="setauthorizedusers" class="tsd-anchor"></a>
 					<h3>set<wbr>Authorized<wbr>Users</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Authorized<wbr>Users<span class="tsd-signature-symbol">(</span>users<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Snowflake</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Authorized<wbr>Users<span class="tsd-signature-symbol">(</span>users<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Snowflake</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Snowflake</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L183">base/index.ts:183</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L204">src/base/index.ts:204</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -852,9 +916,9 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>users: <span class="tsd-signature-type">Snowflake</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>users: <span class="tsd-signature-type">Snowflake</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Snowflake</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>An array of user IDs.</p>
+										<p>A user ID or an array of user IDs.</p>
 									</div>
 								</li>
 							</ul>
@@ -872,7 +936,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L195">base/index.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L217">src/base/index.ts:217</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -897,13 +961,13 @@
 					<a name="setclientassets" class="tsd-anchor"></a>
 					<h3>set<wbr>Client<wbr>Assets</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Client<wbr>Assets<span class="tsd-signature-symbol">(</span>assets<span class="tsd-signature-symbol">: </span><a href="../interfaces/iclientassets.html" class="tsd-signature-type">IClientAssets</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Client<wbr>Assets<span class="tsd-signature-symbol">(</span>assets<span class="tsd-signature-symbol">: </span><a href="../interfaces/clientassets.html" class="tsd-signature-type">ClientAssets</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L205">base/index.ts:205</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L227">src/base/index.ts:227</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -914,7 +978,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>assets: <a href="../interfaces/iclientassets.html" class="tsd-signature-type">IClientAssets</a></h5>
+									<h5>assets: <a href="../interfaces/clientassets.html" class="tsd-signature-type">ClientAssets</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The assets for the client.</p>
 									</div>
@@ -934,7 +998,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L383">base/index.ts:383</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L385">src/base/index.ts:385</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -962,7 +1026,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L233">base/index.ts:233</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L255">src/base/index.ts:255</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1001,7 +1065,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L280">base/index.ts:280</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L282">src/base/index.ts:282</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1026,13 +1090,13 @@
 					<a name="setfunctionemojis" class="tsd-anchor"></a>
 					<h3>set<wbr>Function<wbr>Emojis</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Function<wbr>Emojis<span class="tsd-signature-symbol">(</span>emojis<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifunctionemoji.html" class="tsd-signature-type">IFunctionEmoji</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Element</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Function<wbr>Emojis<span class="tsd-signature-symbol">(</span>emojis<span class="tsd-signature-symbol">: </span><a href="../interfaces/functionemoji.html" class="tsd-signature-type">FunctionEmoji</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Element</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L317">base/index.ts:317</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L309">src/base/index.ts:309</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1044,29 +1108,19 @@
 								</a>
 								<pre><code class="language-js"> &lt;PaginationEmbed&gt;.setFunctionEmojis({
    <span class="hljs-string">'🔄'</span>: <span class="hljs-function">(<span class="hljs-params">user, instance</span>) =&gt;</span> {
-     <span class="hljs-keyword">const</span> field = instance.fields[<span class="hljs-number">0</span>];
+     <span class="hljs-keyword">const</span> field = instance.embed.fields[<span class="hljs-number">0</span>];
 
      <span class="hljs-keyword">if</span> (field.name === <span class="hljs-string">'Name'</span>)
        field.name = user.tag;
      <span class="hljs-keyword">else</span>
        field.name = <span class="hljs-string">'Name'</span>;
-
-     <span class="hljs-comment">// [OPTIONAL]</span>
-     <span class="hljs-comment">// Either</span>
-     <span class="hljs-keyword">throw</span> <span class="hljs-string">'stopped'</span>;
-
-     <span class="hljs-comment">// or</span>
-     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.reject(<span class="hljs-string">'stopped'</span>);
-
-     <span class="hljs-comment">// will stop the instance from awaiting reacts.</span>
-     <span class="hljs-comment">// Passing an error object will emit the `error` event.</span>
    }
  });</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>emojis: <a href="../interfaces/ifunctionemoji.html" class="tsd-signature-type">IFunctionEmoji</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Element</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>emojis: <a href="../interfaces/functionemoji.html" class="tsd-signature-type">FunctionEmoji</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Element</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>An object containing customised emojis to use as function emojis.</p>
 									</div>
@@ -1080,13 +1134,13 @@
 					<a name="setnavigationemojis" class="tsd-anchor"></a>
 					<h3>set<wbr>Navigation<wbr>Emojis</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Navigation<wbr>Emojis<span class="tsd-signature-symbol">(</span>emojis<span class="tsd-signature-symbol">: </span><a href="../interfaces/inavigationemojis.html" class="tsd-signature-type">INavigationEmojis</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Navigation<wbr>Emojis<span class="tsd-signature-symbol">(</span>emojis<span class="tsd-signature-symbol">: </span><a href="../interfaces/navigationemojis.html" class="tsd-signature-type">NavigationEmojis</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L331">base/index.ts:331</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L323">src/base/index.ts:323</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1097,7 +1151,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>emojis: <a href="../interfaces/inavigationemojis.html" class="tsd-signature-type">INavigationEmojis</a></h5>
+									<h5>emojis: <a href="../interfaces/navigationemojis.html" class="tsd-signature-type">NavigationEmojis</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>An object containing customised emojis to use as navigation emojis.</p>
 									</div>
@@ -1117,7 +1171,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L341">base/index.ts:341</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L333">src/base/index.ts:333</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1142,24 +1196,34 @@
 					<a name="setpageindicator" class="tsd-anchor"></a>
 					<h3>set<wbr>Page<wbr>Indicator</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Page<wbr>Indicator<span class="tsd-signature-symbol">(</span>boolean<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Page<wbr>Indicator<span class="tsd-signature-symbol">(</span>enabled<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"footer"</span>, fn<span class="tsd-signature-symbol">?: </span><a href="../globals.html#pageindicatorpremadetypes" class="tsd-signature-type">PageIndicatorPreMadeTypes</a><span class="tsd-signature-symbol"> | </span><a href="../globals.html#pageindicatorcaster" class="tsd-signature-type">PageIndicatorCaster</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L371">base/index.ts:371</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L365">src/base/index.ts:365</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Sets whether page number indicator on client&#39;s message is shown.</p>
+									<p>Sets the page indicator formatting function and placement.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>boolean: <span class="tsd-signature-type">boolean</span></h5>
+									<h5>enabled: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"footer"</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Whether to show page indicator.
+										Pass <code>footer</code> to display the indicator in embed&#39;s footer text (replaces existing text) instead.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> fn: <a href="../globals.html#pageindicatorpremadetypes" class="tsd-signature-type">PageIndicatorPreMadeTypes</a><span class="tsd-signature-symbol"> | </span><a href="../globals.html#pageindicatorcaster" class="tsd-signature-type">PageIndicatorCaster</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Function for indicator formatting.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -1176,7 +1240,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/base/index.ts#L359">base/index.ts:359</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/base/index.ts#L351">src/base/index.ts:351</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1220,7 +1284,7 @@
 					<li class="current tsd-kind-class tsd-has-type-parameter">
 						<a href="paginationembed.html" class="tsd-kind-icon">Pagination<wbr>Embed</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="paginationembed.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-event tsd-parent-kind-class tsd-is-overwrite">
@@ -1260,13 +1324,16 @@
 								<a href="paginationembed.html#page" class="tsd-kind-icon">page</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="paginationembed.html#pageindicator" class="tsd-kind-icon">page<wbr>Indicator</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="paginationembed.html#pages" class="tsd-kind-icon">pages</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="paginationembed.html#timeout" class="tsd-kind-icon">timeout</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="paginationembed.html#usepageindicator" class="tsd-kind-icon">use<wbr>Page<wbr>Indicator</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="paginationembed.html#pageindicator" class="tsd-kind-icon">page<wbr>Indicator</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="paginationembed.html#addfunctionemoji" class="tsd-kind-icon">add<wbr>Function<wbr>Emoji</a>
@@ -1321,13 +1388,13 @@
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iclientassets.html" class="tsd-kind-icon">IClient<wbr>Assets</a>
+						<a href="../interfaces/clientassets.html" class="tsd-kind-icon">Client<wbr>Assets</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="../interfaces/ifunctionemoji.html" class="tsd-kind-icon">IFunction<wbr>Emoji</a>
+						<a href="../interfaces/functionemoji.html" class="tsd-kind-icon">Function<wbr>Emoji</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/inavigationemojis.html" class="tsd-kind-icon">INavigation<wbr>Emojis</a>
+						<a href="../interfaces/navigationemojis.html" class="tsd-kind-icon">Navigation<wbr>Emojis</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#disablednavigationemojis" class="tsd-kind-icon">Disabled<wbr>Navigation<wbr>Emojis</a>
@@ -1343,6 +1410,12 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#navigationemojiidentifier" class="tsd-kind-icon">Navigation<wbr>Emoji<wbr>Identifier</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#pageindicatorcaster" class="tsd-kind-icon">Page<wbr>Indicator<wbr>Caster</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#pageindicatorpremadetypes" class="tsd-kind-icon">Page<wbr>Indicator<wbr>Pre<wbr>Made<wbr>Types</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#version" class="tsd-kind-icon">version</a>

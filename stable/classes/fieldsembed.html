@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A pagination mode that uses a RichEmbed with a field(s) containing the elements to paginate.</p>
+						<p>A pagination mode that uses a MessageEmbed with a field(s) containing the elements to paginate.</p>
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>extends</dt>
@@ -144,7 +144,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="paginationembed.html">PaginationEmbed</a>.<a href="paginationembed.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/FieldsEmbed.ts#L9">FieldsEmbed.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/FieldsEmbed.ts#L9">src/FieldsEmbed.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="fieldsembed.html" class="tsd-signature-type">FieldsEmbed</a></h4>
@@ -160,7 +160,7 @@
 					<div class="tsd-signature tsd-kind-icon">elements<wbr>Per<wbr>Page<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/FieldsEmbed.ts#L19">FieldsEmbed.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/FieldsEmbed.ts#L19">src/FieldsEmbed.ts:19</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -172,20 +172,20 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="embed" class="tsd-anchor"></a>
 					<h3>embed</h3>
-					<div class="tsd-signature tsd-kind-icon">embed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RichEmbed</span></div>
+					<div class="tsd-signature tsd-kind-icon">embed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MessageEmbed</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/FieldsEmbed.ts#L30">FieldsEmbed.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/FieldsEmbed.ts#L30">src/FieldsEmbed.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The RichEmbed being used for this mode.</p>
+							<p>The MessageEmbed being used for this mode.</p>
 						</div>
 						<a href="#notice" id="notice" style="color: inherit; text-decoration: none;">
 							<h3>Notice</h3>
 						</a>
-						<p>To customise the RichEmbed for this mode, please access this property. Example:</p>
+						<p>To customise the MessageEmbed for this mode, please access this property. Example:</p>
 						<pre><code class="language-js">&lt;FieldsEmbed&gt;.embed.setColor(<span class="hljs-string">'red'</span>)</code></pre>
 					</div>
 				</section>
@@ -202,7 +202,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/FieldsEmbed.ts#L33">FieldsEmbed.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/FieldsEmbed.ts#L33">src/FieldsEmbed.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -228,7 +228,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="paginationembed.html">PaginationEmbed</a>.<a href="paginationembed.html#build">build</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/FieldsEmbed.ts#L76">FieldsEmbed.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/FieldsEmbed.ts#L76">src/FieldsEmbed.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -259,7 +259,7 @@
    })
    .setFunctionEmojis({
      <span class="hljs-string">'🔄'</span>: <span class="hljs-function">(<span class="hljs-params">user, instance</span>) =&gt;</span> {
-       <span class="hljs-keyword">const</span> field = instance.fields[<span class="hljs-number">0</span>];
+       <span class="hljs-keyword">const</span> field = instance.embed.fields[<span class="hljs-number">0</span>];
 
        <span class="hljs-keyword">if</span> (field.name === <span class="hljs-string">'Name'</span>)
          field.name = user.tag;
@@ -283,13 +283,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/FieldsEmbed.ts#L107">FieldsEmbed.ts:107</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/FieldsEmbed.ts#L105">src/FieldsEmbed.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Adds a field to the embed.
-									Same as RichEmbed.addField, but value takes a function instead.</p>
+									Same as MessageEmbed.addField, but value takes a function instead.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -345,7 +345,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/da10670/src/FieldsEmbed.ts#L120">FieldsEmbed.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/gazmull/discord-paginationembed/blob/7255fe7/src/FieldsEmbed.ts#L118">src/FieldsEmbed.ts:118</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -415,13 +415,13 @@
 						<a href="paginationembed.html" class="tsd-kind-icon">Pagination<wbr>Embed</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iclientassets.html" class="tsd-kind-icon">IClient<wbr>Assets</a>
+						<a href="../interfaces/clientassets.html" class="tsd-kind-icon">Client<wbr>Assets</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="../interfaces/ifunctionemoji.html" class="tsd-kind-icon">IFunction<wbr>Emoji</a>
+						<a href="../interfaces/functionemoji.html" class="tsd-kind-icon">Function<wbr>Emoji</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/inavigationemojis.html" class="tsd-kind-icon">INavigation<wbr>Emojis</a>
+						<a href="../interfaces/navigationemojis.html" class="tsd-kind-icon">Navigation<wbr>Emojis</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#disablednavigationemojis" class="tsd-kind-icon">Disabled<wbr>Navigation<wbr>Emojis</a>
@@ -437,6 +437,12 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#navigationemojiidentifier" class="tsd-kind-icon">Navigation<wbr>Emoji<wbr>Identifier</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#pageindicatorcaster" class="tsd-kind-icon">Page<wbr>Indicator<wbr>Caster</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#pageindicatorpremadetypes" class="tsd-kind-icon">Page<wbr>Indicator<wbr>Pre<wbr>Made<wbr>Types</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#version" class="tsd-kind-icon">version</a>
