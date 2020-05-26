@@ -57,7 +57,8 @@ const Pagination = require('discord-paginationembed');
 const FieldsEmbed = new Pagination.FieldsEmbed()
   // A must: an array to paginate, can be an array of any type
   .setArray([{ word: 'they are' }, { word: 'being treated' }])
-  // Set users who can only interact with the instance, set as `[]` if everyone can interact.
+  // Set users who can only interact with the instance. Default: `[]` (everyone can interact).
+  // If there is only 1 user, you may omit the Array literal.
   .setAuthorizedUsers([message.author.id])
    // A must: sets the channel where to send the embed
   .setChannel(message.channel)
