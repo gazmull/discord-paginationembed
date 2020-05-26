@@ -2,15 +2,16 @@
 A pagination utility for MessageEmbed in Discord.JS
 
 [![Discord Server](https://discordapp.com/api/guilds/370614673122263041/embed.png)](https://discord.gg/eDUzT87)
-[![Travis (.org) branch](https://img.shields.io/travis/gazmull/discord-paginationembed/master.svg?logo=travis&style=flat-square)](https://travis-ci.org/gazmull/discord-paginationembed)
+[![Travis (.org) branch](https://img.shields.io/travis/gazmull/discord-paginationembed/stable.svg?logo=travis&style=flat-square)](https://travis-ci.org/gazmull/discord-paginationembed)
 [![npm peer dependency version](https://img.shields.io/npm/dependency-version/discord-paginationembed/peer/discord.js.svg?logo=npm&style=flat-square)](https://nodei.co/npm/discord-paginationembed/)
 [![npm type definitions](https://img.shields.io/npm/types/discord-paginationembed.svg?logo=npm&style=flat-square)](https://nodei.co/npm/discord-paginationembed/)
 
 [![NPM](https://nodei.co/npm/discord-paginationembed.png?downloads=true&stars=true)](https://nodei.co/npm/discord-paginationembed/)
 
 ## 📣 Notice Board
-- [**Changelog**](https://github.com/gazmull/discord-paginationembed/blob/master/CHANGELOG.md)
-- [**Updating from `v1`**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V2.md)
+- [**Changelog**](https://github.com/gazmull/discord-paginationembed/blob/stable/CHANGELOG.md)
+- [**Updating from `v1`**](https://github.com/gazmull/discord-paginationembed/blob/stable/UPDATING_V2.md)
+- Recently updated to `v2`! If **[Documentation]** feels off, please clear site cache!
 - This utility no longer provide updates for v1 (Discord.JS **11**)
 
 ## 🎉 Welcome
@@ -21,17 +22,13 @@ A pagination utility for MessageEmbed in Discord.JS
 - ❔ Nothing found within docs or need a nudge? You may visit the [**Discord server**](https://discord.gg/eDUzT87)
 
 ## 🛠 Installation
-- **PaginationEmbed**:
-    - **Published**: `npm install discord-paginationembed@beta`
-    - **Unpublished**: `npm install gazmull/discord-paginationembed`
-      - ❗ Requires [**Git**](https://git-scm.com/)
-- **Discord.JS**: `npm install discordjs/discord.js`
-    - ❗ Requires [**Git**](https://git-scm.com/)
+- **Requires Discord.JS 12**: `npm install discord.js`
+- **PaginationEmbed**: `npm install discord-paginationembed`
 
 ## 🔰 Examples
-> [**Test Unit Example**](https://github.com/gazmull/discord-paginationembed/blob/master/test)
+> [**Test Unit Example**](https://github.com/gazmull/discord-paginationembed/blob/stable/test)
 
-> [**Preface for TypeScript Projects**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V1.md#TypeScript)
+> [**Preface for TypeScript Projects**](https://github.com/gazmull/discord-paginationembed/blob/stable/UPDATING_V1.md#TypeScript)
 
 ### In-action samples:
 - [**Pages of command description**](https://github.com/gazmull/eros-bot/blob/master/src/commands/general/guide.ts#L35)
@@ -79,7 +76,7 @@ FieldsEmbed.embed
 // Deploy embed
 FieldsEmbed.build();
 ```
-![FieldsEmbed](https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed.png?raw=true)
+![FieldsEmbed](https://github.com/gazmull/discord-paginationembed/blob/stable/demo/FieldsEmbed.png?raw=true)
 
 #### Working with Asynchronous Behaviour
 > This assumes this is under an `async` function
@@ -133,7 +130,7 @@ await FieldsEmbed.build();
 // (or techinically emitted either `expire` or `finish` event)
 console.log('done');
 ```
-![FieldsEmbed2](https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed2.gif?raw=true)
+![FieldsEmbed2](https://github.com/gazmull/discord-paginationembed/blob/stable/demo/FieldsEmbed2.gif?raw=true)
 
 ---
 
@@ -227,7 +224,7 @@ const Embeds = new PaginationEmbed.Embeds()
 
 await Embeds.build();
 ```
-![Embeds2](https://github.com/gazmull/discord-paginationembed/blob/master/demo/Embeds.gif?raw=true)
+![Embeds2](https://github.com/gazmull/discord-paginationembed/blob/stable/demo/Embeds.gif?raw=true)
 
 ## 💡🐛💻 Contributing
 ### Bug Reports
@@ -252,8 +249,8 @@ Please be explicit about the feature's description and provide a valid reason (e
 - For the PR comment, it goes the same with **`Suggestions / Discussions`**.
 
 # License
-> [**MIT**](https://github.com/gazmull/discord-paginationembed/blob/master/LICENSE)
+> [**MIT**](https://github.com/gazmull/discord-paginationembed/blob/stable/LICENSE)
 
 © 2018-present [**Euni (gazmull)**](https://github.com/gazmull)
 
-[Documentation]: https://gazmull.github.io/discord-paginationembed
+[Documentation]: https://gazmull.github.io/discord-paginationembed/stable
