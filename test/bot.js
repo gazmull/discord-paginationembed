@@ -1,4 +1,4 @@
-const { Client, MessageEmbed } = require('discord.js');
+const { Client } = require('discord.js');
 const PaginationEmbed = require('../');
 
 const credentials = require('./credentials');
@@ -40,7 +40,10 @@ bot
       const embeds = [];
 
       for (let i = 1; i <= 3; ++i)
-        embeds.push(new MessageEmbed().addField('Page', i).setImage(`attachment://1.jpg`));
+        embeds.push({
+          fields: [ { name: 'Page', value: i, inline: false } ],
+          image: { url: 'attachment://1.jpg' }
+        });
 
       const Embeds = new PaginationEmbed.Embeds()
         .setArray(embeds)
