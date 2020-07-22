@@ -154,8 +154,11 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
 
     if (!isValidArray) throw new TypeError('Cannot invoke Embeds class without a valid array to paginate.');
 
-    for (let i = 0; i < array.length; i++)
-      if (array[i] instanceof MessageEmbed) continue;
+    for (const [ i, v ] of array.entries())
+      if (Boolean(v) && v.constructor === Object && Object.keys(v).length)
+        array[i] = new MessageEmbed(v);
+      else if (v instanceof MessageEmbed)
+        continue;
       else
         throw new TypeError(`(MessageEmbeds[${i}]) Cannot invoke Embeds class with an invalid MessageEmbed instance.`);
 
@@ -305,6 +308,13 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
       el.spliceFields(index, deleteCount, name, value, inline);
 
     return this;
+  }
+
+  /** Transforms all embeds to plain objects. */
+  public toJSON () {
+    if (!this.array) throw new TypeError('this.array must be set first.');
+
+    return this.array.map(m => m.toJSON());
   }
 
   /** @ignore */
