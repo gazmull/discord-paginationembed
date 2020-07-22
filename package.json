@@ -1,6 +1,6 @@
 {
   "name": "discord-paginationembed",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0",
   "description": "A pagination utility for MessageEmbed in Discord.JS",
   "main": "./bin/index.js",
   "types": "./typings",

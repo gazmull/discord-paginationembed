@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.0.0] - 2020-05-27
+
 This version involves reflection of official release of Discord.JS 12, code optimisations, and changes that will give the user more control to the instance
 such as customisable page indicator, and favourable event emissions.
 
@@ -45,6 +47,7 @@ such as customisable page indicator, and favourable event emissions.
 ### Internal
 - (ft. [@cycloptux]) - Test script `bot.js` updated for new changes
 - Migrated linter from TSLint to ESLint
+- Upload vscode settings
 
 [@cycloptux]: https://github.com/cycloptux
 [@d-shaun]: https://github.com/d-shaun
@@ -294,7 +297,8 @@ return 'done!';
 ### Added
   - Initial release
 
-[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.4...HEAD
+[Unreleased]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.4...2.0.0
 [2.0.0-beta.4]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.3...2.0.0-beta.4
 [2.0.0-beta.3]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.2...2.0.0-beta.3
 [2.0.0-beta.2]: https://github.com/gazmull/discord-paginationembed/compare/2.0.0-beta.1...2.0.0-beta.2

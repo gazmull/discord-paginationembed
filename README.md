@@ -11,6 +11,7 @@ A pagination utility for MessageEmbed in Discord.JS
 ## 📣 Notice Board
 - [**Changelog**](https://github.com/gazmull/discord-paginationembed/blob/master/CHANGELOG.md)
 - [**Updating from `v1`**](https://github.com/gazmull/discord-paginationembed/blob/master/UPDATING_V2.md)
+- Recently updated to `v2`! If **[Documentation]** feels off, please clear site cache!
 - This utility no longer provide updates for v1 (Discord.JS **11**)
 
 ## 🎉 Welcome
@@ -21,12 +22,11 @@ A pagination utility for MessageEmbed in Discord.JS
 - ❔ Nothing found within docs or need a nudge? You may visit the [**Discord server**](https://discord.gg/eDUzT87)
 
 ## 🛠 Installation
+- **Requires Discord.JS 12**: `npm install discord.js`
 - **PaginationEmbed**:
     - **Published**: `npm install discord-paginationembed@beta`
     - **Unpublished**: `npm install gazmull/discord-paginationembed`
       - ❗ Requires [**Git**](https://git-scm.com/)
-- **Discord.JS**: `npm install discordjs/discord.js`
-    - ❗ Requires [**Git**](https://git-scm.com/)
 
 ## 🔰 Examples
 > [**Test Unit Example**](https://github.com/gazmull/discord-paginationembed/blob/master/test)
@@ -256,4 +256,4 @@ Please be explicit about the feature's description and provide a valid reason (e
 
 © 2018-present [**Euni (gazmull)**](https://github.com/gazmull)
 
-[Documentation]: https://gazmull.github.io/discord-paginationembed
+[Documentation]: https://gazmull.github.io/discord-paginationembed/master

@@ -8,6 +8,8 @@
 New way to install the utility is from NPM: `npm install discord-paginationembed@beta`
 
 ## TypeScript
+> ***Since v2.0.0***: `I` prefix from interfaces has been removed.
+
 For importing types to your TypeScript project:
 ```ts
 import { Embeds, FieldsEmbed, IClientAssets } from 'discord-paginationembed';
