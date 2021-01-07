@@ -416,7 +416,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
     if (channel.guild) {
       const missing = channel
         .permissionsFor(channel.client.user)
-        .missing([ 'ADD_REACTIONS', 'MANAGE_MESSAGES', 'EMBED_LINKS', 'VIEW_CHANNEL', 'SEND_MESSAGES' ]);
+        .missing([ 'ADD_REACTIONS', 'EMBED_LINKS', 'VIEW_CHANNEL', 'SEND_MESSAGES' ]);
 
       if (missing.length)
         throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${missing.join(', ')}`);
@@ -495,6 +495,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   /** Awaits the reaction from the user(s). */
   protected async _awaitResponse (): Promise<void> {
     const emojis = Object.values(this.navigationEmojis);
+    const channel = this.clientAssets.message.channel as TextChannel;
     const filter = (r: MessageReaction, u: User) => {
       const enabledEmoji = this._enabled('all')
         ? !this._disabledNavigationEmojiValues.length
@@ -518,7 +519,14 @@ export class PaginationEmbed<Element> extends EventEmitter {
       const emoji = [ response.emoji.name, response.emoji.id ];
 
       if (this.listenerCount('react')) this.emit('react', user, response.emoji);
-      if (clientMessage.guild) await response.users.remove(user);
+      if (clientMessage.guild) {
+        const missing = channel
+          .permissionsFor(channel.client.user)
+          .missing([ 'MANAGE_MESSAGES' ]);
+
+        if (!missing.length)
+          await response.users.remove(user);
+      }
 
       switch (emoji[0] || emoji[1]) {
         case this.navigationEmojis.back:
@@ -569,12 +577,20 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * @param user The user object (only for `finish` event).
    */
   protected async _cleanUp (err: any, clientMessage: Message, expired = true, user?: User) {
+    const channel = this.clientAssets.message.channel as TextChannel;
+
     if (this.deleteOnTimeout && clientMessage.deletable) {
       await clientMessage.delete();
 
       clientMessage.deleted = true;
     }
-    if (clientMessage.guild && !clientMessage.deleted) await clientMessage.reactions.removeAll();
+    if (clientMessage.guild && !clientMessage.deleted) {
+      const missing = channel
+        .permissionsFor(channel.client.user)
+        .missing([ 'MANAGE_MESSAGES' ]);
+
+      if (!missing.length) await clientMessage.reactions.removeAll();
+    }
     if (err instanceof Error) {
       if (this.listenerCount('error')) this.emit('error', err);
 
@@ -610,6 +626,8 @@ export class PaginationEmbed<Element> extends EventEmitter {
       const responses = await channel.awaitMessages(filter, { max: 1, time: this.timeout, errors: [ 'time' ] });
       const response = responses.first();
       const content = response.content;
+      const missing = (channel as TextChannel).permissionsFor(channel.client.user)
+        .missing([ 'MANAGE_MESSAGES' ]);
 
       if (this.clientAssets.message.deleted) {
         if (this.listenerCount('error')) this.emit('error', new Error(MESSAGE_DELETED));
@@ -618,7 +636,12 @@ export class PaginationEmbed<Element> extends EventEmitter {
       }
 
       await prompt.delete();
-      if (response.deletable) await response.delete();
+
+      if (response.deletable)
+        if (!missing.length) {
+          await response.delete();
+        }
+
       if (cancel.includes(content)) return this._awaitResponse();
 
       return this._loadPage(parseInt(content));

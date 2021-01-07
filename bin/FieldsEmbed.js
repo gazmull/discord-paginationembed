@@ -2,13 +2,13 @@
 
 Object.defineProperty(exports, "__esModule", {
   value: !0
-});
+}), exports.FieldsEmbed = void 0;
 
 const e = require("discord.js"), t = require("./base");
 
-exports.FieldsEmbed = class extends t.PaginationEmbed {
+class s extends t.PaginationEmbed {
   constructor() {
-    super(), this.elementsPerPage = 10, this.embed = new e.MessageEmbed();
+    super(), this.elementsPerPage = 10, this.embed = new e.MessageEmbed;
   }
   get elementList() {
     const e = (this.page - 1) * this.elementsPerPage, t = e + this.elementsPerPage;
@@ -19,7 +19,7 @@ exports.FieldsEmbed = class extends t.PaginationEmbed {
     const e = this.embed.fields;
     this.embed.fields = [];
     for (const t of e) "function" == typeof t.value ? this.formatField(t.name, t.value, t.inline) : this.embed.addField(t.name, t.value, t.inline);
-    if (!this.embed.fields.filter(e => "function" == typeof e.value).length) throw new Error("Cannot invoke FieldsEmbed class without at least one formatted field to paginate.");
+    if (!this.embed.fields.filter((e => "function" == typeof e.value)).length) throw new Error("Cannot invoke FieldsEmbed class without at least one formatted field to paginate.");
     return this._loadList();
   }
   formatField(e, t, s = !0) {
@@ -49,4 +49,6 @@ exports.FieldsEmbed = class extends t.PaginationEmbed {
       embed: t
     }), super._loadList(e);
   }
-};
+}
+
+exports.FieldsEmbed = s;
