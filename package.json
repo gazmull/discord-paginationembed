@@ -55,5 +55,8 @@
     "typedoc": "^0.15.0",
     "typedoc-plugin-no-inherit": "^1.1.9",
     "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "discord.js": "^12.5.1"
   }
 }
