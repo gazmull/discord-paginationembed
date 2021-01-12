@@ -226,7 +226,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    * Sets the image of all embeds.
    * @param url - The image of all embeds.
    */
-  public setImage (url: string ) {
+  public setImage (url: string) {
     if (!this.array) throw new TypeError('this.array must be set first.');
 
     for (const el of this.array)
@@ -328,13 +328,15 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
         ? undefined
         : this.pageIndicator
       : undefined;
+    const { content } = this;
 
     if (isFooter)
       embed.setFooter(this.pageIndicator, embed.footer.iconURL);
     if (this.clientAssets.message)
-      await this.clientAssets.message.edit(shouldIndicate, { embed });
+      await this.clientAssets.message.edit(`${content ? `${content}\n` : ''}${shouldIndicate}`, { embed });
     else
-      this.clientAssets.message = await this.channel.send(shouldIndicate, { embed }) as Message;
+      this.clientAssets.message =
+        await this.channel.send(`${content ? `${content}\n` : ''}${shouldIndicate}`, { embed }) as Message;
 
     return super._loadList(callNavigation);
   }

@@ -111,6 +111,9 @@ export class PaginationEmbed<Element> extends EventEmitter {
   /** Number of pages for this instance. */
   public pages: number;
 
+  /** The string of content to appear above the embed */
+  public content: string;
+
   /** The disabled navigation emojis (in values). */
   protected _disabledNavigationEmojiValues: any[];
 
@@ -386,6 +389,17 @@ export class PaginationEmbed<Element> extends EventEmitter {
     if (typeof boolean !== 'boolean') throw new TypeError('deleteOnTimeout() only accepts boolean type.');
 
     this.deleteOnTimeout = boolean;
+
+    return this;
+  }
+
+  /**
+   * Sets the content of the message displayed above the embeds
+   * @param string
+   */
+  public setContent (string: string) {
+    if (typeof string !== 'string') throw new TypeError('setContent() only accepts string type');
+    this.content = string;
 
     return this;
   }
