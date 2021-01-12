@@ -155,12 +155,12 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     if (isFooter)
       embed.setFooter(this.pageIndicator, embed.footer.iconURL);
     if (this.clientAssets.message)
-      await this.clientAssets.message.edit(`${content ? `${content}\n` : ''}${shouldIndicate}`, { embed });
+      await this.clientAssets.message.edit(`${content ? `${content}\n` : ''}${shouldIndicate ?? ''}`, { embed });
     else
       this.clientAssets.message =
         await this
           .channel
-          .send(`${content ? `${content}\n` : ''}${shouldIndicate}`, { content: content ?? '', embed }) as Message;
+          .send(`${content ? `${content}\n` : ''}${shouldIndicate ?? ''}`, { embed }) as Message;
 
     return super._loadList(callNavigation);
   }

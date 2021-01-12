@@ -333,10 +333,10 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
     if (isFooter)
       embed.setFooter(this.pageIndicator, embed.footer.iconURL);
     if (this.clientAssets.message)
-      await this.clientAssets.message.edit(`${content ? `${content}\n` : ''}${shouldIndicate}`, { embed });
+      await this.clientAssets.message.edit(`${content ? `${content}\n` : ''}${shouldIndicate ?? ''}`, { embed });
     else
       this.clientAssets.message =
-        await this.channel.send(`${content ? `${content}\n` : ''}${shouldIndicate}`, { embed }) as Message;
+        await this.channel.send(`${content ? `${content}\n` : ''}${shouldIndicate ?? ''}`, { embed }) as Message;
 
     return super._loadList(callNavigation);
   }
