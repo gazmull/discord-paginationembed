@@ -54,6 +54,8 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     emojisFunctionAfterNavigation: boolean;
     /** Number of pages for this instance. */
     pages: number;
+    /** The string of content to appear above the embed */
+    public content: string;
     /** The disabled navigation emojis (in values). */
     protected _disabledNavigationEmojiValues: any[];
     /** The default navigation emojis. Used for resetting the navigation emojis. */
@@ -183,6 +185,11 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      * @param deleteOnTimeout - Delete client's message upon timeout?
      */
     setDeleteOnTimeout(boolean: boolean): this;
+    /**
+    * Sets the content of the message displayed above the embeds
+    * @param string
+    */
+    setContent (string: string): this;
     /**
      * Evaluates the constructor and the client.
      * @ignore
