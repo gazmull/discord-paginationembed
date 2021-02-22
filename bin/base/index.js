@@ -2,11 +2,11 @@
 
 Object.defineProperty(exports, "__esModule", {
   value: !0
-});
+}), exports.PaginationEmbed = void 0;
 
-const t = require("events"), e = "Client's message was deleted before being processed.";
+const t = require("events");
 
-exports.PaginationEmbed = class extends t.EventEmitter {
+class e extends t.EventEmitter {
   constructor() {
     super(), this.authorizedUsers = [], this.channel = null, this.clientAssets = {}, 
     this.usePageIndicator = !1, this.deleteOnTimeout = !1, this.page = 1, this.timeout = 3e4, 
@@ -51,7 +51,7 @@ exports.PaginationEmbed = class extends t.EventEmitter {
     return this.navigationEmojis = this._defaultNavigationEmojis, this;
   }
   setArray(t) {
-    if (!Array.isArray(t) || !Boolean(t.length)) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array to paginate.");
+    if (!(Array.isArray(t) && Boolean(t.length))) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array to paginate.");
     return this.array = t, this;
   }
   setAuthorizedUsers(t) {
@@ -74,7 +74,9 @@ exports.PaginationEmbed = class extends t.EventEmitter {
   setDisabledNavigationEmojis(t) {
     if (!Array.isArray(t)) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array.");
     const e = [], i = [];
-    for (const s of t) [ "back", "jump", "forward", "delete", "all" ].includes(s) ? i.push(s) : e.push(s);
+    for (const s of t) {
+      [ "back", "jump", "forward", "delete", "all" ].includes(s) ? i.push(s) : e.push(s);
+    }
     if (e.length) throw new TypeError(`Cannot invoke PaginationEmbed class with invalid navigation emoji(s): ${e.join(", ")}.`);
     return this.disabledNavigationEmojis = i, this;
   }
@@ -125,7 +127,7 @@ exports.PaginationEmbed = class extends t.EventEmitter {
   async _checkPermissions() {
     const t = this.channel;
     if (t.guild) {
-      const e = t.permissionsFor(t.client.user).missing([ "ADD_REACTIONS", "MANAGE_MESSAGES", "EMBED_LINKS", "VIEW_CHANNEL", "SEND_MESSAGES" ]);
+      const e = t.permissionsFor(t.client.user).missing([ "ADD_REACTIONS", "EMBED_LINKS", "VIEW_CHANNEL", "SEND_MESSAGES" ]);
       if (e.length) throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${e.join(", ")}`);
     }
     return !0;
@@ -154,67 +156,74 @@ exports.PaginationEmbed = class extends t.EventEmitter {
     return this.setPage(t), await this._loadList(!1), this._awaitResponse();
   }
   async _awaitResponse() {
-    const t = Object.values(this.navigationEmojis), e = (e, i) => {
-      const s = !!this._enabled("all") && (!this._disabledNavigationEmojiValues.length || this._disabledNavigationEmojiValues.some(t => ![ e.emoji.name, e.emoji.id ].includes(t))) && (t.includes(e.emoji.name) || t.includes(e.emoji.id)) || e.emoji.name in this.functionEmojis || e.emoji.id in this.functionEmojis;
+    const t = Object.values(this.navigationEmojis), e = this.clientAssets.message.channel, i = (e, i) => {
+      const s = !!this._enabled("all") && (!this._disabledNavigationEmojiValues.length || this._disabledNavigationEmojiValues.some((t => ![ e.emoji.name, e.emoji.id ].includes(t)))) && (t.includes(e.emoji.name) || t.includes(e.emoji.id)) || e.emoji.name in this.functionEmojis || e.emoji.id in this.functionEmojis;
       return this.authorizedUsers.length ? this.authorizedUsers.includes(i.id) && s : !i.bot && s;
-    }, i = this.clientAssets.message;
+    }, s = this.clientAssets.message;
     try {
-      const t = (await i.awaitReactions(e, {
+      const t = (await s.awaitReactions(i, {
         max: 1,
         time: this.timeout,
         errors: [ "time" ]
-      })).first(), s = t.users.cache.last(), a = [ t.emoji.name, t.emoji.id ];
-      switch (this.listenerCount("react") && this.emit("react", s, t.emoji), i.guild && await t.users.remove(s), 
-      a[0] || a[1]) {
+      })).first(), a = t.users.cache.last(), n = [ t.emoji.name, t.emoji.id ];
+      if (this.listenerCount("react") && this.emit("react", a, t.emoji), s.guild) {
+        e.permissionsFor(e.client.user).missing([ "MANAGE_MESSAGES" ]).length || await t.users.remove(a);
+      }
+      switch (n[0] || n[1]) {
        case this.navigationEmojis.back:
         return 1 === this.page ? this._awaitResponse() : this._loadPage("back");
 
        case this.navigationEmojis.jump:
-        return this.pages <= 2 ? this._awaitResponse() : this._awaitResponseEx(s);
+        return this.pages <= 2 ? this._awaitResponse() : this._awaitResponseEx(a);
 
        case this.navigationEmojis.forward:
         return this.page === this.pages ? this._awaitResponse() : this._loadPage("forward");
 
        case this.navigationEmojis.delete:
-        return await i.delete(), void (this.listenerCount("finish") && this.emit("finish", s));
+        return await s.delete(), void (this.listenerCount("finish") && this.emit("finish", a));
 
        default:
         {
-          const t = this.functionEmojis[a[0]] || this.functionEmojis[a[1]];
+          const t = this.functionEmojis[n[0]] || this.functionEmojis[n[1]];
           try {
-            await t(s, this);
+            await t(a, this);
           } catch (t) {
-            return this._cleanUp(t, i, !1, s);
+            return this._cleanUp(t, s, !1, a);
           }
           return this._loadPage(this.page);
         }
       }
     } catch (t) {
-      return this._cleanUp(t, i);
+      return this._cleanUp(t, s);
     }
   }
   async _cleanUp(t, e, i = !0, s) {
-    if (this.deleteOnTimeout && e.deletable && (await e.delete(), e.deleted = !0), e.guild && !e.deleted && await e.reactions.removeAll(), 
-    t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
-    const a = i ? "expire" : "finish";
-    this.listenerCount(a) && this.emit(a, s);
+    const a = this.clientAssets.message.channel;
+    if (this.deleteOnTimeout && e.deletable && (await e.delete(), e.deleted = !0), e.guild && !e.deleted) {
+      a.permissionsFor(a.client.user).missing([ "MANAGE_MESSAGES" ]).length || await e.reactions.removeAll();
+    }
+    if (t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
+    const n = i ? "expire" : "finish";
+    this.listenerCount(n) && this.emit(n, s);
   }
   async _awaitResponseEx(t) {
-    const i = [ "0", "cancel" ], s = e => {
-      const s = parseInt(e.content);
-      return e.author.id === t.id && (!isNaN(Number(e.content)) && s !== this.page && s >= 1 && s <= this.pages || i.includes(e.content.toLowerCase()));
-    }, a = this.clientAssets.message.channel, n = await a.send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, t.toString()));
+    const e = [ "0", "cancel" ], i = i => {
+      const s = parseInt(i.content);
+      return i.author.id === t.id && (!isNaN(Number(i.content)) && s !== this.page && s >= 1 && s <= this.pages || e.includes(i.content.toLowerCase()));
+    }, s = this.clientAssets.message.channel, a = await s.send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, t.toString()));
     try {
-      const t = (await a.awaitMessages(s, {
+      const t = (await s.awaitMessages(i, {
         max: 1,
         time: this.timeout,
         errors: [ "time" ]
-      })).first(), o = t.content;
-      return this.clientAssets.message.deleted ? void (this.listenerCount("error") && this.emit("error", new Error(e))) : (await n.delete(), 
-      t.deletable && await t.delete(), i.includes(o) ? this._awaitResponse() : this._loadPage(parseInt(o)));
+      })).first(), n = t.content, o = s.permissionsFor(s.client.user).missing([ "MANAGE_MESSAGES" ]);
+      return this.clientAssets.message.deleted ? void (this.listenerCount("error") && this.emit("error", new Error("Client's message was deleted before being processed."))) : (await a.delete(), 
+      t.deletable && (o.length || await t.delete()), e.includes(n) ? this._awaitResponse() : this._loadPage(parseInt(n)));
     } catch (t) {
-      if (n.deletable && await n.delete(), t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
+      if (a.deletable && await a.delete(), t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
       this.listenerCount("expire") && this.emit("expire");
     }
   }
-};
+}
+
+exports.PaginationEmbed = e;

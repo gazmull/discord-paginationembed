@@ -2,11 +2,11 @@
 
 Object.defineProperty(exports, "__esModule", {
   value: !0
-});
+}), exports.Embeds = void 0;
 
 const r = require("discord.js"), t = require("./base");
 
-exports.Embeds = class extends t.PaginationEmbed {
+class s extends t.PaginationEmbed {
   get currentEmbed() {
     return this.array[this.page - 1];
   }
@@ -28,7 +28,7 @@ exports.Embeds = class extends t.PaginationEmbed {
     return this.pages = this.array.length, await this._verify(), this._loadList();
   }
   setArray(t) {
-    if (!Array.isArray(t) || !Boolean(t.length)) throw new TypeError("Cannot invoke Embeds class without a valid array to paginate.");
+    if (!(Array.isArray(t) && Boolean(t.length))) throw new TypeError("Cannot invoke Embeds class without a valid array to paginate.");
     for (const [s, e] of t.entries()) {
       if (!Boolean(e) || e.constructor !== Object || !Object.keys(e).length) {
         if (e instanceof r.MessageEmbed) continue;
@@ -90,7 +90,7 @@ exports.Embeds = class extends t.PaginationEmbed {
   }
   toJSON() {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    return this.array.map(r => r.toJSON());
+    return this.array.map((r => r.toJSON()));
   }
   async _loadList(t = !0) {
     this.listenerCount("pageUpdate") && this.emit("pageUpdate");
@@ -101,4 +101,6 @@ exports.Embeds = class extends t.PaginationEmbed {
       embed: s
     }), super._loadList(t);
   }
-};
+}
+
+exports.Embeds = s;
