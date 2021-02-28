@@ -776,7 +776,7 @@ export interface ClientAssets {
 }
 
 /** Options for client's message content. */
-interface ClientMessageContent {
+export interface ClientMessageContent {
   /** The message content. */
   text?: StringResolvable;
   /**
