@@ -42,7 +42,7 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      * @param inline - Whether the field is inline to the other fields.
      */
     addField(name: string, value: StringResolvable, inline?: boolean): this;
-    addFields(...fields: EmbedFieldData[] | EmbedFieldData[][]): void;
+    addFields(...fields: EmbedFieldData[] | EmbedFieldData[][]): this;
     /**
      * Files to attach to all embeds.
      * @param files - Files to attach.

@@ -79,6 +79,8 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
 
     for (const el of this.array)
       el.addFields(...fields);
+
+    return this;
   }
 
   /**

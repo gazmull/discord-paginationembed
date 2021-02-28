@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { DMChannel, Emoji, Message, Snowflake, TextChannel, User } from 'discord.js';
+import { DMChannel, Emoji, Message, NewsChannel, Snowflake, TextChannel, User } from 'discord.js';
 import { EventEmitter } from 'events';
 import { Embeds } from '../Embeds';
 import { FieldsEmbed } from '../FieldsEmbed';
@@ -13,7 +13,7 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     /** The authorized users to navigate the pages. Default: `everyone` */
     authorizedUsers: Snowflake[];
     /** The channel where to send the embed. */
-    channel: TextChannel | DMChannel;
+    channel: TextChannel | DMChannel | NewsChannel;
     /** Settings for assets for the client. */
     clientAssets: ClientAssets;
     /** An array of elements to paginate. */
@@ -113,7 +113,7 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      * The channel where to send the embed.
      * @param channel - The channel object.
      */
-    setChannel(channel: TextChannel | DMChannel): this;
+    setChannel(channel: TextChannel | DMChannel | NewsChannel): this;
     /**
      * Sets the settings for assets for the client.
      * @param assets - The assets for the client.
