@@ -102,7 +102,8 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
    * @param value - Value of the field. Function for `Array.prototype.map().join('\n')`.
    * @param inline - Whether the field is inline with other field. Default: `true`
    */
-  public formatField (name: string, value: (element: Element) => any, inline = true) {
+  // eslint-disable-next-line max-len
+  public formatField (name: string, value: (element: Element, index?: number, array?: Element[]) => any, inline = true) {
     if (typeof value !== 'function') throw new TypeError('formatField() value parameter only takes a function.');
 
     // @ts-ignore
