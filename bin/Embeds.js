@@ -18,6 +18,7 @@ class s extends t.PaginationEmbed {
   addFields(...r) {
     if (!this.array) throw new TypeError("this.array must be set first.");
     for (const t of this.array) t.addFields(...r);
+    return this;
   }
   attachFiles(r) {
     if (!this.array) throw new TypeError("this.array must be set first.");
