@@ -53,7 +53,7 @@ bot
         .setTitle('Test Title')
         .setDescription('Test Description')
         .setPageIndicator(true, 'hybrid')
-        .setContent('penis')
+        .setContent('benis', '\n\n')
         .setFooter(`version: ${PaginationEmbed.version}`)
         .setURL('https://gazmull.github.io/discord-paginationembed')
         .setColor(0xFF00AE)
