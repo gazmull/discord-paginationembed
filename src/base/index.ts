@@ -239,15 +239,17 @@ export class PaginationEmbed<Element> extends EventEmitter {
    * @param assets - The assets for the client.
    */
   public setClientAssets (assets: ClientAssets) {
-    if (!assets) throw new TypeError('Cannot accept assets options as a non-object type.');
+    const type = typeof assets;
 
-    const { message } = assets;
+    if (type !== 'object' || type === null)
+      throw new TypeError('setClientAssets() only accepts object type.');
+
     let { prompt } = assets;
 
     if (!prompt)
       prompt = '{{user}}, To what page would you like to jump? Say `cancel` or `0` to cancel the prompt.';
 
-    Object.assign(this.clientAssets, { message, prompt });
+    Object.assign(this.clientAssets, { ...assets, prompt });
 
     return this;
   }
