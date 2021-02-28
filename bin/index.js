@@ -1,18 +1,19 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+
+var e = this && this.__createBinding || (Object.create ? function(e, r, t, i) {
+  void 0 === i && (i = t), Object.defineProperty(e, i, {
+    enumerable: !0,
+    get: function() {
+      return r[t];
+    }
+  });
+} : function(e, r, t, i) {
+  void 0 === i && (i = t), e[i] = r[t];
+}), r = this && this.__exportStar || function(r, t) {
+  for (var i in r) "default" === i || t.hasOwnProperty(i) || e(t, r, i);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.version = void 0;
-__exportStar(require("./Embeds"), exports);
-__exportStar(require("./FieldsEmbed"), exports);
-__exportStar(require("./base"), exports);
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-exports.version = require('../package.json').version;
+
+Object.defineProperty(exports, "__esModule", {
+  value: !0
+}), exports.version = void 0, r(require("./Embeds"), exports), r(require("./FieldsEmbed"), exports), 
+r(require("./base"), exports), exports.version = require("../package.json").version;

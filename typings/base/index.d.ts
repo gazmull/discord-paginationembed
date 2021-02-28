@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { DMChannel, Emoji, Message, NewsChannel, Snowflake, TextChannel, User } from 'discord.js';
+import { DMChannel, Emoji, Message, NewsChannel, Snowflake, StringResolvable, TextChannel, User } from 'discord.js';
 import { EventEmitter } from 'events';
 import { Embeds } from '../Embeds';
 import { FieldsEmbed } from '../FieldsEmbed';
@@ -54,8 +54,8 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     emojisFunctionAfterNavigation: boolean;
     /** Number of pages for this instance. */
     pages: number;
-    /** The string of content to appear above the embed */
-    public content: string;
+    /** The client's message content options. */
+    content: ClientMessageContent;
     /** The disabled navigation emojis (in values). */
     protected _disabledNavigationEmojiValues: any[];
     /** The default navigation emojis. Used for resetting the navigation emojis. */
@@ -186,10 +186,11 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
      */
     setDeleteOnTimeout(boolean: boolean): this;
     /**
-    * Sets the content of the message displayed above the embeds
-    * @param string
-    */
-    setContent (string: string): this;
+     * Sets the client's message content.
+     * @param text - The message content.
+     * @param separator - The string to separate the content from the page indicator.
+     */
+    setContent(text: StringResolvable, separator?: string): this;
     /**
      * Evaluates the constructor and the client.
      * @ignore
@@ -311,6 +312,17 @@ export interface ClientAssets {
      */
     prompt?: string;
 }
+/** Options for client's message content. */
+interface ClientMessageContent {
+    /** The message content. */
+    text?: StringResolvable;
+    /**
+     * The string to separate the content from the page indicator.
+     *
+     * Default: `\n`
+     */
+    separator?: string;
+}
 export declare type NavigationEmojiIdentifier = 'back' | 'jump' | 'forward' | 'delete' | 'all';
 /**
  * Function for a custom emoji.
@@ -342,3 +354,4 @@ export interface FunctionEmoji<Element> {
  */
 export declare type PageIndicatorCaster = (page: number, pages: number) => string;
 export declare type PageIndicatorPreMadeTypes = 'text' | 'textcompact' | 'circle' | 'hybrid';
+export {};

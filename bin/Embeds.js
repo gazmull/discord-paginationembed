@@ -95,12 +95,12 @@ class s extends t.PaginationEmbed {
   }
   async _loadList(t = !0) {
     this.listenerCount("pageUpdate") && this.emit("pageUpdate");
-    const s = new r.MessageEmbed(this.currentEmbed), e = "footer" === this.usePageIndicator, i = this.usePageIndicator && !e ? 1 === this.pages ? void 0 : this.pageIndicator : void 0;
-    return e && s.setFooter(this.pageIndicator, s.footer.iconURL), this.clientAssets.message ? await this.clientAssets.message.edit(i, {
+    const s = new r.MessageEmbed(this.currentEmbed), e = "footer" === this.usePageIndicator, i = this.usePageIndicator && !e ? 1 === this.pages ? "" : this.pageIndicator : "", {separator: a, text: o} = this.content, h = [ `${o ? `${r.Util.resolveString(o)}${a}` : ""}${i}`, {
       embed: s
-    }) : this.clientAssets.message = await this.channel.send(i, {
-      embed: s
-    }), super._loadList(t);
+    } ];
+    return e && s.setFooter(this.pageIndicator, s.footer.iconURL), this.clientAssets.message ? await this.clientAssets.message.edit(...h) : this.clientAssets.message = await this.channel.send(...h), 
+    super._loadList(t);
   }
 }
-exports.Embeds = Embeds;
+
+exports.Embeds = s;
