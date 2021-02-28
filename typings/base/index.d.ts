@@ -313,7 +313,7 @@ export interface ClientAssets {
     prompt?: string;
 }
 /** Options for client's message content. */
-interface ClientMessageContent {
+export interface ClientMessageContent {
     /** The message content. */
     text?: StringResolvable;
     /**
@@ -354,4 +354,3 @@ export interface FunctionEmoji<Element> {
  */
 export declare type PageIndicatorCaster = (page: number, pages: number) => string;
 export declare type PageIndicatorPreMadeTypes = 'text' | 'textcompact' | 'circle' | 'hybrid';
-export {};
