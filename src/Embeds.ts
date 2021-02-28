@@ -6,7 +6,8 @@ import {
   Message,
   MessageAttachment,
   MessageEmbed,
-  StringResolvable
+  StringResolvable,
+  Util
 } from 'discord.js';
 import { PaginationEmbed } from './base';
 
@@ -228,7 +229,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    * Sets the image of all embeds.
    * @param url - The image of all embeds.
    */
-  public setImage (url: string ) {
+  public setImage (url: string) {
     if (!this.array) throw new TypeError('this.array must be set first.');
 
     for (const el of this.array)
@@ -327,16 +328,22 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
     const isFooter = this.usePageIndicator === 'footer';
     const shouldIndicate = this.usePageIndicator && !isFooter
       ? this.pages === 1
-        ? undefined
+        ? ''
         : this.pageIndicator
-      : undefined;
+      : '';
+    const { separator, text } = this.content;
+    // Fixes no-argument TS error
+    const args: [ any, any ] = [
+      `${text ? `${Util.resolveString(text)}${separator}` : ''}${shouldIndicate}`,
+      { embed },
+    ];
 
     if (isFooter)
       embed.setFooter(this.pageIndicator, embed.footer.iconURL);
     if (this.clientAssets.message)
-      await this.clientAssets.message.edit(shouldIndicate, { embed });
+      await this.clientAssets.message.edit(...args);
     else
-      this.clientAssets.message = await this.channel.send(shouldIndicate, { embed }) as Message;
+      this.clientAssets.message = await this.channel.send(...args) as Message;
 
     return super._loadList(callNavigation);
   }

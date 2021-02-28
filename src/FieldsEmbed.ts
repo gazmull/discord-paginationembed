@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from 'discord.js';
+import { Message, MessageEmbed, Util } from 'discord.js';
 import { PaginationEmbed } from './base';
 
 /**
@@ -147,16 +147,22 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     const isFooter = this.usePageIndicator === 'footer';
     const shouldIndicate = this.usePageIndicator && !isFooter
       ? this.pages === 1
-        ? undefined
+        ? ''
         : this.pageIndicator
-      : undefined;
+      : '';
+    const { separator, text } = this.content;
+    // Fixes no-arguemnt TS error
+    const args: [ any, any ] = [
+      `${text ? `${Util.resolveString(text)}${separator}` : ''}${shouldIndicate}`,
+      { embed },
+    ];
 
     if (isFooter)
       embed.setFooter(this.pageIndicator, embed.footer.iconURL);
     if (this.clientAssets.message)
-      await this.clientAssets.message.edit(shouldIndicate, { embed });
+      await this.clientAssets.message.edit(...args);
     else
-      this.clientAssets.message = await this.channel.send(shouldIndicate, { embed }) as Message;
+      this.clientAssets.message = await this.channel.send(...args) as Message;
 
     return super._loadList(callNavigation);
   }

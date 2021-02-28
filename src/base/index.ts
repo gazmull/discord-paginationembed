@@ -5,6 +5,7 @@ import {
   MessageReaction,
   NewsChannel,
   Snowflake,
+  StringResolvable,
   TextChannel,
   User
 } from 'discord.js';
@@ -28,6 +29,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
     this.authorizedUsers = [];
     this.channel = null;
     this.clientAssets = {};
+    this.content = { separator: '\n' };
     this.usePageIndicator = false;
     this.deleteOnTimeout = false;
     this.page = 1;
@@ -119,6 +121,9 @@ export class PaginationEmbed<Element> extends EventEmitter {
 
   /** Number of pages for this instance. */
   public pages: number;
+
+  /** The client's message content options. */
+  public content: ClientMessageContent;
 
   /** The disabled navigation emojis (in values). */
   protected _disabledNavigationEmojiValues: any[];
@@ -395,6 +400,20 @@ export class PaginationEmbed<Element> extends EventEmitter {
     if (typeof boolean !== 'boolean') throw new TypeError('deleteOnTimeout() only accepts boolean type.');
 
     this.deleteOnTimeout = boolean;
+
+    return this;
+  }
+
+  /**
+   * Sets the client's message content.
+   * @param text - The message content.
+   * @param separator - The string to separate the content from the page indicator.
+   */
+  public setContent (text: StringResolvable, separator = '\n') {
+    if (typeof separator !== 'string')
+      throw new TypeError('setContent()\'s `separator` parameter only accepts string type.');
+
+    Object.assign(this.content, { text, separator });
 
     return this;
   }
@@ -754,6 +773,18 @@ export interface ClientAssets {
    * Default: `"{{user}}, To what page would you like to jump? Say 'cancel' or '0' to cancel the prompt."`
    */
   prompt?: string;
+}
+
+/** Options for client's message content. */
+export interface ClientMessageContent {
+  /** The message content. */
+  text?: StringResolvable;
+  /**
+   * The string to separate the content from the page indicator.
+   *
+   * Default: `\n`
+   */
+  separator?: string;
 }
 
 export type NavigationEmojiIdentifier = 'back' | 'jump' | 'forward' | 'delete' | 'all';
