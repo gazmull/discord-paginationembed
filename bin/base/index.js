@@ -18,7 +18,7 @@ class e extends t.EventEmitter {
       forward: "▶",
       delete: "🗑"
     }, this.functionEmojis = {}, this.disabledNavigationEmojis = [], this.emojisFunctionAfterNavigation = !1, 
-    this.pages = null, this._disabledNavigationEmojiValues = [], this._defaultNavigationEmojis = {
+    this._disabledNavigationEmojiValues = [], this._defaultNavigationEmojis = {
       back: "◀",
       jump: "↗",
       forward: "▶",
@@ -64,14 +64,13 @@ class e extends t.EventEmitter {
     return this.channel = t, this;
   }
   setClientAssets(t) {
-    if (!t) throw new TypeError("Cannot accept assets options as a non-object type.");
-    const {message: e} = t;
+    const e = typeof t;
+    if ("object" !== e || null === e) throw new TypeError("setClientAssets() only accepts object type.");
     let {prompt: i} = t;
     return i || (i = "{{user}}, To what page would you like to jump? Say `cancel` or `0` to cancel the prompt."), 
-    Object.assign(this.clientAssets, {
-      message: e,
+    Object.assign(this.clientAssets, Object.assign(Object.assign({}, t), {
       prompt: i
-    }), this;
+    })), this;
   }
   setDisabledNavigationEmojis(t) {
     if (!Array.isArray(t)) throw new TypeError("Cannot invoke PaginationEmbed class without a valid array.");

@@ -14,8 +14,11 @@ class s extends t.PaginationEmbed {
     const e = (this.page - 1) * this.elementsPerPage, t = e + this.elementsPerPage;
     return this.array.slice(e, t);
   }
+  get pages() {
+    return Math.ceil(this.array.length / this.elementsPerPage);
+  }
   async build() {
-    this.pages = Math.ceil(this.array.length / this.elementsPerPage), await this._verify();
+    await this._verify();
     const e = this.embed.fields;
     this.embed.fields = [];
     for (const t of e) "function" == typeof t.value ? this.formatField(t.name, t.value, t.inline) : this.embed.addField(t.name, t.value, t.inline);

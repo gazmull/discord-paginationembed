@@ -21,6 +21,7 @@ export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     embed: MessageEmbed;
     /** Elements in the current page. */
     get elementList(): Element[];
+    get pages(): number;
     /**
      * Build the Pagination Fields Embed.
      *
@@ -65,7 +66,7 @@ export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
      * @param value - Value of the field. Function for `Array.prototype.map().join('\n')`.
      * @param inline - Whether the field is inline with other field. Default: `true`
      */
-    formatField(name: string, value: (element: Element) => any, inline?: boolean): this;
+    formatField(name: string, value: (element: Element, index?: number, array?: Element[]) => any, inline?: boolean): this;
     /**
      * Sets the maximum number of elements to be displayed per page.
      * @param max - Maximum number of elements to be displayed per page.

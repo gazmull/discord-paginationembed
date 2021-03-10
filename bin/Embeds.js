@@ -10,6 +10,9 @@ class s extends t.PaginationEmbed {
   get currentEmbed() {
     return this.array[this.page - 1];
   }
+  get pages() {
+    return this.array.length;
+  }
   addField(r, t, s = !1) {
     if (!this.array) throw new TypeError("this.array must be set first.");
     for (const e of this.array) e.addField(r, t, s);
@@ -26,7 +29,7 @@ class s extends t.PaginationEmbed {
     return this;
   }
   async build() {
-    return this.pages = this.array.length, await this._verify(), this._loadList();
+    return await this._verify(), this._loadList();
   }
   setArray(t) {
     if (!(Array.isArray(t) && Boolean(t.length))) throw new TypeError("Cannot invoke Embeds class without a valid array to paginate.");

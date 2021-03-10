@@ -35,6 +35,7 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
     };
     /** Embed in the current page. */
     get currentEmbed(): MessageEmbed;
+    get pages(): number;
     /**
      * Adds a field to the fields of all embeds.
      * @param name - The name of the field.
