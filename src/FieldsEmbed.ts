@@ -37,6 +37,10 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     return this.array.slice(begin, end);
   }
 
+  get pages (): number {
+    return Math.ceil(this.array.length / this.elementsPerPage);
+  }
+
   /**
    * Build the Pagination Fields Embed.
    *
@@ -74,8 +78,6 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
    *    .build();```
    */
   public async build () {
-    this.pages = Math.ceil(this.array.length / this.elementsPerPage);
-
     await this._verify();
 
     const fields = this.embed.fields;

@@ -60,6 +60,10 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
     return this.array[this.page - 1];
   }
 
+  get pages (): number {
+    return this.array.length;
+  }
+
   /**
    * Adds a field to the fields of all embeds.
    * @param name - The name of the field.
@@ -141,8 +145,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    *    .build();```
    */
   public async build () {
-    this.pages = this.array.length;
-
     await this._verify();
 
     return this._loadList();

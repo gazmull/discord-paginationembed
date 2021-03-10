@@ -43,7 +43,6 @@ export class PaginationEmbed<Element> extends EventEmitter {
     this.functionEmojis = {};
     this.disabledNavigationEmojis = [];
     this.emojisFunctionAfterNavigation = false;
-    this.pages = null;
 
     this._disabledNavigationEmojiValues = [];
     this._defaultNavigationEmojis = {
