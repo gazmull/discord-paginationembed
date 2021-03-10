@@ -15,7 +15,7 @@
     "dev:watch": "tsc -p . --watch",
     "dev:gulp-watch": "gulp watch",
     "docs:parse": "npm run gh:build -- --json ./bin/docs.json",
-    "gh:build": "typedoc src",
+    "gh:build": "typedoc",
     "prepublishOnly": "npm test",
     "pub": "npm publish"
   },
@@ -52,8 +52,9 @@
     "gulp-eslint": "^6.0.0",
     "gulp-terser": "^1.2.0",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "typedoc": "^0.15.0",
-    "typedoc-plugin-no-inherit": "^1.1.9",
+    "typedoc": "^0.20.30",
+    "typedoc-neo-theme": "^1.1.0",
+    "typedoc-plugin-no-inherit": "^1.2.2",
     "typescript": "^3.7.5"
   }
 }

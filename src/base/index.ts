@@ -1,3 +1,5 @@
+/** @module PaginationEmbed */
+
 import {
   DMChannel,
   Emoji,

@@ -1,3 +1,4 @@
+/** @module PaginationEmbed */
 /// <reference types="node" />
 import { DMChannel, Emoji, Message, NewsChannel, Snowflake, StringResolvable, TextChannel, User } from 'discord.js';
 import { EventEmitter } from 'events';
