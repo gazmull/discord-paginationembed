@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -21,6 +21,8 @@
 					<ul class="results">
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
+					</ul>
+					<ul class="results-priority" style="display:none">
 					</ul>
 					<a href="index.html" class="title">Discord PaginationEmbed - Docs</a>
 				</div>
@@ -50,17 +52,32 @@
 	<div class="tsd-page-title">
 		<div class="container">
 			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
 			</ul>
-			<h1> Discord PaginationEmbed - Docs</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
-		<div class="col-8 col-content">
+		<div class="col-3 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/embeds.html">Embeds</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fieldsembed.html">FieldsEmbed</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/paginationembed.html">PaginationEmbed</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<div class="col-7 offset-3 col-content">
+			<h1>Discord PaginationEmbed - Docs</h1>
 			<div class="tsd-panel tsd-typography">
 				<a href="#discordjs---paginationembed" id="discordjs---paginationembed" style="color: inherit; text-decoration: none;">
 					<h1>Discord.JS - PaginationEmbed</h1>
@@ -140,32 +157,33 @@
 					<li>A pagination mode that uses a MessageEmbed with a field(s) containing the elements to paginate.</li>
 					<li>Usually used for simple listing such as leaderboards and queues.</li>
 				</ul>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> Pagination = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord-paginationembed'</span>);
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Pagination</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;discord-paginationembed&#039;</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> FieldsEmbed = <span class="hljs-keyword">new</span> Pagination.FieldsEmbed()
-  <span class="hljs-comment">// A must: an array to paginate, can be an array of any type</span>
-  .setArray([{ <span class="hljs-attr">word</span>: <span class="hljs-string">'they are'</span> }, { <span class="hljs-attr">word</span>: <span class="hljs-string">'being treated'</span> }])
-  <span class="hljs-comment">// Set users who can only interact with the instance. Default: `[]` (everyone can interact).</span>
-  <span class="hljs-comment">// If there is only 1 user, you may omit the Array literal.</span>
-  .setAuthorizedUsers([message.author.id])
-   <span class="hljs-comment">// A must: sets the channel where to send the embed</span>
-  .setChannel(message.channel)
-  <span class="hljs-comment">// Elements to show per page. Default: 10 elements per page</span>
-  .setElementsPerPage(<span class="hljs-number">2</span>)
-   <span class="hljs-comment">// Have a page indicator (shown on message content). Default: false</span>
-  .setPageIndicator(<span class="hljs-literal">false</span>)
-   <span class="hljs-comment">// Format based on the array, in this case we're formatting the page based on each object's `word` property</span>
-  .formatField(<span class="hljs-string">'Continue...'</span>, el =&gt; el.word);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">FieldsEmbed</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">Pagination</span><span style="color: #000000">.</span><span style="color: #795E26">FieldsEmbed</span><span style="color: #000000">()</span>
+<span style="color: #000000">  </span><span style="color: #008000">// A must: an array to paginate, can be an array of any type</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setArray</span><span style="color: #000000">([{ </span><span style="color: #001080">word:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;they are&#039;</span><span style="color: #000000"> }, { </span><span style="color: #001080">word:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;being treated&#039;</span><span style="color: #000000"> }])</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Set users who can only interact with the instance. Default: `[]` (everyone can interact).</span>
+<span style="color: #000000">  </span><span style="color: #008000">// If there is only 1 user, you may omit the Array literal.</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setAuthorizedUsers</span><span style="color: #000000">([</span><span style="color: #001080">message</span><span style="color: #000000">.</span><span style="color: #001080">author</span><span style="color: #000000">.</span><span style="color: #001080">id</span><span style="color: #000000">])</span>
+<span style="color: #000000">   </span><span style="color: #008000">// A must: sets the channel where to send the embed</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setChannel</span><span style="color: #000000">(</span><span style="color: #001080">message</span><span style="color: #000000">.</span><span style="color: #001080">channel</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Elements to show per page. Default: 10 elements per page</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setElementsPerPage</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">)</span>
+<span style="color: #000000">   </span><span style="color: #008000">// Have a page indicator (shown on message content). Default: false</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setPageIndicator</span><span style="color: #000000">(</span><span style="color: #0000FF">false</span><span style="color: #000000">)</span>
+<span style="color: #000000">   </span><span style="color: #008000">// Format based on the array, in this case we&#039;re formatting the page based on each object&#039;s `word` property</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">formatField</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Continue...&#039;</span><span style="color: #000000">, </span><span style="color: #001080">el</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">el</span><span style="color: #000000">.</span><span style="color: #001080">word</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// Customise embed</span>
-FieldsEmbed.embed
-  .setColor(<span class="hljs-number">0x00FFFF</span>)
-  .setTitle(<span class="hljs-string">'Jesus Yamato Saves the Day by Obliterating a Swarm of Abyssal Bombers!'</span>)
-  .setDescription(<span class="hljs-string">'Akagi and Kaga give their thanks to their holy saviour today as...'</span>)
-  .setImage(<span class="hljs-string">'https://lh5.googleusercontent.com/-TIcwCxc7a-A/AAAAAAAAAAI/AAAAAAAAAAA/Hij7_7Qa1j0/s900-c-k-no/photo.jpg'</span>);
+<span style="color: #008000">// Customise embed</span>
+<span style="color: #001080">FieldsEmbed</span><span style="color: #000000">.</span><span style="color: #001080">embed</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setColor</span><span style="color: #000000">(</span><span style="color: #098658">0x00FFFF</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setTitle</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Jesus Yamato Saves the Day by Obliterating a Swarm of Abyssal Bombers!&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setDescription</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Akagi and Kaga give their thanks to their holy saviour today as...&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setImage</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;https://lh5.googleusercontent.com/-TIcwCxc7a-A/AAAAAAAAAAI/AAAAAAAAAAA/Hij7_7Qa1j0/s900-c-k-no/photo.jpg&#039;</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// Deploy embed</span>
-FieldsEmbed.build();</code></pre>
+<span style="color: #008000">// Deploy embed</span>
+<span style="color: #001080">FieldsEmbed</span><span style="color: #000000">.</span><span style="color: #795E26">build</span><span style="color: #000000">();</span>
+</code></pre>
 				<p><img src="https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed.png?raw=true" alt="FieldsEmbed"></p>
 				<a href="#working-with-asynchronous-behaviour" id="working-with-asynchronous-behaviour" style="color: inherit; text-decoration: none;">
 					<h4>Working with Asynchronous Behaviour</h4>
@@ -173,53 +191,54 @@ FieldsEmbed.build();</code></pre>
 				<blockquote>
 					<p>This assumes this is under an <code>async</code> function</p>
 				</blockquote>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> Pagination = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord-paginationembed'</span>);
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Pagination</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;discord-paginationembed&#039;</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> FieldsEmbed = <span class="hljs-keyword">new</span> Pagination.FieldsEmbed()
-  .setArray([{ <span class="hljs-attr">name</span>: <span class="hljs-string">'John Doe'</span> }, { <span class="hljs-attr">name</span>: <span class="hljs-string">'Jane Doe'</span> }])
-  .setAuthorizedUsers([message.author.id])
-  .setChannel(message.channel)
-  .setElementsPerPage(<span class="hljs-number">1</span>)
-  <span class="hljs-comment">// Initial page on deploy</span>
-  .setPage(<span class="hljs-number">2</span>)
-  .setPageIndicator(<span class="hljs-literal">true</span>)
-  .formatField(<span class="hljs-string">'Name'</span>, i =&gt; i.name)
-  <span class="hljs-comment">// Deletes the embed upon awaiting timeout</span>
-  .setDeleteOnTimeout(<span class="hljs-literal">true</span>)
-  <span class="hljs-comment">// Disable built-in navigation emojis, in this case: 🗑 (Delete Embed)</span>
-  .setDisabledNavigationEmojis([<span class="hljs-string">'delete'</span>])
-  <span class="hljs-comment">// Set your own customised emojis</span>
-  .setFunctionEmojis({
-    <span class="hljs-string">'🔄'</span>: <span class="hljs-function">(<span class="hljs-params">user, instance</span>) =&gt;</span> {
-      <span class="hljs-keyword">const</span> field = instance.embed.fields[<span class="hljs-number">0</span>];
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">FieldsEmbed</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">Pagination</span><span style="color: #000000">.</span><span style="color: #795E26">FieldsEmbed</span><span style="color: #000000">()</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setArray</span><span style="color: #000000">([{ </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;John Doe&#039;</span><span style="color: #000000"> }, { </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Jane Doe&#039;</span><span style="color: #000000"> }])</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setAuthorizedUsers</span><span style="color: #000000">([</span><span style="color: #001080">message</span><span style="color: #000000">.</span><span style="color: #001080">author</span><span style="color: #000000">.</span><span style="color: #001080">id</span><span style="color: #000000">])</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setChannel</span><span style="color: #000000">(</span><span style="color: #001080">message</span><span style="color: #000000">.</span><span style="color: #001080">channel</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setElementsPerPage</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Initial page on deploy</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setPage</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setPageIndicator</span><span style="color: #000000">(</span><span style="color: #0000FF">true</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">formatField</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Name&#039;</span><span style="color: #000000">, </span><span style="color: #001080">i</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">i</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Deletes the embed upon awaiting timeout</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setDeleteOnTimeout</span><span style="color: #000000">(</span><span style="color: #0000FF">true</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Disable built-in navigation emojis, in this case: 🗑 (Delete Embed)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setDisabledNavigationEmojis</span><span style="color: #000000">([</span><span style="color: #A31515">&#039;delete&#039;</span><span style="color: #000000">])</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Set your own customised emojis</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setFunctionEmojis</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&#039;🔄&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">user</span><span style="color: #000000">, </span><span style="color: #001080">instance</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">field</span><span style="color: #000000"> = </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">embed</span><span style="color: #000000">.</span><span style="color: #001080">fields</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">];</span>
 
-      <span class="hljs-keyword">if</span> (field.name === <span class="hljs-string">'Name'</span>)
-        field.name = user.tag;
-      <span class="hljs-keyword">else</span>
-        field.name = <span class="hljs-string">'Name'</span>;
-    }
-  })
-  <span class="hljs-comment">// Similar to setFunctionEmojis() but this one takes only one emoji</span>
-  .addFunctionEmoji(<span class="hljs-string">'🅱'</span>, (_, instance) =&gt; {
-    <span class="hljs-keyword">const</span> field = instance.embed.fields[<span class="hljs-number">0</span>];
+<span style="color: #000000">      </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">field</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000"> === </span><span style="color: #A31515">&#039;Name&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">        </span><span style="color: #001080">field</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000"> = </span><span style="color: #001080">user</span><span style="color: #000000">.</span><span style="color: #001080">tag</span><span style="color: #000000">;</span>
+<span style="color: #000000">      </span><span style="color: #AF00DB">else</span>
+<span style="color: #000000">        </span><span style="color: #001080">field</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;Name&#039;</span><span style="color: #000000">;</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  })</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Similar to setFunctionEmojis() but this one takes only one emoji</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">addFunctionEmoji</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;🅱&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">_</span><span style="color: #000000">, </span><span style="color: #001080">instance</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">field</span><span style="color: #000000"> = </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">embed</span><span style="color: #000000">.</span><span style="color: #001080">fields</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">];</span>
 
-    <span class="hljs-keyword">if</span> (field.name.includes(<span class="hljs-string">'🅱'</span>))
-      field.name = <span class="hljs-string">'Name'</span>;
-    <span class="hljs-keyword">else</span>
-      field.name = <span class="hljs-string">'Na🅱e'</span>;
-  })
-  <span class="hljs-comment">// Sets whether function emojis should be deployed after navigation emojis</span>
-  .setEmojisFunctionAfterNavigation(<span class="hljs-literal">false</span>);
+<span style="color: #000000">    </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">field</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000">.</span><span style="color: #795E26">includes</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;🅱&#039;</span><span style="color: #000000">))</span>
+<span style="color: #000000">      </span><span style="color: #001080">field</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;Name&#039;</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">else</span>
+<span style="color: #000000">      </span><span style="color: #001080">field</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;Na🅱e&#039;</span><span style="color: #000000">;</span>
+<span style="color: #000000">  })</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Sets whether function emojis should be deployed after navigation emojis</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setEmojisFunctionAfterNavigation</span><span style="color: #000000">(</span><span style="color: #0000FF">false</span><span style="color: #000000">);</span>
 
-FieldsEmbed.embed
-  .setColor(<span class="hljs-number">0xFF00AE</span>)
-  .setDescription(<span class="hljs-string">'Test Description'</span>);
+<span style="color: #001080">FieldsEmbed</span><span style="color: #000000">.</span><span style="color: #001080">embed</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setColor</span><span style="color: #000000">(</span><span style="color: #098658">0xFF00AE</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setDescription</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Test Description&#039;</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">await</span> FieldsEmbed.build();
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">FieldsEmbed</span><span style="color: #000000">.</span><span style="color: #795E26">build</span><span style="color: #000000">();</span>
 
-<span class="hljs-comment">// Will not log until the instance finished awaiting user responses</span>
-<span class="hljs-comment">// (or techinically emitted either `expire` or `finish` event)</span>
-<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'done'</span>);</code></pre>
+<span style="color: #008000">// Will not log until the instance finished awaiting user responses</span>
+<span style="color: #008000">// (or techinically emitted either `expire` or `finish` event)</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;done&#039;</span><span style="color: #000000">);</span>
+</code></pre>
 				<p><img src="https://github.com/gazmull/discord-paginationembed/blob/master/demo/FieldsEmbed2.gif?raw=true" alt="FieldsEmbed2"></p>
 				<hr>
 				<a href="#embeds-mode" id="embeds-mode" style="color: inherit; text-decoration: none;">
@@ -229,88 +248,90 @@ FieldsEmbed.embed
 					<li>A pagination mode that uses an array of MessageEmbed to paginate.</li>
 					<li>Usually used for complex builds such as characters&#39; information.</li>
 				</ul>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> Discord = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord.js'</span>);
-<span class="hljs-keyword">const</span> Pagination = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord-paginationembed'</span>);
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Discord</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;discord.js&#039;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Pagination</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;discord-paginationembed&#039;</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> embeds = [];
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">embeds</span><span style="color: #000000"> = [];</span>
 
-<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; ++i)
-  embeds.push(<span class="hljs-keyword">new</span> Discord.MessageEmbed().addField(<span class="hljs-string">'Page'</span>, i));
+<span style="color: #AF00DB">for</span><span style="color: #000000"> (</span><span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">i</span><span style="color: #000000"> = </span><span style="color: #098658">1</span><span style="color: #000000">; </span><span style="color: #001080">i</span><span style="color: #000000"> &lt;= </span><span style="color: #098658">5</span><span style="color: #000000">; ++</span><span style="color: #001080">i</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #001080">embeds</span><span style="color: #000000">.</span><span style="color: #795E26">push</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">Discord</span><span style="color: #000000">.</span><span style="color: #795E26">MessageEmbed</span><span style="color: #000000">().</span><span style="color: #795E26">addField</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Page&#039;</span><span style="color: #000000">, </span><span style="color: #001080">i</span><span style="color: #000000">));</span>
 
-<span class="hljs-keyword">const</span> myImage = message.author.displayAvatarURL();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">myImage</span><span style="color: #000000"> = </span><span style="color: #001080">message</span><span style="color: #000000">.</span><span style="color: #001080">author</span><span style="color: #000000">.</span><span style="color: #795E26">displayAvatarURL</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">new</span> Pagination.Embeds()
-  .setArray(embeds)
-  .setAuthorizedUsers([message.author.id])
-  .setChannel(message.channel)
-  .setPageIndicator(<span class="hljs-literal">true</span>)
-  .setPage(<span class="hljs-number">3</span>)
-   <span class="hljs-comment">// Methods below are for customising all embeds</span>
-  .setImage(myImage)
-  .setThumbnail(myImage)
-  .setTitle(<span class="hljs-string">'Test Title'</span>)
-  .setDescription(<span class="hljs-string">'Test Description'</span>)
-  .setFooter(<span class="hljs-string">'Test Footer Text'</span>)
-  .setURL(myImage)
-  .setColor(<span class="hljs-number">0xFF00AE</span>)
-  .addField(<span class="hljs-string">'\u200b'</span>, <span class="hljs-string">'\u200b'</span>)
-  .addField(<span class="hljs-string">'Test Field 1'</span>, <span class="hljs-string">'Test Field 1'</span>, <span class="hljs-literal">true</span>)
-  .addField(<span class="hljs-string">'Test Field 2'</span>, <span class="hljs-string">'Test Field 2'</span>, <span class="hljs-literal">true</span>)
-  .build();</code></pre>
+<span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">Pagination</span><span style="color: #000000">.</span><span style="color: #795E26">Embeds</span><span style="color: #000000">()</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setArray</span><span style="color: #000000">(</span><span style="color: #001080">embeds</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setAuthorizedUsers</span><span style="color: #000000">([</span><span style="color: #001080">message</span><span style="color: #000000">.</span><span style="color: #001080">author</span><span style="color: #000000">.</span><span style="color: #001080">id</span><span style="color: #000000">])</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setChannel</span><span style="color: #000000">(</span><span style="color: #001080">message</span><span style="color: #000000">.</span><span style="color: #001080">channel</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setPageIndicator</span><span style="color: #000000">(</span><span style="color: #0000FF">true</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setPage</span><span style="color: #000000">(</span><span style="color: #098658">3</span><span style="color: #000000">)</span>
+<span style="color: #000000">   </span><span style="color: #008000">// Methods below are for customising all embeds</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setImage</span><span style="color: #000000">(</span><span style="color: #001080">myImage</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setThumbnail</span><span style="color: #000000">(</span><span style="color: #001080">myImage</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setTitle</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Test Title&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setDescription</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Test Description&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setFooter</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Test Footer Text&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setURL</span><span style="color: #000000">(</span><span style="color: #001080">myImage</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setColor</span><span style="color: #000000">(</span><span style="color: #098658">0xFF00AE</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">addField</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;</span><span style="color: #EE0000">\u200b</span><span style="color: #A31515">&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;</span><span style="color: #EE0000">\u200b</span><span style="color: #A31515">&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">addField</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Test Field 1&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;Test Field 1&#039;</span><span style="color: #000000">, </span><span style="color: #0000FF">true</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">addField</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Test Field 2&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;Test Field 2&#039;</span><span style="color: #000000">, </span><span style="color: #0000FF">true</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">build</span><span style="color: #000000">();</span>
+</code></pre>
 				<p><img src="https://user-images.githubusercontent.com/32944712/37118454-41116cbe-228f-11e8-9878-f39db26316a1.png" alt="Embeds"></p>
 				<blockquote>
 					<p>This assumes this is under an <code>async</code> function</p>
 				</blockquote>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> Discord = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord.js'</span>);
-<span class="hljs-keyword">const</span> Pagination = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord-paginationembed'</span>);
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Discord</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;discord.js&#039;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Pagination</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;discord-paginationembed&#039;</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> embeds = [];
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">embeds</span><span style="color: #000000"> = [];</span>
 
-<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; ++i)
-  embeds.push(<span class="hljs-keyword">new</span> Discord.MessageEmbed().addField(<span class="hljs-string">'Page'</span>, i));
+<span style="color: #AF00DB">for</span><span style="color: #000000"> (</span><span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">i</span><span style="color: #000000"> = </span><span style="color: #098658">1</span><span style="color: #000000">; </span><span style="color: #001080">i</span><span style="color: #000000"> &lt;= </span><span style="color: #098658">5</span><span style="color: #000000">; ++</span><span style="color: #001080">i</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #001080">embeds</span><span style="color: #000000">.</span><span style="color: #795E26">push</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">Discord</span><span style="color: #000000">.</span><span style="color: #795E26">MessageEmbed</span><span style="color: #000000">().</span><span style="color: #795E26">addField</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Page&#039;</span><span style="color: #000000">, </span><span style="color: #001080">i</span><span style="color: #000000">));</span>
 
-<span class="hljs-keyword">const</span> Embeds = <span class="hljs-keyword">new</span> PaginationEmbed.Embeds()
-  .setArray(embeds)
-  .setAuthorizedUsers([message.author.id])
-  .setChannel(message.channel)
-  .setPageIndicator(<span class="hljs-literal">true</span>)
-  .setTitle(<span class="hljs-string">'Test Title'</span>)
-  .setDescription(<span class="hljs-string">'Test Description'</span>)
-  .setFooter(<span class="hljs-string">'Test Footer Text'</span>)
-  .setURL(<span class="hljs-string">'https://gazmull.github.io/discord-paginationembed'</span>)
-  .setColor(<span class="hljs-number">0xFF00AE</span>)
-  <span class="hljs-comment">// Sets the client's assets to utilise. Available options:</span>
-  <span class="hljs-comment">//  - message: the client's Message object (edits the message instead of sending new one for this instance)</span>
-  <span class="hljs-comment">//  - prompt: custom content for the message sent when prompted to jump to a page</span>
-  <span class="hljs-comment">//      {{user}} is the placeholder for the user mention</span>
-  .setClientAssets({ message, <span class="hljs-attr">prompt</span>: <span class="hljs-string">'Page plz {{user}}'</span> })
-  .setDeleteOnTimeout(<span class="hljs-literal">true</span>)
-  .setDisabledNavigationEmojis([<span class="hljs-string">'delete'</span>])
-  .setFunctionEmojis({
-    <span class="hljs-string">'⬆'</span>: <span class="hljs-function">(<span class="hljs-params">_, instance</span>) =&gt;</span> {
-      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> embed <span class="hljs-keyword">of</span> instance.array)
-        embed.fields[<span class="hljs-number">0</span>].value++;
-    },
-    <span class="hljs-string">'⬇'</span>: <span class="hljs-function">(<span class="hljs-params">_, instance</span>) =&gt;</span> {
-      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> embed <span class="hljs-keyword">of</span> instance.array)
-        embed.fields[<span class="hljs-number">0</span>].value--;
-    }
-  })
-  <span class="hljs-comment">// Listeners for PaginationEmbed's events</span>
-  <span class="hljs-comment">// After the initial embed has been sent</span>
-  <span class="hljs-comment">// (technically, after the client finished reacting with enabled navigation and function emojis).</span>
-  .on(<span class="hljs-string">'start'</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Started!'</span>))
-  <span class="hljs-comment">// When the instance is finished by a user reacting with `delete` navigation emoji</span>
-  <span class="hljs-comment">// or a function emoji that throws non-Error type.</span>
-  .on(<span class="hljs-string">'finish'</span>, (user) =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Finished! User: <span class="hljs-subst">${user.username}</span>`</span>))
-  <span class="hljs-comment">// Upon a user reacting on the instance.</span>
-  .on(<span class="hljs-string">'react'</span>, (user, emoji) =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Reacted! User: <span class="hljs-subst">${user.username}</span> | Emoji: <span class="hljs-subst">${emoji.name}</span> (<span class="hljs-subst">${emoji.id}</span>)`</span>))
-  <span class="hljs-comment">// When the awaiting timeout is reached.</span>
-  .on(<span class="hljs-string">'expire'</span>, () =&gt; <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">'Expired!'</span>))
-  <span class="hljs-comment">// Upon an occurance of error (e.g: Discord API Error).</span>
-  .on(<span class="hljs-string">'error'</span>, <span class="hljs-built_in">console</span>.error);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Embeds</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">PaginationEmbed</span><span style="color: #000000">.</span><span style="color: #795E26">Embeds</span><span style="color: #000000">()</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setArray</span><span style="color: #000000">(</span><span style="color: #001080">embeds</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setAuthorizedUsers</span><span style="color: #000000">([</span><span style="color: #001080">message</span><span style="color: #000000">.</span><span style="color: #001080">author</span><span style="color: #000000">.</span><span style="color: #001080">id</span><span style="color: #000000">])</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setChannel</span><span style="color: #000000">(</span><span style="color: #001080">message</span><span style="color: #000000">.</span><span style="color: #001080">channel</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setPageIndicator</span><span style="color: #000000">(</span><span style="color: #0000FF">true</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setTitle</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Test Title&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setDescription</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Test Description&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setFooter</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Test Footer Text&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setURL</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;https://gazmull.github.io/discord-paginationembed&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setColor</span><span style="color: #000000">(</span><span style="color: #098658">0xFF00AE</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Sets the client&#039;s assets to utilise. Available options:</span>
+<span style="color: #000000">  </span><span style="color: #008000">//  - message: the client&#039;s Message object (edits the message instead of sending new one for this instance)</span>
+<span style="color: #000000">  </span><span style="color: #008000">//  - prompt: custom content for the message sent when prompted to jump to a page</span>
+<span style="color: #000000">  </span><span style="color: #008000">//      {{user}} is the placeholder for the user mention</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setClientAssets</span><span style="color: #000000">({ </span><span style="color: #001080">message</span><span style="color: #000000">, </span><span style="color: #001080">prompt:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;Page plz {{user}}&#039;</span><span style="color: #000000"> })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setDeleteOnTimeout</span><span style="color: #000000">(</span><span style="color: #0000FF">true</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setDisabledNavigationEmojis</span><span style="color: #000000">([</span><span style="color: #A31515">&#039;delete&#039;</span><span style="color: #000000">])</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">setFunctionEmojis</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&#039;⬆&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">_</span><span style="color: #000000">, </span><span style="color: #001080">instance</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #AF00DB">for</span><span style="color: #000000"> (</span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">embed</span><span style="color: #000000"> </span><span style="color: #0000FF">of</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">array</span><span style="color: #000000">)</span>
+<span style="color: #000000">        </span><span style="color: #001080">embed</span><span style="color: #000000">.</span><span style="color: #001080">fields</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">value</span><span style="color: #000000">++;</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&#039;⬇&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">_</span><span style="color: #000000">, </span><span style="color: #001080">instance</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #AF00DB">for</span><span style="color: #000000"> (</span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">embed</span><span style="color: #000000"> </span><span style="color: #0000FF">of</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #001080">array</span><span style="color: #000000">)</span>
+<span style="color: #000000">        </span><span style="color: #001080">embed</span><span style="color: #000000">.</span><span style="color: #001080">fields</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">value</span><span style="color: #000000">--;</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  })</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Listeners for PaginationEmbed&#039;s events</span>
+<span style="color: #000000">  </span><span style="color: #008000">// After the initial embed has been sent</span>
+<span style="color: #000000">  </span><span style="color: #008000">// (technically, after the client finished reacting with enabled navigation and function emojis).</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;start&#039;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Started!&#039;</span><span style="color: #000000">))</span>
+<span style="color: #000000">  </span><span style="color: #008000">// When the instance is finished by a user reacting with `delete` navigation emoji</span>
+<span style="color: #000000">  </span><span style="color: #008000">// or a function emoji that throws non-Error type.</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;finish&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">user</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`Finished! User: </span><span style="color: #0000FF">${</span><span style="color: #001080">user</span><span style="color: #000000FF">.</span><span style="color: #001080">username</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">))</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Upon a user reacting on the instance.</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;react&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">user</span><span style="color: #000000">, </span><span style="color: #001080">emoji</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`Reacted! User: </span><span style="color: #0000FF">${</span><span style="color: #001080">user</span><span style="color: #000000FF">.</span><span style="color: #001080">username</span><span style="color: #0000FF">}</span><span style="color: #A31515"> | Emoji: </span><span style="color: #0000FF">${</span><span style="color: #001080">emoji</span><span style="color: #000000FF">.</span><span style="color: #001080">name</span><span style="color: #0000FF">}</span><span style="color: #A31515"> (</span><span style="color: #0000FF">${</span><span style="color: #001080">emoji</span><span style="color: #000000FF">.</span><span style="color: #001080">id</span><span style="color: #0000FF">}</span><span style="color: #A31515">)`</span><span style="color: #000000">))</span>
+<span style="color: #000000">  </span><span style="color: #008000">// When the awaiting timeout is reached.</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;expire&#039;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">warn</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Expired!&#039;</span><span style="color: #000000">))</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Upon an occurance of error (e.g: Discord API Error).</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;error&#039;</span><span style="color: #000000">, </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #001080">error</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">await</span> Embeds.build();</code></pre>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Embeds</span><span style="color: #000000">.</span><span style="color: #795E26">build</span><span style="color: #000000">();</span>
+</code></pre>
 				<p><img src="https://github.com/gazmull/discord-paginationembed/blob/master/demo/Embeds.gif?raw=true" alt="Embeds2"></p>
 				<a href="#💡🐛💻-contributing" id="💡🐛💻-contributing" style="color: inherit; text-decoration: none;">
 					<h2>💡🐛💻 Contributing</h2>
@@ -357,129 +378,22 @@ FieldsEmbed.embed
 				</blockquote>
 				<p>© 2018-present <a href="https://github.com/gazmull"><strong>Euni (gazmull)</strong></a></p>
 			</div>
+			<!--{&quot;options&quot;:&quot;/home/travis/build/gazmull/discord-paginationembed&quot;,&quot;tsconfig&quot;:&quot;/home/travis/build/gazmull/discord-paginationembed&quot;,&quot;entryPoints&quot;:[&quot;src/base/index.ts&quot;,&quot;src/Embeds.ts&quot;,&quot;src/FieldsEmbed.ts&quot;],&quot;exclude&quot;:[],&quot;externalPattern&quot;:[&quot;**/node_modules/**&quot;],&quot;excludeExternals&quot;:true,&quot;excludeNotDocumented&quot;:true,&quot;excludeInternal&quot;:false,&quot;excludePrivate&quot;:false,&quot;excludeProtected&quot;:true,&quot;disableSources&quot;:false,&quot;includes&quot;:&quot;&quot;,&quot;media&quot;:&quot;&quot;,&quot;watch&quot;:false,&quot;preserveWatchOutput&quot;:false,&quot;emit&quot;:false,&quot;out&quot;:&quot;docs/master&quot;,&quot;json&quot;:&quot;&quot;,&quot;theme&quot;:&quot;node_modules/typedoc-neo-theme/bin/default&quot;,&quot;highlightTheme&quot;:&quot;light-plus&quot;,&quot;name&quot;:&quot;Discord PaginationEmbed - Docs&quot;,&quot;includeVersion&quot;:false,&quot;excludeTags&quot;:[],&quot;readme&quot;:&quot;README.md&quot;,&quot;defaultCategory&quot;:&quot;Other&quot;,&quot;categoryOrder&quot;:[],&quot;categorizeByGroup&quot;:true,&quot;gitRevision&quot;:&quot;&quot;,&quot;gitRemote&quot;:&quot;origin&quot;,&quot;gaID&quot;:&quot;&quot;,&quot;gaSite&quot;:&quot;auto&quot;,&quot;hideGenerator&quot;:false,&quot;toc&quot;:[],&quot;disableOutputCheck&quot;:false,&quot;help&quot;:false,&quot;version&quot;:false,&quot;showConfig&quot;:false,&quot;plugin&quot;:[],&quot;logger&quot;:&quot;console&quot;,&quot;logLevel&quot;:1,&quot;listInvalidSymbolLinks&quot;:false}-->
 		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
-					</li>
-				</ul>
-			</nav>
+		<div class="col-2 col-menu secondary-menu">
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="classes/embeds.html" class="tsd-kind-icon">Embeds</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/fieldsembed.html" class="tsd-kind-icon">Fields<wbr>Embed</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/paginationembed.html" class="tsd-kind-icon">Pagination<wbr>Embed</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/clientassets.html" class="tsd-kind-icon">Client<wbr>Assets</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/functionemoji.html" class="tsd-kind-icon">Function<wbr>Emoji</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/navigationemojis.html" class="tsd-kind-icon">Navigation<wbr>Emojis</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#disablednavigationemojis" class="tsd-kind-icon">Disabled<wbr>Navigation<wbr>Emojis</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#listenererror" class="tsd-kind-icon">Listener<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#listenerreact" class="tsd-kind-icon">Listener<wbr>React</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#listeneruser" class="tsd-kind-icon">Listener<wbr>User</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#navigationemojiidentifier" class="tsd-kind-icon">Navigation<wbr>Emoji<wbr>Identifier</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#pageindicatorcaster" class="tsd-kind-icon">Page<wbr>Indicator<wbr>Caster</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#pageindicatorpremadetypes" class="tsd-kind-icon">Page<wbr>Indicator<wbr>Pre<wbr>Made<wbr>Types</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#version" class="tsd-kind-icon">version</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
 	</div>
 </div>
 <footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
-			</ul>
-		</div>
-	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
