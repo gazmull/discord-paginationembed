@@ -9,7 +9,7 @@ import { FieldsEmbed } from '../FieldsEmbed';
  * @extends [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
  * @noInheritDoc
  */
-export declare class PaginationEmbed<Element> extends EventEmitter {
+export declare abstract class PaginationEmbed<Element> extends EventEmitter {
     constructor();
     /** The authorized users to navigate the pages. Default: `everyone` */
     authorizedUsers: Snowflake[];
@@ -54,7 +54,7 @@ export declare class PaginationEmbed<Element> extends EventEmitter {
     /** Whether to set function emojis after navigation emojis. Default: `false` */
     emojisFunctionAfterNavigation: boolean;
     /** Number of pages for this instance. */
-    pages: number;
+    abstract pages: number;
     /** The client's message content options. */
     content: ClientMessageContent;
     /** The disabled navigation emojis (in values). */

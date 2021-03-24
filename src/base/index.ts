@@ -23,7 +23,7 @@ const MESSAGE_DELETED = 'Client\'s message was deleted before being processed.';
  * @extends [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
  * @noInheritDoc
  */
-export class PaginationEmbed<Element> extends EventEmitter {
+export abstract class PaginationEmbed<Element> extends EventEmitter {
 
   constructor () {
     super();
@@ -121,7 +121,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
   public emojisFunctionAfterNavigation: boolean;
 
   /** Number of pages for this instance. */
-  public pages: number;
+  public abstract pages: number;
 
   /** The client's message content options. */
   public content: ClientMessageContent;
@@ -669,9 +669,7 @@ export class PaginationEmbed<Element> extends EventEmitter {
       await prompt.delete();
 
       if (response.deletable)
-        if (!missing.length) {
-          await response.delete();
-        }
+        if (!missing.length) await response.delete();
 
       if (cancel.includes(content)) return this._awaitResponse();
 

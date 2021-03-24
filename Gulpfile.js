@@ -1,7 +1,7 @@
 const del = require('del');
 const gulp = require('gulp');
 const ts = require('gulp-typescript');
-const eslint = require('gulp-eslint');
+const eslint = require('gulp-eslint7');
 const terser = require('gulp-terser');
 
 const tsProject = ts.createProject('tsconfig.json');
