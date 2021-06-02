@@ -48,7 +48,7 @@ class s extends t.PaginationEmbed {
     const s = await this._drawList(), i = "footer" === this.usePageIndicator, a = this.usePageIndicator && !i ? 1 === this.pages ? "" : this.pageIndicator : "", {separator: n, text: r} = this.content, o = [ `${r ? `${e.Util.resolveString(r)}${n}` : ""}${a}`, {
       embed: s
     } ];
-    return i && s.setFooter(this.pageIndicator, s.footer.iconURL), this.clientAssets.message ? await this.clientAssets.message.edit(...o) : this.clientAssets.message = await this.channel.send(...o), 
+    return i && s.setFooter(this.pageIndicator, s.footer ? s.footer.iconURL : undefined), this.clientAssets.message ? await this.clientAssets.message.edit(...o) : this.clientAssets.message = await this.channel.send(...o), 
     super._loadList(t);
   }
 }
