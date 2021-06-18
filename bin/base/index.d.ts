@@ -1,6 +1,6 @@
 /** @module PaginationEmbed */
 /// <reference types="node" />
-import { DMChannel, Emoji, Message, NewsChannel, Snowflake, StringResolvable, TextChannel, User } from 'discord.js';
+import { DMChannel, Emoji, Message, NewsChannel, Snowflake, TextChannel, User } from 'discord.js';
 import { EventEmitter } from 'events';
 import { Embeds } from '../Embeds';
 import { FieldsEmbed } from '../FieldsEmbed';
@@ -191,7 +191,7 @@ export declare abstract class PaginationEmbed<Element> extends EventEmitter {
      * @param text - The message content.
      * @param separator - The string to separate the content from the page indicator.
      */
-    setContent(text: StringResolvable, separator?: string): this;
+    setContent(text: string, separator?: string): this;
     /**
      * Evaluates the constructor and the client.
      * @ignore
@@ -316,7 +316,7 @@ export interface ClientAssets {
 /** Options for client's message content. */
 export interface ClientMessageContent {
     /** The message content. */
-    text?: StringResolvable;
+    text?: string;
     /**
      * The string to separate the content from the page indicator.
      *

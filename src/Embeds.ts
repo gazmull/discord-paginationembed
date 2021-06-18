@@ -2,9 +2,7 @@ import {
   ColorResolvable,
   EmbedField,
   EmbedFieldData,
-  FileOptions,
   Message,
-  MessageAttachment,
   MessageEmbed,
   Util
 } from 'discord.js';
