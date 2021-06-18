@@ -1,0 +1,78 @@
+import { MessageEmbed } from 'discord.js';
+import { PaginationEmbed } from './base';
+/**
+ * A pagination mode that uses a MessageEmbed with a field(s) containing the elements to paginate.
+ * @extends [[PaginationEmbed]]
+ * @noInheritDoc
+ */
+export declare class FieldsEmbed<Element> extends PaginationEmbed<Element> {
+    constructor();
+    /** Maximum number of elements to be displayed per page. */
+    elementsPerPage: number;
+    /**
+     * The MessageEmbed being used for this mode.
+     *
+     * ### Notice
+     * To customise the MessageEmbed for this mode, please access this property. Example:
+     * ```js
+     * <FieldsEmbed>.embed.setColor('red')
+     * ```
+     */
+    embed: MessageEmbed;
+    /** Elements in the current page. */
+    get elementList(): Element[];
+    get pages(): number;
+    /**
+     * Build the Pagination Fields Embed.
+     *
+     * ### Example
+     * ```js
+     *   const { FieldsEmbed } = require('discord-paginationembed');
+     *
+     *   // Under message event.
+     *   new FieldsEmbed()
+     *    .setAuthorizedUsers([message.author.id])
+     *    .setChannel(message.channel)
+     *    .setClientAssets({ prompt: 'Yo {{user}} wat peige?!?!?' })
+     *    .setArray([{ name: 'John Doe' }, { name: 'Jane Doe' }])
+     *    .setElementsPerPage(1)
+     *    .setPageIndicator(false)
+     *    .formatField('Name', el => el.name)
+     *    .setPage(1)
+     *    .setTimeout(69000)
+     *    .setNavigationEmojis({
+     *      back: '◀',
+     *      jump: '↗',
+     *      forward: '▶',
+     *      delete: '🗑'
+     *    })
+     *    .setFunctionEmojis({
+     *      '🔄': (user, instance) => {
+     *        const field = instance.embed.fields[0];
+     *
+     *        if (field.name === 'Name')
+     *          field.name = user.tag;
+     *        else
+     *          field.name = 'Name';
+     *      }
+     *    })
+     *    .build();```
+     */
+    build(): Promise<void>;
+    /**
+     * Adds a field to the embed.
+     * Same as MessageEmbed.addField, but value takes a function instead.
+     * @param name - Name of the field.
+     * @param value - Value of the field. Function for `Array.prototype.map().join('\n')`.
+     * @param inline - Whether the field is inline with other field. Default: `true`
+     */
+    formatField(name: string, value: (element: Element, index?: number, array?: Element[]) => any, inline?: boolean): this;
+    /**
+     * Sets the maximum number of elements to be displayed per page.
+     * @param max - Maximum number of elements to be displayed per page.
+     */
+    setElementsPerPage(max: number): this;
+    protected _drawList(): Promise<MessageEmbed>;
+    /** @ignore */
+    _loadList(callNavigation?: boolean): Promise<void>;
+}

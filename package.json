@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/gazmull/discord-paginationembed#readme",
   "peerDependencies": {
-    "discord.js": "^12.0.0"
+    "discord.js": "discordjs/discord.js"
   },
   "devDependencies": {
     "@types/node": "^14.14.35",
@@ -55,5 +55,8 @@
     "typedoc-neo-theme": "^1.1.0",
     "typedoc-plugin-no-inherit": "^1.2.2",
     "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "discord.js": "discordjs/discord.js"
   }
 }

@@ -1,56 +1,134 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: !0
-}), exports.FieldsEmbed = void 0;
-
-const e = require("discord.js"), t = require("./base");
-
-class s extends t.PaginationEmbed {
-  constructor() {
-    super(), this.elementsPerPage = 10, this.embed = new e.MessageEmbed;
-  }
-  get elementList() {
-    const e = (this.page - 1) * this.elementsPerPage, t = e + this.elementsPerPage;
-    return this.array.slice(e, t);
-  }
-  get pages() {
-    return Math.ceil(this.array.length / this.elementsPerPage);
-  }
-  async build() {
-    await this._verify();
-    const e = this.embed.fields;
-    this.embed.fields = [];
-    for (const t of e) "function" == typeof t.value ? this.formatField(t.name, t.value, t.inline) : this.embed.addField(t.name, t.value, t.inline);
-    if (!this.embed.fields.filter((e => "function" == typeof e.value)).length) throw new Error("Cannot invoke FieldsEmbed class without at least one formatted field to paginate.");
-    return this._loadList();
-  }
-  formatField(e, t, s = !0) {
-    if ("function" != typeof t) throw new TypeError("formatField() value parameter only takes a function.");
-    return this.embed.fields.push({
-      name: e,
-      value: t,
-      inline: s
-    }), this;
-  }
-  setElementsPerPage(e) {
-    if ("number" != typeof e) throw new TypeError("setElementsPerPage() only accepts number type.");
-    return this.elementsPerPage = e, this;
-  }
-  async _drawList() {
-    const t = new e.MessageEmbed(this.embed);
-    t.fields = [];
-    for (const e of this.embed.fields) t.addField(e.name, "function" == typeof e.value ? this.elementList.map(e.value).join("\n") : e.value, e.inline);
-    return t;
-  }
-  async _loadList(t = !0) {
-    this.listenerCount("pageUpdate") && this.emit("pageUpdate");
-    const s = await this._drawList(), i = "footer" === this.usePageIndicator, a = this.usePageIndicator && !i ? 1 === this.pages ? "" : this.pageIndicator : "", {separator: n, text: r} = this.content, o = [ `${r ? `${e.Util.resolveString(r)}${n}` : ""}${a}`, {
-      embed: s
-    } ];
-    return i && s.setFooter(this.pageIndicator, s.footer.iconURL), this.clientAssets.message ? await this.clientAssets.message.edit(...o) : this.clientAssets.message = await this.channel.send(...o), 
-    super._loadList(t);
-  }
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FieldsEmbed = void 0;
+const discord_js_1 = require("discord.js");
+const base_1 = require("./base");
+/**
+ * A pagination mode that uses a MessageEmbed with a field(s) containing the elements to paginate.
+ * @extends [[PaginationEmbed]]
+ * @noInheritDoc
+ */
+class FieldsEmbed extends base_1.PaginationEmbed {
+    constructor() {
+        super();
+        this.elementsPerPage = 10;
+        this.embed = new discord_js_1.MessageEmbed();
+    }
+    /** Elements in the current page. */
+    get elementList() {
+        const begin = (this.page - 1) * this.elementsPerPage;
+        const end = begin + this.elementsPerPage;
+        return this.array.slice(begin, end);
+    }
+    get pages() {
+        return Math.ceil(this.array.length / this.elementsPerPage);
+    }
+    /**
+     * Build the Pagination Fields Embed.
+     *
+     * ### Example
+     * ```js
+     *   const { FieldsEmbed } = require('discord-paginationembed');
+     *
+     *   // Under message event.
+     *   new FieldsEmbed()
+     *    .setAuthorizedUsers([message.author.id])
+     *    .setChannel(message.channel)
+     *    .setClientAssets({ prompt: 'Yo {{user}} wat peige?!?!?' })
+     *    .setArray([{ name: 'John Doe' }, { name: 'Jane Doe' }])
+     *    .setElementsPerPage(1)
+     *    .setPageIndicator(false)
+     *    .formatField('Name', el => el.name)
+     *    .setPage(1)
+     *    .setTimeout(69000)
+     *    .setNavigationEmojis({
+     *      back: '◀',
+     *      jump: '↗',
+     *      forward: '▶',
+     *      delete: '🗑'
+     *    })
+     *    .setFunctionEmojis({
+     *      '🔄': (user, instance) => {
+     *        const field = instance.embed.fields[0];
+     *
+     *        if (field.name === 'Name')
+     *          field.name = user.tag;
+     *        else
+     *          field.name = 'Name';
+     *      }
+     *    })
+     *    .build();```
+     */
+    async build() {
+        await this._verify();
+        const fields = this.embed.fields;
+        this.embed.fields = [];
+        for (const field of fields)
+            if (typeof field.value === 'function')
+                this.formatField(field.name, field.value, field.inline);
+            else
+                this.embed.addField(field.name, field.value, field.inline);
+        const hasPaginateField = this.embed.fields.filter(f => typeof f.value === 'function').length;
+        if (!hasPaginateField)
+            throw new Error('Cannot invoke FieldsEmbed class without at least one formatted field to paginate.');
+        return this._loadList();
+    }
+    /**
+     * Adds a field to the embed.
+     * Same as MessageEmbed.addField, but value takes a function instead.
+     * @param name - Name of the field.
+     * @param value - Value of the field. Function for `Array.prototype.map().join('\n')`.
+     * @param inline - Whether the field is inline with other field. Default: `true`
+     */
+    // eslint-disable-next-line max-len
+    formatField(name, value, inline = true) {
+        if (typeof value !== 'function')
+            throw new TypeError('formatField() value parameter only takes a function.');
+        // @ts-ignore
+        this.embed.fields.push({ name, value, inline });
+        return this;
+    }
+    /**
+     * Sets the maximum number of elements to be displayed per page.
+     * @param max - Maximum number of elements to be displayed per page.
+     */
+    setElementsPerPage(max) {
+        if (typeof max !== 'number')
+            throw new TypeError('setElementsPerPage() only accepts number type.');
+        this.elementsPerPage = max;
+        return this;
+    }
+    async _drawList() {
+        const embed = new discord_js_1.MessageEmbed(this.embed);
+        embed.fields = [];
+        for (const field of this.embed.fields)
+            embed.addField(field.name, typeof field.value === 'function'
+                ? this.elementList.map(field.value).join('\n')
+                : field.value, field.inline);
+        return embed;
+    }
+    /** @ignore */
+    async _loadList(callNavigation = true) {
+        if (this.listenerCount('pageUpdate'))
+            this.emit('pageUpdate');
+        const embed = await this._drawList();
+        const isFooter = this.usePageIndicator === 'footer';
+        const shouldIndicate = this.usePageIndicator && !isFooter
+            ? this.pages === 1
+                ? ''
+                : this.pageIndicator
+            : '';
+        const { separator, text } = this.content;
+        // Fixes no-arguemnt TS error
+        const content = `${text ? `${discord_js_1.Util.verifyString(text)}${separator}` : ''}${shouldIndicate}`;
+        const opt = { content, embeds: [embed] };
+        if (isFooter)
+            embed.setFooter(this.pageIndicator, embed.footer.iconURL);
+        if (this.clientAssets.message)
+            await this.clientAssets.message.edit(opt);
+        else
+            this.clientAssets.message = await this.channel.send(opt);
+        return super._loadList(callNavigation);
+    }
 }
-
-exports.FieldsEmbed = s;
+exports.FieldsEmbed = FieldsEmbed;

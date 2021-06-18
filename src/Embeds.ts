@@ -6,7 +6,6 @@ import {
   Message,
   MessageAttachment,
   MessageEmbed,
-  StringResolvable,
   Util
 } from 'discord.js';
 import { PaginationEmbed } from './base';
@@ -70,7 +69,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param value - The value of the field.
    * @param inline - Whether the field is inline to the other fields.
    */
-  public addField (name: string, value: StringResolvable, inline = false) {
+  public addField (name: string, value: string, inline = false) {
     if (!this.array) throw new TypeError('this.array must be set first.');
 
     for (const el of this.array)
@@ -84,19 +83,6 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
 
     for (const el of this.array)
       el.addFields(...fields);
-
-    return this;
-  }
-
-  /**
-   * Files to attach to all embeds.
-   * @param files - Files to attach.
-   */
-  public attachFiles (files: (FileOptions|string|MessageAttachment)[]) {
-    if (!this.array) throw new TypeError('this.array must be set first.');
-
-    for (const el of this.array)
-      el.attachFiles(files);
 
     return this;
   }
@@ -204,7 +190,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    * Sets the description of all embeds.
    * @param description - The description of all embeds.
    */
-  public setDescription (description: StringResolvable) {
+  public setDescription (description: string) {
     if (!this.array) throw new TypeError('this.array must be set first.');
 
     for (const el of this.array)
@@ -218,7 +204,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param text - The footer text.
    * @param iconURL - URL for the footer's icon.
    */
-  public setFooter (text: StringResolvable, iconURL?: string) {
+  public setFooter (text: string, iconURL?: string) {
     if (!this.array) throw new TypeError('this.array must be set first.');
 
     for (const el of this.array)
@@ -270,7 +256,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    * Sets the title of all embeds.
    * @param title - The title of all embeds.
    */
-  public setTitle (title: StringResolvable) {
+  public setTitle (title: string) {
     if (!this.array) throw new TypeError('this.array must be set first.');
 
     for (const el of this.array)
@@ -303,14 +289,14 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
   public spliceFields (
     index: number,
     deleteCount: number,
-    name?: StringResolvable,
-    value?: StringResolvable,
+    name?: string,
+    value?: string,
     inline?: boolean
   ) {
     if (!this.array) throw new TypeError('this.array must be set first.');
 
     for (const el of this.array)
-      el.spliceFields(index, deleteCount, name, value, inline);
+      el.spliceFields(index, deleteCount, [ {name, value, inline} ]);
 
     return this;
   }
@@ -335,17 +321,15 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
       : '';
     const { separator, text } = this.content;
     // Fixes no-argument TS error
-    const args: [ any, any ] = [
-      `${text ? `${Util.resolveString(text)}${separator}` : ''}${shouldIndicate}`,
-      { embeds: [embed] },
-    ];
+    const content = `${text ? `${Util.verifyString(text)}${separator}` : ''}${shouldIndicate}`;
+    const opt = { content, embeds: [ embed ] };
 
     if (isFooter)
       embed.setFooter(this.pageIndicator, embed.footer.iconURL);
     if (this.clientAssets.message)
-      await this.clientAssets.message.edit(...args);
+      await this.clientAssets.message.edit(opt);
     else
-      this.clientAssets.message = await this.channel.send(...args) as Message;
+      this.clientAssets.message = await this.channel.send(opt) as Message;
 
     return super._loadList(callNavigation);
   }

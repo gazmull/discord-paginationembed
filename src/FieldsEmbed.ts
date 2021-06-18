@@ -155,17 +155,15 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
       : '';
     const { separator, text } = this.content;
     // Fixes no-arguemnt TS error
-    const args: [ any, any ] = [
-      `${text ? `${Util.resolveString(text)}${separator}` : ''}${shouldIndicate}`,
-      { embed },
-    ];
+    const content = `${text ? `${Util.verifyString(text)}${separator}` : ''}${shouldIndicate}`;
+    const opt = { content, embeds: [ embed ] };
 
     if (isFooter)
       embed.setFooter(this.pageIndicator, embed.footer.iconURL);
     if (this.clientAssets.message)
-      await this.clientAssets.message.edit(...args);
+      await this.clientAssets.message.edit(opt);
     else
-      this.clientAssets.message = await this.channel.send(...args) as Message;
+      this.clientAssets.message = await this.channel.send(opt) as Message;
 
     return super._loadList(callNavigation);
   }
