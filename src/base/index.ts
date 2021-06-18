@@ -7,7 +7,6 @@ import {
   MessageReaction,
   NewsChannel,
   Snowflake,
-  StringResolvable,
   TextChannel,
   User
 } from 'discord.js';
@@ -412,7 +411,7 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
    * @param text - The message content.
    * @param separator - The string to separate the content from the page indicator.
    */
-  public setContent (text: StringResolvable, separator = '\n') {
+  public setContent (text: string, separator = '\n') {
     if (typeof separator !== 'string')
       throw new TypeError('setContent()\'s `separator` parameter only accepts string type.');
 
@@ -779,7 +778,7 @@ export interface ClientAssets {
 /** Options for client's message content. */
 export interface ClientMessageContent {
   /** The message content. */
-  text?: StringResolvable;
+  text?: string;
   /**
    * The string to separate the content from the page indicator.
    *
