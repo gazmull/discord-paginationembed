@@ -337,7 +337,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
     // Fixes no-argument TS error
     const args: [ any, any ] = [
       `${text ? `${Util.resolveString(text)}${separator}` : ''}${shouldIndicate}`,
-      { embed },
+      { embeds: [embed] },
     ];
 
     if (isFooter)
