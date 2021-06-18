@@ -238,7 +238,9 @@ class Embeds extends base_1.PaginationEmbed {
         const { separator, text } = this.content;
         // Fixes no-argument TS error
         const content = `${text ? `${discord_js_1.Util.verifyString(text)}${separator}` : ''}${shouldIndicate}`;
-        const opt = { content, embeds: [embed] };
+        const opt = { content: null, embeds: [embed] };
+        if (content)
+            opt.content = content;
         if (isFooter)
             embed.setFooter(this.pageIndicator, embed.footer.iconURL);
         if (this.clientAssets.message)

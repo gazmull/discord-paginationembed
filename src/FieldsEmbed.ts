@@ -156,7 +156,8 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     const { separator, text } = this.content;
     // Fixes no-arguemnt TS error
     const content = `${text ? `${Util.verifyString(text)}${separator}` : ''}${shouldIndicate}`;
-    const opt = { content, embeds: [ embed ] };
+    const opt = { content: null, embeds: [ embed ] };
+    if (content) opt.content = content;
 
     if (isFooter)
       embed.setFooter(this.pageIndicator, embed.footer.iconURL);
