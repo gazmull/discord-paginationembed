@@ -3,7 +3,15 @@ const PaginationEmbed = require('../');
 
 const credentials = require('./credentials');
 
-const bot = new Client();
+const bot = new Client({
+  intents: [
+    'GUILDS',
+    'GUILD_MESSAGES',
+    'GUILD_MESSAGE_REACTIONS',
+    'DIRECT_MESSAGES',
+    'DIRECT_MESSAGE_REACTIONS',
+  ]
+});
 
 const error = msg => {
   console.error(msg);
@@ -47,7 +55,6 @@ bot
 
       const Embeds = new PaginationEmbed.Embeds()
         .setArray(embeds)
-        .attachFiles([ `${__dirname}/images/1.jpg` ])
         .setAuthorizedUsers(users)
         .setChannel(channel)
         .setTitle('Test Title')
