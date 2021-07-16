@@ -1,4 +1,4 @@
-import { ColorResolvable, EmbedField, EmbedFieldData, FileOptions, MessageAttachment, MessageEmbed, StringResolvable } from 'discord.js';
+import { ColorResolvable, EmbedField, EmbedFieldData, MessageEmbed } from 'discord.js';
 import { PaginationEmbed } from './base';
 /**
  * A pagination mode that uses an array of MessageEmbed to paginate.
@@ -42,13 +42,8 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      * @param value - The value of the field.
      * @param inline - Whether the field is inline to the other fields.
      */
-    addField(name: string, value: StringResolvable, inline?: boolean): this;
+    addField(name: string, value: string, inline?: boolean): this;
     addFields(...fields: EmbedFieldData[] | EmbedFieldData[][]): this;
-    /**
-     * Files to attach to all embeds.
-     * @param files - Files to attach.
-     */
-    attachFiles(files: (FileOptions | string | MessageAttachment)[]): this;
     /**
      * Build the Pagination Embeds.
      *
@@ -114,13 +109,13 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      * Sets the description of all embeds.
      * @param description - The description of all embeds.
      */
-    setDescription(description: StringResolvable): this;
+    setDescription(description: string): this;
     /**
      * Sets the footer of all embeds.
      * @param text - The footer text.
      * @param iconURL - URL for the footer's icon.
      */
-    setFooter(text: StringResolvable, iconURL?: string): this;
+    setFooter(text: string, iconURL?: string): this;
     /**
      * Sets the image of all embeds.
      * @param url - The image of all embeds.
@@ -140,7 +135,7 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      * Sets the title of all embeds.
      * @param title - The title of all embeds.
      */
-    setTitle(title: StringResolvable): this;
+    setTitle(title: string): this;
     /**
      * Sets the URL of all embeds.
      * @param url - The URL of all embeds.
@@ -154,9 +149,9 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      * @param value - The value of the field.
      * @param inline - Set the field to display inline.
      */
-    spliceFields(index: number, deleteCount: number, name?: StringResolvable, value?: StringResolvable, inline?: boolean): this;
+    spliceFields(index: number, deleteCount: number, name?: string, value?: string, inline?: boolean): this;
     /** Transforms all embeds to plain objects. */
-    toJSON(): object[];
+    toJSON(): unknown[];
     /** @ignore */
     _loadList(callNavigation?: boolean): Promise<void>;
 }

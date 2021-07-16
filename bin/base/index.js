@@ -169,7 +169,8 @@ class e extends t.EventEmitter {
       return this.authorizedUsers.length ? this.authorizedUsers.includes(i.id) && s : !i.bot && s;
     }, s = this.clientAssets.message;
     try {
-      const t = (await s.awaitReactions(i, {
+      const t = (await s.awaitReactions({
+        filter: i,
         max: 1,
         time: this.timeout,
         errors: [ "time" ]
@@ -220,7 +221,8 @@ class e extends t.EventEmitter {
       return i.author.id === t.id && (!isNaN(Number(i.content)) && s !== this.page && s >= 1 && s <= this.pages || e.includes(i.content.toLowerCase()));
     }, s = this.clientAssets.message.channel, n = await s.send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, t.toString()));
     try {
-      const t = (await s.awaitMessages(i, {
+      const t = (await s.awaitMessages({
+        filter: i,
         max: 1,
         time: this.timeout,
         errors: [ "time" ]

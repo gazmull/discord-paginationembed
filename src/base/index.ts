@@ -7,7 +7,6 @@ import {
   MessageReaction,
   NewsChannel,
   Snowflake,
-  StringResolvable,
   TextChannel,
   User
 } from 'discord.js';
@@ -412,7 +411,7 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
    * @param text - The message content.
    * @param separator - The string to separate the content from the page indicator.
    */
-  public setContent (text: StringResolvable, separator = '\n') {
+  public setContent (text: string, separator = '\n') {
     if (typeof separator !== 'string')
       throw new TypeError('setContent()\'s `separator` parameter only accepts string type.');
 
@@ -544,7 +543,7 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
     const clientMessage = this.clientAssets.message;
 
     try {
-      const responses = await clientMessage.awaitReactions(filter, { max: 1, time: this.timeout, errors: [ 'time' ] });
+      const responses = await clientMessage.awaitReactions({ filter, max: 1, time: this.timeout, errors: [ 'time' ] });
       const response = responses.first();
       const user = response.users.cache.last();
       const emoji = [ response.emoji.name, response.emoji.id ];
@@ -654,7 +653,7 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
       .send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, user.toString())) as Message;
 
     try {
-      const responses = await channel.awaitMessages(filter, { max: 1, time: this.timeout, errors: [ 'time' ] });
+      const responses = await channel.awaitMessages({ filter, max: 1, time: this.timeout, errors: [ 'time' ] });
       const response = responses.first();
       const content = response.content;
       const missing = (channel as TextChannel).permissionsFor(channel.client.user)
@@ -779,7 +778,7 @@ export interface ClientAssets {
 /** Options for client's message content. */
 export interface ClientMessageContent {
   /** The message content. */
-  text?: StringResolvable;
+  text?: string;
   /**
    * The string to separate the content from the page indicator.
    *
