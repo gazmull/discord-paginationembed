@@ -4,105 +4,105 @@ Object.defineProperty(exports, "__esModule", {
   value: !0
 }), exports.Embeds = void 0;
 
-const r = require("discord.js"), t = require("./base");
+const t = require("discord.js"), r = require("./base");
 
-class s extends t.PaginationEmbed {
+class s extends r.PaginationEmbed {
   get currentEmbed() {
     return this.array[this.page - 1];
   }
   get pages() {
     return this.array.length;
   }
-  addField(r, t, s = !1) {
+  addField(t, r, s = !1) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const e of this.array) e.addField(r, t, s);
+    for (const e of this.array) e.addField(t, r, s);
     return this;
   }
-  addFields(...r) {
+  addFields(...t) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const t of this.array) t.addFields(...r);
-    return this;
-  }
-  attachFiles(r) {
-    if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const t of this.array) t.attachFiles(r);
+    for (const r of this.array) r.addFields(...t);
     return this;
   }
   async build() {
     return await this._verify(), this._loadList();
   }
-  setArray(t) {
-    if (!(Array.isArray(t) && Boolean(t.length))) throw new TypeError("Cannot invoke Embeds class without a valid array to paginate.");
-    for (const [s, e] of t.entries()) {
+  setArray(r) {
+    if (!(Array.isArray(r) && Boolean(r.length))) throw new TypeError("Cannot invoke Embeds class without a valid array to paginate.");
+    for (const [s, e] of r.entries()) {
       if (!Boolean(e) || e.constructor !== Object || !Object.keys(e).length) {
-        if (e instanceof r.MessageEmbed) continue;
+        if (e instanceof t.MessageEmbed) continue;
         throw new TypeError(`(MessageEmbeds[${s}]) Cannot invoke Embeds class with an invalid MessageEmbed instance.`);
       }
-      t[s] = new r.MessageEmbed(e);
+      r[s] = new t.MessageEmbed(e);
     }
-    return this.array = t, this;
+    return this.array = r, this;
   }
-  setAuthor(r, t, s) {
+  setAuthor(t, r, s) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const e of this.array) e.setAuthor(r, t, s);
+    for (const e of this.array) e.setAuthor(t, r, s);
     return this;
   }
-  setColor(r) {
+  setColor(t) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const t of this.array) t.setColor(r);
+    for (const r of this.array) r.setColor(t);
     return this;
   }
-  setDescription(r) {
+  setDescription(t) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const t of this.array) t.setDescription(r);
+    for (const r of this.array) r.setDescription(t);
     return this;
   }
-  setFooter(r, t) {
+  setFooter(t, r) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const s of this.array) s.setFooter(r, t);
+    for (const s of this.array) s.setFooter(t, r);
     return this;
   }
-  setImage(r) {
+  setImage(t) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const t of this.array) t.setImage(r);
+    for (const r of this.array) r.setImage(t);
     return this;
   }
-  setThumbnail(r) {
+  setThumbnail(t) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const t of this.array) t.setThumbnail(r);
+    for (const r of this.array) r.setThumbnail(t);
     return this;
   }
-  setTimestamp(r) {
+  setTimestamp(t) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const t of this.array) t.setTimestamp(r);
+    for (const r of this.array) r.setTimestamp(t);
     return this;
   }
-  setTitle(r) {
+  setTitle(t) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const t of this.array) t.setTitle(r);
+    for (const r of this.array) r.setTitle(t);
     return this;
   }
-  setURL(r) {
+  setURL(t) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const t of this.array) t.setURL(r);
+    for (const r of this.array) r.setURL(t);
     return this;
   }
-  spliceFields(r, t, s, e, i) {
+  spliceFields(t, r, s, e, i) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const a of this.array) a.spliceFields(r, t, s, e, i);
+    for (const a of this.array) a.spliceFields(t, r, [ {
+      name: s,
+      value: e,
+      inline: i
+    } ]);
     return this;
   }
   toJSON() {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    return this.array.map((r => r.toJSON()));
+    return this.array.map((t => t.toJSON()));
   }
-  async _loadList(t = !0) {
+  async _loadList(r = !0) {
     this.listenerCount("pageUpdate") && this.emit("pageUpdate");
-    const s = new r.MessageEmbed(this.currentEmbed), e = "footer" === this.usePageIndicator, i = this.usePageIndicator && !e ? 1 === this.pages ? "" : this.pageIndicator : "", {separator: a, text: o} = this.content, h = [ `${o ? `${r.Util.resolveString(o)}${a}` : ""}${i}`, {
-      embed: s
-    } ];
-    return e && s.setFooter(this.pageIndicator, s.footer.iconURL), this.clientAssets.message ? await this.clientAssets.message.edit(...h) : this.clientAssets.message = await this.channel.send(...h), 
-    super._loadList(t);
+    const s = new t.MessageEmbed(this.currentEmbed), e = "footer" === this.usePageIndicator, i = this.usePageIndicator && !e ? 1 === this.pages ? "" : this.pageIndicator : "", {separator: a, text: o} = this.content, n = {
+      embeds: [ s ],
+      content: `${o ? `${o}${a}` : ""}${i}` || null
+    };
+    return e && s.setFooter(this.pageIndicator, s.footer.iconURL), this.clientAssets.message ? await this.clientAssets.message.edit(n) : this.clientAssets.message = await this.channel.send(n), 
+    super._loadList(r);
   }
 }
 

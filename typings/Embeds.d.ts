@@ -1,4 +1,4 @@
-import { ColorResolvable, EmbedField, EmbedFieldData, FileOptions, MessageAttachment, MessageEmbed, string } from 'discord.js';
+import { ColorResolvable, EmbedField, EmbedFieldData, MessageEmbed } from 'discord.js';
 import { PaginationEmbed } from './base';
 /**
  * A pagination mode that uses an array of MessageEmbed to paginate.
@@ -44,11 +44,6 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      */
     addField(name: string, value: string, inline?: boolean): this;
     addFields(...fields: EmbedFieldData[] | EmbedFieldData[][]): this;
-    /**
-     * Files to attach to all embeds.
-     * @param files - Files to attach.
-     */
-    attachFiles(files: (FileOptions | string | MessageAttachment)[]): this;
     /**
      * Build the Pagination Embeds.
      *
@@ -156,7 +151,7 @@ export declare class Embeds extends PaginationEmbed<MessageEmbed> {
      */
     spliceFields(index: number, deleteCount: number, name?: string, value?: string, inline?: boolean): this;
     /** Transforms all embeds to plain objects. */
-    toJSON(): object[];
+    toJSON(): unknown[];
     /** @ignore */
     _loadList(callNavigation?: boolean): Promise<void>;
 }

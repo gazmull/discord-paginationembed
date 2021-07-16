@@ -43,13 +43,14 @@ class s extends t.PaginationEmbed {
     for (const e of this.embed.fields) t.addField(e.name, "function" == typeof e.value ? this.elementList.map(e.value).join("\n") : e.value, e.inline);
     return t;
   }
-  async _loadList(t = !0) {
+  async _loadList(e = !0) {
     this.listenerCount("pageUpdate") && this.emit("pageUpdate");
-    const s = await this._drawList(), i = "footer" === this.usePageIndicator, a = this.usePageIndicator && !i ? 1 === this.pages ? "" : this.pageIndicator : "", {separator: n, text: r} = this.content, o = [ `${r ? `${e.Util.resolveString(r)}${n}` : ""}${a}`, {
-      embed: s
-    } ];
-    return i && s.setFooter(this.pageIndicator, s.footer.iconURL), this.clientAssets.message ? await this.clientAssets.message.edit(...o) : this.clientAssets.message = await this.channel.send(...o), 
-    super._loadList(t);
+    const t = await this._drawList(), s = "footer" === this.usePageIndicator, i = this.usePageIndicator && !s ? 1 === this.pages ? "" : this.pageIndicator : "", {separator: n, text: a} = this.content, r = {
+      embeds: [ t ],
+      content: `${a ? `${a}${n}` : ""}${i}` || null
+    };
+    return s && t.setFooter(this.pageIndicator, t.footer.iconURL), this.clientAssets.message ? await this.clientAssets.message.edit(r) : this.clientAssets.message = await this.channel.send(r), 
+    super._loadList(e);
   }
 }
 

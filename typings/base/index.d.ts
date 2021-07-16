@@ -1,6 +1,6 @@
 /** @module PaginationEmbed */
 /// <reference types="node" />
-import { DMChannel, Emoji, Message, NewsChannel, Snowflake, string, TextChannel, User } from 'discord.js';
+import { DMChannel, Emoji, Message, NewsChannel, Snowflake, TextChannel, User } from 'discord.js';
 import { EventEmitter } from 'events';
 import { Embeds } from '../Embeds';
 import { FieldsEmbed } from '../FieldsEmbed';
