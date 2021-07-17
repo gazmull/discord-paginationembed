@@ -34,6 +34,12 @@
     "leaderboard"
   ],
   "author": "gazmull",
+  "contributors": [
+    "KyleBoyer (https://github.com/KyleBoyer)",
+    "cycloptux (https://github.com/cycloptux)",
+    "d-shaun (https://github.com/d-shaun)",
+    "kaname-png (https://kaedee.xyz/)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/gazmull/discord-paginationembed/issues"
