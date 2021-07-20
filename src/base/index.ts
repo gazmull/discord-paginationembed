@@ -475,8 +475,7 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
       await this._drawNavigationEmojis();
     }
 
-    if (this.listenerCount('start'))
-      this.emit('start');
+    this._emit('start');
 
     return this._awaitResponse();
   }
@@ -548,7 +547,8 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
       const user = response.users.cache.last();
       const emoji = [ response.emoji.name, response.emoji.id ];
 
-      if (this.listenerCount('react')) this.emit('react', user, response.emoji);
+      this._emit('react', user, response.emoji);
+
       if (clientMessage.guild) {
         const missing = channel
           .permissionsFor(channel.client.user)
@@ -577,7 +577,7 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
         case this.navigationEmojis.delete:
           await clientMessage.delete();
 
-          if (this.listenerCount('finish')) this.emit('finish', user);
+          this._emit('finish', user);
 
           return;
 
@@ -622,14 +622,14 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
       if (!missing.length) await clientMessage.reactions.removeAll();
     }
     if (err instanceof Error) {
-      if (this.listenerCount('error')) this.emit('error', err);
+      this._emit('error', err);
 
       return;
     }
 
     const eventType = expired ? 'expire' : 'finish';
 
-    if (this.listenerCount(eventType)) this.emit(eventType, user);
+    this._emit(eventType, user);
   }
 
   /**
@@ -660,7 +660,7 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
         .missing([ 'MANAGE_MESSAGES' ]);
 
       if (this.clientAssets.message.deleted) {
-        if (this.listenerCount('error')) this.emit('error', new Error(MESSAGE_DELETED));
+        this._emit('error', new Error(MESSAGE_DELETED));
 
         return;
       }
@@ -676,13 +676,19 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
     } catch (c) {
       if (prompt.deletable) await prompt.delete();
       if (c instanceof Error) {
-        if (this.listenerCount('error')) this.emit('error', c);
+        this._emit('error', c);
 
         return;
       }
 
-      if (this.listenerCount('expire')) this.emit('expire');
+      this._emit('expire');
     }
+  }
+
+  protected _emit (event: string, ...args: any[]) {
+    if (!this.listenerCount(event)) return;
+
+    return this.emit(event, ...args, this);
   }
 
   /**
@@ -690,65 +696,72 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
    * (technically, after the client finished reacting with enabled navigation and function emojis).
    * @event
    */
-  public on (event: 'start', listener: () => void): this;
+  public on (event: 'start', listener: (instance: this) => void): this;
 
   /**
    * Emitted when the instance is finished by a user reacting with `delete` navigation emoji
    * or a function emoji that throws non-Error type.
    * @event
    */
-  public on (event: 'finish', listener: ListenerUser): this;
+  public on (event: 'finish', listener: ListenerUser<Element>): this;
 
   /**
    * Emitted after the page number is updated and before the client sends the embed.
    * @event
    */
-  public on (event: 'pageUpdate', listener: () => void): this;
+  public on (event: 'pageUpdate', listener: (instance: this) => void): this;
 
   /**
    * Emitted upon a user reacting on the instance.
    * @event
    */
-  public on (event: 'react', listener: ListenerReact): this;
+  public on (event: 'react', listener: ListenerReact<Element>): this;
 
   /**
    * Emitted when the awaiting timeout is reached.
    * @event
    */
-  public on (event: 'expire', listener: () => void): this;
+  public on (event: 'expire', listener: (instance: this) => void): this;
 
   /**
    * Emitted upon an occurance of error.
    * @event
    */
   // @ts-ignore
-  public on (event: 'error', listener: ListenerError): this;
+  public on (event: 'error', listener: ListenerError<Element>): this;
 
   /** @event */
-  public once (event: 'finish', listener: ListenerUser): this;
+  public once (event: 'finish', listener: ListenerUser<Element>): this;
 
   /** @event */
-  public once (event: 'start' | 'expire' | 'pageUpdate', listener: () => void): this;
+  public once (event: 'start' | 'expire' | 'pageUpdate', listener: (instance: this) => void): this;
 
   /** @event */
-  public once (event: 'react', listener: ListenerReact): this;
+  public once (event: 'react', listener: ListenerReact<Element>): this;
 
   /** @event */
   // @ts-ignore
-  public once (event: 'error', listener: ListenerError): this;
+  public once (event: 'error', listener: ListenerError<Element>): this;
 }
 
-/**  @param user The user who responded to the instance. */
-export type ListenerUser = (user: User) => void;
+/**
+ * @param user The user who responded to the instance.
+ * @param instance The current instance of PaginationEmbed.
+ **/
+export type ListenerUser<T> = (user: User, instance: PaginationEmbed<T>) => void;
 
 /**
  * @param user The user who responded to the instance.
  * @param emoji The emoji that was reacted to the instance.
+ * @param instance The current instance of PaginationEmbed.
  */
-export type ListenerReact = (user: User, emoji: Emoji) => void;
+export type ListenerReact<T> = (user: User, emoji: Emoji, instance: PaginationEmbed<T>) => void;
 
-/** @param err The error object. */
-export type ListenerError = (err: Error) => void;
+/**
+ * @param err The error object.
+ * @param instance The current instance of PaginationEmbed.
+ * */
+export type ListenerError<T> = (err: Error, instance: PaginationEmbed<T>) => void;
 
 /** Options for [[PaginationEmbed.disabledNavigationEmojis]]. */
 export type DisabledNavigationEmojis = NavigationEmojiIdentifier[];

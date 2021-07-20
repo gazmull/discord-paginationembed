@@ -144,7 +144,7 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
 
   /** @ignore */
   public async _loadList (callNavigation = true) {
-    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate');
+    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate', this);
 
     const embed = await this._drawList();
     const isFooter = this.usePageIndicator === 'footer';

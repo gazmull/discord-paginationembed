@@ -307,7 +307,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
 
   /** @ignore */
   public async _loadList (callNavigation = true) {
-    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate');
+    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate', this);
 
     const embed = new MessageEmbed(this.currentEmbed);
     const isFooter = this.usePageIndicator === 'footer';
