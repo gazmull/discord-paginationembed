@@ -807,7 +807,7 @@ export type NavigationEmojiIdentifier = 'back' | 'jump' | 'forward' | 'delete' |
  *  ```
  */
 export interface FunctionEmoji<Element> {
-  [emojiNameOrID: string]: (user: User, instance: Embeds | FieldsEmbed<Element>) => any;
+  [emojiNameOrId: string]: (user: User, instance: Embeds | FieldsEmbed<Element>) => any;
 }
 
 /**
