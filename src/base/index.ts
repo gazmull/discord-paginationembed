@@ -6,6 +6,7 @@ import {
   Message,
   MessageReaction,
   NewsChannel,
+  Permissions,
   Snowflake,
   TextChannel,
   User
@@ -13,9 +14,6 @@ import {
 import { EventEmitter } from 'events';
 import { Embeds } from '../Embeds';
 import { FieldsEmbed } from '../FieldsEmbed';
-
-/** @ignore */
-const MESSAGE_DELETED = 'Client\'s message was deleted before being processed.';
 
 /**
  * The base class for Pagination Modes. **Do not invoke**.
@@ -446,7 +444,13 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
     if (channel.guild) {
       const missing = channel
         .permissionsFor(channel.client.user)
-        .missing([ 'ADD_REACTIONS', 'EMBED_LINKS', 'VIEW_CHANNEL', 'SEND_MESSAGES' ]);
+        .missing([
+          Permissions.FLAGS.ADD_REACTIONS,
+          Permissions.FLAGS.EMBED_LINKS,
+          Permissions.FLAGS.VIEW_CHANNEL,
+          Permissions.FLAGS.READ_MESSAGE_HISTORY,
+          Permissions.FLAGS.SEND_MESSAGES,
+        ]);
 
       if (missing.length)
         throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${missing.join(', ')}`);
@@ -552,7 +556,7 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
       if (clientMessage.guild) {
         const missing = channel
           .permissionsFor(channel.client.user)
-          .missing([ 'MANAGE_MESSAGES' ]);
+          .missing(Permissions.FLAGS.MANAGE_MESSAGES);
 
         if (!missing.length)
           await response.users.remove(user);
@@ -617,7 +621,7 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
     if (clientMessage.guild && !clientMessage.deleted) {
       const missing = channel
         .permissionsFor(channel.client.user)
-        .missing([ 'MANAGE_MESSAGES' ]);
+        .missing(Permissions.FLAGS.MANAGE_MESSAGES);
 
       if (!missing.length) await clientMessage.reactions.removeAll();
     }
@@ -648,28 +652,24 @@ export abstract class PaginationEmbed<Element> extends EventEmitter {
         )
       );
     };
-    const channel = this.clientAssets.message.channel;
-    const prompt = await channel
-      .send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, user.toString())) as Message;
+    const clientMessage = this.clientAssets.message;
+    const channel = clientMessage.channel;
+    const content = this.clientAssets.prompt.replace(/\{\{user\}\}/g, user.toString());
+    const prompt = await channel.send({
+      content,
+      reply: {
+        messageReference: clientMessage,
+        failIfNotExists: false
+      }
+    });
 
     try {
       const responses = await channel.awaitMessages({ filter, max: 1, time: this.timeout, errors: [ 'time' ] });
       const response = responses.first();
       const content = response.content;
-      const missing = (channel as TextChannel).permissionsFor(channel.client.user)
-        .missing([ 'MANAGE_MESSAGES' ]);
 
-      if (this.clientAssets.message.deleted) {
-        this._emit('error', new Error(MESSAGE_DELETED));
-
-        return;
-      }
-
-      await prompt.delete();
-
-      if (response.deletable)
-        if (!missing.length) await response.delete();
-
+      if (!this.clientAssets.message.deleted) await prompt.delete();
+      if (response.deletable) await response.delete();
       if (cancel.includes(content)) return this._awaitResponse();
 
       return this._loadPage(parseInt(content));
