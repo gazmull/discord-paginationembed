@@ -82,13 +82,9 @@ class s extends r.PaginationEmbed {
     for (const r of this.array) r.setURL(t);
     return this;
   }
-  spliceFields(t, r, s, e, i) {
+  spliceFields(t, r, ...s) {
     if (!this.array) throw new TypeError("this.array must be set first.");
-    for (const a of this.array) a.spliceFields(t, r, [ {
-      name: s,
-      value: e,
-      inline: i
-    } ]);
+    for (const e of this.array) e.spliceFields(t, r, ...s);
     return this;
   }
   toJSON() {
@@ -96,7 +92,7 @@ class s extends r.PaginationEmbed {
     return this.array.map((t => t.toJSON()));
   }
   async _loadList(r = !0) {
-    this.listenerCount("pageUpdate") && this.emit("pageUpdate");
+    this.listenerCount("pageUpdate") && this.emit("pageUpdate", this);
     const s = new t.MessageEmbed(this.currentEmbed), e = "footer" === this.usePageIndicator, i = this.usePageIndicator && !e ? 1 === this.pages ? "" : this.pageIndicator : "", {separator: a, text: o} = this.content, n = {
       embeds: [ s ],
       content: `${o ? `${o}${a}` : ""}${i}` || null

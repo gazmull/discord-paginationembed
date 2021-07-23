@@ -44,12 +44,14 @@ class s extends t.PaginationEmbed {
     return t;
   }
   async _loadList(e = !0) {
-    this.listenerCount("pageUpdate") && this.emit("pageUpdate");
-    const t = await this._drawList(), s = "footer" === this.usePageIndicator, i = this.usePageIndicator && !s ? 1 === this.pages ? "" : this.pageIndicator : "", {separator: n, text: a} = this.content, r = {
-      embeds: [ t ],
-      content: `${a ? `${a}${n}` : ""}${i}` || null
+    var t;
+    this.listenerCount("pageUpdate") && this.emit("pageUpdate", this);
+    const s = await this._drawList(), i = "footer" === this.usePageIndicator, n = this.usePageIndicator && !i ? 1 === this.pages ? "" : this.pageIndicator : "", {separator: a, text: r} = this.content, o = {
+      embeds: [ s ],
+      content: `${r ? `${r}${a}` : ""}${n}` || null
     };
-    return s && t.setFooter(this.pageIndicator, t.footer.iconURL), this.clientAssets.message ? await this.clientAssets.message.edit(r) : this.clientAssets.message = await this.channel.send(r), 
+    return i && s.setFooter(this.pageIndicator, null === (t = s.footer) || void 0 === t ? void 0 : t.iconURL), 
+    this.clientAssets.message ? await this.clientAssets.message.edit(o) : this.clientAssets.message = await this.channel.send(o), 
     super._loadList(e);
   }
 }

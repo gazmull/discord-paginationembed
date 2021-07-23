@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: !0
 }), exports.PaginationEmbed = void 0;
 
-const t = require("events");
+const t = require("discord.js"), e = require("events");
 
-class e extends t.EventEmitter {
+class i extends e.EventEmitter {
   constructor() {
     super(), this.authorizedUsers = [], this.channel = null, this.clientAssets = {}, 
     this.content = {
@@ -133,10 +133,10 @@ class e extends t.EventEmitter {
     return this._checkPermissions();
   }
   async _checkPermissions() {
-    const t = this.channel;
-    if (t.guild) {
-      const e = t.permissionsFor(t.client.user).missing([ "ADD_REACTIONS", "EMBED_LINKS", "VIEW_CHANNEL", "SEND_MESSAGES" ]);
-      if (e.length) throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${e.join(", ")}`);
+    const e = this.channel;
+    if (e.guild) {
+      const i = e.permissionsFor(e.client.user).missing([ t.Permissions.FLAGS.ADD_REACTIONS, t.Permissions.FLAGS.EMBED_LINKS, t.Permissions.FLAGS.VIEW_CHANNEL, t.Permissions.FLAGS.READ_MESSAGE_HISTORY, t.Permissions.FLAGS.SEND_MESSAGES ]);
+      if (i.length) throw new Error(`Cannot invoke PaginationEmbed class without required permissions: ${i.join(", ")}`);
     }
     return !0;
   }
@@ -146,7 +146,7 @@ class e extends t.EventEmitter {
   async _drawEmojis() {
     return this.emojisFunctionAfterNavigation ? (await this._drawNavigationEmojis(), 
     await this._drawFunctionEmojis()) : (await this._drawFunctionEmojis(), await this._drawNavigationEmojis()), 
-    this.listenerCount("start") && this.emit("start"), this._awaitResponse();
+    this._emit("start"), this._awaitResponse();
   }
   async _drawFunctionEmojis() {
     if (Object.keys(this.functionEmojis).length) for (const t of Object.keys(this.functionEmojis)) await this.clientAssets.message.react(t);
@@ -164,21 +164,21 @@ class e extends t.EventEmitter {
     return this.setPage(t), await this._loadList(!1), this._awaitResponse();
   }
   async _awaitResponse() {
-    const t = Object.values(this.navigationEmojis), e = this.clientAssets.message.channel, i = (e, i) => {
-      const s = !!this._enabled("all") && (!this._disabledNavigationEmojiValues.length || this._disabledNavigationEmojiValues.some((t => ![ e.emoji.name, e.emoji.id ].includes(t)))) && (t.includes(e.emoji.name) || t.includes(e.emoji.id)) || e.emoji.name in this.functionEmojis || e.emoji.id in this.functionEmojis;
+    const e = Object.values(this.navigationEmojis), i = this.clientAssets.message.channel, s = (t, i) => {
+      const s = !!this._enabled("all") && (!this._disabledNavigationEmojiValues.length || this._disabledNavigationEmojiValues.some((e => ![ t.emoji.name, t.emoji.id ].includes(e)))) && (e.includes(t.emoji.name) || e.includes(t.emoji.id)) || t.emoji.name in this.functionEmojis || t.emoji.id in this.functionEmojis;
       return this.authorizedUsers.length ? this.authorizedUsers.includes(i.id) && s : !i.bot && s;
-    }, s = this.clientAssets.message;
+    }, a = this.clientAssets.message;
     try {
-      const t = (await s.awaitReactions({
-        filter: i,
+      const e = (await a.awaitReactions({
+        filter: s,
         max: 1,
         time: this.timeout,
         errors: [ "time" ]
-      })).first(), n = t.users.cache.last(), a = [ t.emoji.name, t.emoji.id ];
-      if (this.listenerCount("react") && this.emit("react", n, t.emoji), s.guild) {
-        e.permissionsFor(e.client.user).missing([ "MANAGE_MESSAGES" ]).length || await t.users.remove(n);
+      })).first(), n = e.users.cache.last(), o = [ e.emoji.name, e.emoji.id ];
+      if (this._emit("react", n, e.emoji), a.guild) {
+        i.permissionsFor(i.client.user).missing(t.Permissions.FLAGS.MANAGE_MESSAGES).length || await e.users.remove(n);
       }
-      switch (a[0] || a[1]) {
+      switch (o[0] || o[1]) {
        case this.navigationEmojis.back:
         return 1 === this.page ? this._awaitResponse() : this._loadPage("back");
 
@@ -189,51 +189,60 @@ class e extends t.EventEmitter {
         return this.page === this.pages ? this._awaitResponse() : this._loadPage("forward");
 
        case this.navigationEmojis.delete:
-        return await s.delete(), void (this.listenerCount("finish") && this.emit("finish", n));
+        return await a.delete(), void this._emit("finish", n);
 
        default:
         {
-          const t = this.functionEmojis[a[0]] || this.functionEmojis[a[1]];
+          const t = this.functionEmojis[o[0]] || this.functionEmojis[o[1]];
           try {
             await t(n, this);
           } catch (t) {
-            return this._cleanUp(t, s, !1, n);
+            return this._cleanUp(t, a, !1, n);
           }
           return this._loadPage(this.page);
         }
       }
     } catch (t) {
-      return this._cleanUp(t, s);
+      return this._cleanUp(t, a);
     }
   }
-  async _cleanUp(t, e, i = !0, s) {
+  async _cleanUp(e, i, s = !0, a) {
     const n = this.clientAssets.message.channel;
-    if (this.deleteOnTimeout && e.deletable && (await e.delete(), e.deleted = !0), e.guild && !e.deleted) {
-      n.permissionsFor(n.client.user).missing([ "MANAGE_MESSAGES" ]).length || await e.reactions.removeAll();
+    if (this.deleteOnTimeout && i.deletable && (await i.delete(), i.deleted = !0), i.guild && !i.deleted) {
+      n.permissionsFor(n.client.user).missing(t.Permissions.FLAGS.MANAGE_MESSAGES).length || await i.reactions.removeAll();
     }
-    if (t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
-    const a = i ? "expire" : "finish";
-    this.listenerCount(a) && this.emit(a, s);
+    if (e instanceof Error) return void this._emit("error", e);
+    const o = s ? "expire" : "finish";
+    this._emit(o, a);
   }
   async _awaitResponseEx(t) {
     const e = [ "0", "cancel" ], i = i => {
       const s = parseInt(i.content);
       return i.author.id === t.id && (!isNaN(Number(i.content)) && s !== this.page && s >= 1 && s <= this.pages || e.includes(i.content.toLowerCase()));
-    }, s = this.clientAssets.message.channel, n = await s.send(this.clientAssets.prompt.replace(/\{\{user\}\}/g, t.toString()));
+    }, s = this.clientAssets.message, a = s.channel, n = this.clientAssets.prompt.replace(/\{\{user\}\}/g, t.toString()), o = await a.send({
+      content: n,
+      reply: {
+        messageReference: s,
+        failIfNotExists: !1
+      }
+    });
     try {
-      const t = (await s.awaitMessages({
+      const t = (await a.awaitMessages({
         filter: i,
         max: 1,
         time: this.timeout,
         errors: [ "time" ]
-      })).first(), a = t.content, o = s.permissionsFor(s.client.user).missing([ "MANAGE_MESSAGES" ]);
-      return this.clientAssets.message.deleted ? void (this.listenerCount("error") && this.emit("error", new Error("Client's message was deleted before being processed."))) : (await n.delete(), 
-      t.deletable && (o.length || await t.delete()), e.includes(a) ? this._awaitResponse() : this._loadPage(parseInt(a)));
+      })).first(), s = t.content;
+      return this.clientAssets.message.deleted || await o.delete(), t.deletable && await t.delete(), 
+      e.includes(s) ? this._awaitResponse() : this._loadPage(parseInt(s));
     } catch (t) {
-      if (n.deletable && await n.delete(), t instanceof Error) return void (this.listenerCount("error") && this.emit("error", t));
-      this.listenerCount("expire") && this.emit("expire");
+      if (o.deletable && await o.delete(), t instanceof Error) return void this._emit("error", t);
+      this._emit("expire");
     }
+  }
+  _emit(t, ...e) {
+    if (this.listenerCount(t)) return this.emit(t, ...e, this);
   }
 }
 
-exports.PaginationEmbed = e;
+exports.PaginationEmbed = i;

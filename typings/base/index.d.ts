@@ -241,56 +241,64 @@ export declare abstract class PaginationEmbed<Element> extends EventEmitter {
      * @param user - The user who reacted to jump on a certain page.
      */
     protected _awaitResponseEx(user: User): Promise<void>;
+    protected _emit(event: string, ...args: any[]): boolean;
     /**
      * Emitted after the initial embed has been sent
      * (technically, after the client finished reacting with enabled navigation and function emojis).
      * @event
      */
-    on(event: 'start', listener: () => void): this;
+    on(event: 'start', listener: (instance: this) => void): this;
     /**
      * Emitted when the instance is finished by a user reacting with `delete` navigation emoji
      * or a function emoji that throws non-Error type.
      * @event
      */
-    on(event: 'finish', listener: ListenerUser): this;
+    on(event: 'finish', listener: ListenerUser<Element>): this;
     /**
      * Emitted after the page number is updated and before the client sends the embed.
      * @event
      */
-    on(event: 'pageUpdate', listener: () => void): this;
+    on(event: 'pageUpdate', listener: (instance: this) => void): this;
     /**
      * Emitted upon a user reacting on the instance.
      * @event
      */
-    on(event: 'react', listener: ListenerReact): this;
+    on(event: 'react', listener: ListenerReact<Element>): this;
     /**
      * Emitted when the awaiting timeout is reached.
      * @event
      */
-    on(event: 'expire', listener: () => void): this;
+    on(event: 'expire', listener: (instance: this) => void): this;
     /**
      * Emitted upon an occurance of error.
      * @event
      */
-    on(event: 'error', listener: ListenerError): this;
+    on(event: 'error', listener: ListenerError<Element>): this;
     /** @event */
-    once(event: 'finish', listener: ListenerUser): this;
+    once(event: 'finish', listener: ListenerUser<Element>): this;
     /** @event */
-    once(event: 'start' | 'expire' | 'pageUpdate', listener: () => void): this;
+    once(event: 'start' | 'expire' | 'pageUpdate', listener: (instance: this) => void): this;
     /** @event */
-    once(event: 'react', listener: ListenerReact): this;
+    once(event: 'react', listener: ListenerReact<Element>): this;
     /** @event */
-    once(event: 'error', listener: ListenerError): this;
+    once(event: 'error', listener: ListenerError<Element>): this;
 }
-/**  @param user The user who responded to the instance. */
-export declare type ListenerUser = (user: User) => void;
+/**
+ * @param user The user who responded to the instance.
+ * @param instance The current instance of PaginationEmbed.
+ **/
+export declare type ListenerUser<T> = (user: User, instance: PaginationEmbed<T>) => void;
 /**
  * @param user The user who responded to the instance.
  * @param emoji The emoji that was reacted to the instance.
+ * @param instance The current instance of PaginationEmbed.
  */
-export declare type ListenerReact = (user: User, emoji: Emoji) => void;
-/** @param err The error object. */
-export declare type ListenerError = (err: Error) => void;
+export declare type ListenerReact<T> = (user: User, emoji: Emoji, instance: PaginationEmbed<T>) => void;
+/**
+ * @param err The error object.
+ * @param instance The current instance of PaginationEmbed.
+ * */
+export declare type ListenerError<T> = (err: Error, instance: PaginationEmbed<T>) => void;
 /** Options for [[PaginationEmbed.disabledNavigationEmojis]]. */
 export declare type DisabledNavigationEmojis = NavigationEmojiIdentifier[];
 /** An object containing emojis to use as navigation emojis. */
@@ -343,7 +351,7 @@ export declare type NavigationEmojiIdentifier = 'back' | 'jump' | 'forward' | 'd
  *  ```
  */
 export interface FunctionEmoji<Element> {
-    [emojiNameOrID: string]: (user: User, instance: Embeds | FieldsEmbed<Element>) => any;
+    [emojiNameOrId: string]: (user: User, instance: Embeds | FieldsEmbed<Element>) => any;
 }
 /**
  * Function to pass to the instance for page indicator formatting.
