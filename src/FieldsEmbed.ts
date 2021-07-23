@@ -159,7 +159,7 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     const options = { embeds: [ embed ], content: content || null };
 
     if (isFooter)
-      embed.setFooter(this.pageIndicator, embed.footer.iconURL);
+      embed.setFooter(this.pageIndicator, embed.footer?.iconURL);
     if (this.clientAssets.message)
       await this.clientAssets.message.edit(options);
     else
