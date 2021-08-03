@@ -84,10 +84,7 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     this.embed.fields = [];
 
     for (const field of fields)
-      if (typeof field.value === 'function')
-        this.formatField(field.name, field.value, field.inline);
-      else
-        this.embed.addField(field.name, field.value, field.inline);
+      this.embed.fields.push(field);
 
     const hasPaginateField = this.embed.fields.filter(f => typeof f.value === 'function').length;
 
@@ -127,10 +124,12 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
   }
 
   protected async _drawList () {
+    const fields = this.embed.fields;
+    this.embed.fields = [];
     const embed = new MessageEmbed(this.embed);
-    embed.fields = [];
+    this.embed.fields = fields;
 
-    for (const field of this.embed.fields)
+    for (const field of fields)
       embed.addField(
         field.name,
         typeof field.value === 'function'
@@ -144,7 +143,7 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
 
   /** @ignore */
   public async _loadList (callNavigation = true) {
-    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate');
+    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate', this);
 
     const embed = await this._drawList();
     const isFooter = this.usePageIndicator === 'footer';
@@ -159,7 +158,7 @@ export class FieldsEmbed<Element> extends PaginationEmbed<Element> {
     const options = { embeds: [ embed ], content: content || null };
 
     if (isFooter)
-      embed.setFooter(this.pageIndicator, embed.footer.iconURL);
+      embed.setFooter(this.pageIndicator, embed.footer?.iconURL);
     if (this.clientAssets.message)
       await this.clientAssets.message.edit(options);
     else

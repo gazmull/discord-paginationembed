@@ -21,7 +21,7 @@ class s extends t.PaginationEmbed {
     await this._verify();
     const e = this.embed.fields;
     this.embed.fields = [];
-    for (const t of e) "function" == typeof t.value ? this.formatField(t.name, t.value, t.inline) : this.embed.addField(t.name, t.value, t.inline);
+    for (const t of e) this.embed.fields.push(t);
     if (!this.embed.fields.filter((e => "function" == typeof e.value)).length) throw new Error("Cannot invoke FieldsEmbed class without at least one formatted field to paginate.");
     return this._loadList();
   }
@@ -38,18 +38,22 @@ class s extends t.PaginationEmbed {
     return this.elementsPerPage = e, this;
   }
   async _drawList() {
-    const t = new e.MessageEmbed(this.embed);
-    t.fields = [];
-    for (const e of this.embed.fields) t.addField(e.name, "function" == typeof e.value ? this.elementList.map(e.value).join("\n") : e.value, e.inline);
-    return t;
+    const t = this.embed.fields;
+    this.embed.fields = [];
+    const s = new e.MessageEmbed(this.embed);
+    this.embed.fields = t;
+    for (const e of t) s.addField(e.name, "function" == typeof e.value ? this.elementList.map(e.value).join("\n") : e.value, e.inline);
+    return s;
   }
   async _loadList(e = !0) {
-    this.listenerCount("pageUpdate") && this.emit("pageUpdate");
-    const t = await this._drawList(), s = "footer" === this.usePageIndicator, i = this.usePageIndicator && !s ? 1 === this.pages ? "" : this.pageIndicator : "", {separator: n, text: a} = this.content, r = {
-      embeds: [ t ],
-      content: `${a ? `${a}${n}` : ""}${i}` || null
+    var t;
+    this.listenerCount("pageUpdate") && this.emit("pageUpdate", this);
+    const s = await this._drawList(), i = "footer" === this.usePageIndicator, n = this.usePageIndicator && !i ? 1 === this.pages ? "" : this.pageIndicator : "", {separator: a, text: r} = this.content, o = {
+      embeds: [ s ],
+      content: `${r ? `${r}${a}` : ""}${n}` || null
     };
-    return s && t.setFooter(this.pageIndicator, t.footer.iconURL), this.clientAssets.message ? await this.clientAssets.message.edit(r) : this.clientAssets.message = await this.channel.send(r), 
+    return i && s.setFooter(this.pageIndicator, null === (t = s.footer) || void 0 === t ? void 0 : t.iconURL), 
+    this.clientAssets.message ? await this.clientAssets.message.edit(o) : this.clientAssets.message = await this.channel.send(o), 
     super._loadList(e);
   }
 }

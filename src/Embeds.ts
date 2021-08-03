@@ -283,17 +283,11 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
    * @param value - The value of the field.
    * @param inline - Set the field to display inline.
    */
-  public spliceFields (
-    index: number,
-    deleteCount: number,
-    name?: string,
-    value?: string,
-    inline?: boolean
-  ) {
+  public spliceFields (index: number, deleteCount: number, ...fields: EmbedFieldData[] | EmbedFieldData[][]) {
     if (!this.array) throw new TypeError('this.array must be set first.');
 
     for (const el of this.array)
-      el.spliceFields(index, deleteCount, [ { name, value, inline } ]);
+      el.spliceFields(index, deleteCount, ...fields);
 
     return this;
   }
@@ -307,7 +301,7 @@ export class Embeds extends PaginationEmbed<MessageEmbed> {
 
   /** @ignore */
   public async _loadList (callNavigation = true) {
-    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate');
+    if (this.listenerCount('pageUpdate')) this.emit('pageUpdate', this);
 
     const embed = new MessageEmbed(this.currentEmbed);
     const isFooter = this.usePageIndicator === 'footer';

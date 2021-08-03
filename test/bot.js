@@ -49,7 +49,7 @@ bot
 
       for (let i = 1; i <= 3; ++i)
         embeds.push({
-          fields: [ { name: 'Page', value: i, inline: false } ],
+          fields: [ { name: 'Page', value: String(i), inline: false } ],
           image: { url: 'attachment://1.jpg' }
         });
 
@@ -72,11 +72,11 @@ bot
         .setFunctionEmojis({
           '⬆': (_, instance) => {
             for (const embed of instance.array)
-              embed.fields[0].value++;
+              embed.fields[0].value = String(Number(embed.fields[0].value) + 1);
           },
           '⬇': (_, instance) => {
             for (const embed of instance.array)
-              embed.fields[0].value--;
+              embed.fields[0].value = String(Number(embed.fields[0].value) - 1);
           },
           '⏹': () => Promise.reject('stopped'),
           '🔕': () => Promise.reject(new Error('Worst Error Ever'))
